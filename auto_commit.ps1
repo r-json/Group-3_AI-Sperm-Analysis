@@ -77,7 +77,7 @@ try {
     Write-Host "✅ Remote repository already configured" -ForegroundColor Green
 } catch {
     Write-Host "🌐 Adding GitHub repository remote..." -ForegroundColor Blue
-    git remote add origin https://github.com/r-json/Project-CUM.git
+    git remote add origin https://github.com/r-json/Group-3_AI-Sperm-Analysis.git
     if ($LASTEXITCODE -ne 0) {
         Write-Host "❌ ERROR: Failed to add remote repository" -ForegroundColor Red
         Read-Host "Press Enter to exit"
@@ -146,7 +146,7 @@ Initial commit: AI-assisted sperm morphology classification system
 - Comprehensive documentation and professional repository structure
 
 🎓 Academic Project:
-- Team: Group 3, BSCS 3-1N
+- Team: Agarin, L., Rosel, A., & Sanchez, A., BSCS 2-1N
 - Institution: Polytechnic University of the Philippines
 - Academic Year: 2024-2025
 
@@ -199,7 +199,7 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host ""
     Write-Host "Possible issues:" -ForegroundColor Yellow
     Write-Host "1. Check your internet connection" -ForegroundColor Yellow
-    Write-Host "2. Verify you have access to https://github.com/r-json/Project-CUM" -ForegroundColor Yellow
+    Write-Host "2. Verify you have access to https://github.com/r-json/Group-3_AI-Sperm-Analysis" -ForegroundColor Yellow
     Write-Host "3. You may need to authenticate with GitHub" -ForegroundColor Yellow
     Write-Host "4. Large files may require more time" -ForegroundColor Yellow
     Write-Host ""
@@ -223,7 +223,7 @@ Write-Host "   - Model accuracy: 64.4% (HuSHeM), 81.5% (SMIDS)" -ForegroundColor
 Write-Host "   - Technical stack: TensorFlow, PyQt5, OpenCV" -ForegroundColor Gray
 Write-Host ""
 Write-Host "🔗 Next Steps:" -ForegroundColor Blue
-Write-Host "   1. Visit: https://github.com/r-json/Project-CUM" -ForegroundColor Gray
+Write-Host "   1. Visit: https://github.com/r-json/Group-3_AI-Sperm-Analysis" -ForegroundColor Gray
 Write-Host "   2. Verify all files are present" -ForegroundColor Gray
 Write-Host "   3. Update repository description and topics" -ForegroundColor Gray
 Write-Host "   4. Share with your team and supervisor" -ForegroundColor Gray
