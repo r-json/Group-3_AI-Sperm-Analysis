@@ -267,17 +267,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact and Support
 
 ### Team Members
-- **[Team Member 1]** - Lead Developer ([email@example.com])
-- **[Team Member 2]** - Machine Learning Engineer ([email@example.com])
-- **[Team Member 3]** - UI/UX Developer ([email@example.com])
+- **Lawrence Ivan P. Agarin** (lawrenceivanpagarin@iskolarngbayab.pup.edu.ph)
+- **Arjay N. Rosel**  (arjaynrosel@iskolarngbayan.pup.edu.ph)
+- **[Team Member 3]**  ([email@example.com])
 
 ### Academic Supervisor
-- **[Faculty Name]** - Project Supervisor ([faculty@pup.edu.ph])
+- **Regine Criseno** - Statistics Instructor (rzcriseno@pup.edu.ph)
 
 ### Institution
 **Polytechnic University of the Philippines**  
 College of Computer and Information Sciences  
-BSCS 3-1N Group 3
+BSCS 2-1N Group 3
 
 ## 🙏 Acknowledgments
 
@@ -289,8 +289,8 @@ BSCS 3-1N Group 3
 
 ## 📚 References and Citations
 
-1. **HuSHeM Dataset**: [Citation needed - original paper]
-2. **SMIDS Dataset**: [Citation needed - original paper]
+1. **HuSHeM Dataset**: Shaker, F. Human Sperm Head Morphology dataset (HuSHeM) [Data set]. Mendeley Data 2018. Version 3. https://doi.org/10.17632/tt3yj2pf38.3
+2. **SMIDS Dataset**: Başkut, K., & Tortumlu, Ö. L. Classification of Morphology of Sperm Cells with Deep Learning. Yıldız Technical University, Department of Computer Engineering 2020.
 3. **Transfer Learning**: Yosinski, J., et al. "How transferable are features in deep neural networks?" NIPS 2014.
 4. **Xception Architecture**: Chollet, F. "Xception: Deep learning with depthwise separable convolutions." CVPR 2017.
 5. **Sperm Morphology**: WHO Laboratory Manual for the Examination and Processing of Human Semen, 5th Edition.
