@@ -1,6 +1,6 @@
 # GitHub Repository Setup Guide
 
-This guide will help you commit all project files to the GitHub repository at https://github.com/r-json/Project-CUM.
+This guide will help you commit all project files to the GitHub repository at https://github.com/r-json/Group-3_AI-Sperm-Analysis.
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ This guide will help you commit all project files to the GitHub repository at ht
    git config --global user.email "your.email@example.com"
    ```
 
-3. **GitHub Account**: Ensure you have access to https://github.com/r-json/Project-CUM
+3. **GitHub Account**: Ensure you have access to https://github.com/r-json/Group-3_AI-Sperm-Analysis
 
 ## Step-by-Step Repository Setup
 
@@ -34,7 +34,7 @@ git add .gitattributes
 
 ### 2. Connect to GitHub Repository
 ```bash
-git remote add origin https://github.com/r-json/Project-CUM.git
+git remote add origin https://github.com/r-json/Group-3_AI-Sperm-Analysis.git
 ```
 
 ### 3. Add All Project Files
@@ -64,7 +64,7 @@ git push -u origin main
 
 If you prefer using the GitHub web interface:
 
-1. **Go to**: https://github.com/r-json/Project-CUM
+1. **Go to**: https://github.com/r-json/Group-3_AI-Sperm-Analysis
 2. **Click**: "Upload files" button
 3. **Drag and drop** all project folders and files
 4. **Add commit message**: "Initial commit: Complete AI sperm morphology classification system"
@@ -156,7 +156,7 @@ After committing, verify the repository:
 2. **Review README** renders correctly
 3. **Test clone** from another location:
    ```bash
-   git clone https://github.com/r-json/Project-CUM.git
+   git clone https://github.com/r-json/Group-3_AI-Sperm-Analysis.git
    cd Project-CUM
    pip install -r requirements.txt
    cd Interface
