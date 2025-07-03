@@ -7,7 +7,7 @@ If you use this software in your research, please cite it as follows:
 ```bibtex
 @software{sperm_morphology_ai_2024,
   title = {AI-Assisted Diagnosis of Male Fertility: Morphological Classification of Sperm Cells Using the Sperm Morphology Image Dataset},
-  author = {Group 3, BSCS 2-1N},
+  author = {Agarin, L., Rosel, A., & Sanchez, A.},
   institution = {Polytechnic University of the Philippines},
   year = {2025},
   url = {https://github.com/r-json/Group-3_AI-Sperm-Analysis},
