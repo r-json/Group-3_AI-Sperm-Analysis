@@ -1,4 +1,4 @@
-# 🔬 AI-Assisted Diagnosis of Male Fertility: Morphological Classification of Sperm Cells
+# 🔬 AI-Assisted Diagnosis of Male Fertility: Morphological Classification of Sperm Cells Using the Sperm Morphology Image Dataset
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://python.org)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://tensorflow.org)
