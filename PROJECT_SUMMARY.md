@@ -2,7 +2,7 @@
 
 ## 📋 Executive Summary
 
-This project presents a comprehensive AI-assisted diagnostic system for male fertility assessment through automated sperm morphology classification. Developed by Group 3, BSCS 3-1N at Polytechnic University of the Philippines, the system leverages state-of-the-art deep learning techniques to provide objective, reproducible sperm morphology analysis.
+This project presents a comprehensive AI-assisted diagnostic system for male fertility assessment through automated sperm morphology classification. Developed by Agarin, L., Rosel, A., & Sanchez, A., BSCS 2-1N at Polytechnic University of the Philippines, the system leverages state-of-the-art deep learning techniques to provide objective, reproducible sperm morphology analysis.
 
 ## 🎯 Project Objectives
 
@@ -221,7 +221,7 @@ The foundation established by this project creates opportunities for future rese
 
 ---
 
-**Project Team**: Group 3, BSCS 3-1N  
+**Project Team**: Agarin, L., Rosel, A., & Sanchez, A. Group 3, BSCS 2-1N  
 **Institution**: Polytechnic University of the Philippines  
 **Academic Year**: 2024-2025  
-**Repository**: https://github.com/r-json/Project-CUM
+**Repository**: https://github.com/r-json/Group-3_AI-Sperm-Analysis
