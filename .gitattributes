@@ -1,0 +1,11 @@
+# Git LFS (Large File Storage) Configuration
+# Track large model files that exceed GitHub's 100MB limit
+*.h5 filter=lfs diff=lfs merge=lfs -text
+*.weights.h5 filter=lfs diff=lfs merge=lfs -text
+*.keras filter=lfs diff=lfs merge=lfs -text
+*.pkl filter=lfs diff=lfs merge=lfs -text
+*.npy filter=lfs diff=lfs merge=lfs -text
+# Track other potentially large files
+*.bin filter=lfs diff=lfs merge=lfs -text
+*.model filter=lfs diff=lfs merge=lfs -text
+*.checkpoint filter=lfs diff=lfs merge=lfs -text
