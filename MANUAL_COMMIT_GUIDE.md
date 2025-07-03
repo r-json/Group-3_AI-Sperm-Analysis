@@ -30,7 +30,7 @@ git lfs track "*.keras"
 git add .gitattributes
 
 # 4. Add GitHub repository
-git remote add origin https://github.com/r-json/Project-CUM.git
+git remote add origin https://github.com/r-json/Group-3_AI-Sperm-Analysis.git
 
 # 5. Add all files
 git add .
@@ -40,7 +40,7 @@ git commit -m "Initial commit: AI-assisted sperm morphology classification syste
 
 Complete deep learning pipeline for HuSHeM and SMIDS datasets with modern PyQt5 GUI application. 
 Achieves 64.4% accuracy on HuSHeM and 81.5% accuracy on SMIDS using transfer learning.
-Academic project by Group 3, BSCS 3-1N, Polytechnic University of the Philippines."
+Academic project by Agarin, L., Rosel, A., & Sanchez, A., BSCS 2-1N, Polytechnic University of the Philippines."
 
 # 7. Set main branch and push
 git branch -M main
@@ -72,7 +72,7 @@ auto_commit.bat
 ### Expected Result
 
 After successful completion, your project will be available at:
-**https://github.com/r-json/Project-CUM**
+**https://github.com/r-json/Group-3_AI-Sperm-Analysis**
 
 ### Troubleshooting
 
