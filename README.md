@@ -197,9 +197,9 @@ Sperm morphology assessment is crucial for:
 ## 🎓 Academic Context
 
 **Institution**: Polytechnic University of the Philippines  
-**Course**: BSCS 3-1N  
+**Course**: BSCS 2-1N  
 **Team**: Group 3  
-**Supervisor**: [Faculty Name]  
+**Supervisor**: Regine Criseno
 **Academic Year**: 2024-2025
 
 ### Learning Outcomes
@@ -269,7 +269,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Team Members
 - **Lawrence Ivan P. Agarin** (lawrenceivanpagarin@iskolarngbayab.pup.edu.ph)
 - **Arjay N. Rosel**  (arjaynrosel@iskolarngbayan.pup.edu.ph)
-- **[Team Member 3]**  ([email@example.com])
+- **Aaliyah Reign T. Sanchez**  (aaliyahreigntsanchez@iskolarngbayan.pup.edu.ph)
 
 ### Academic Supervisor
 - **Regine Criseno** - Statistics Instructor (rzcriseno@pup.edu.ph)
