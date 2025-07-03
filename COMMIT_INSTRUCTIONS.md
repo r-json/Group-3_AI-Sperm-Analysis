@@ -2,7 +2,7 @@
 
 ## 📋 Repository Status: READY FOR COMMIT
 
-Your AI-assisted sperm morphology classification project is now completely prepared for GitHub repository setup at **https://github.com/r-json/Project-CUM**.
+Your AI-assisted sperm morphology classification project is now completely prepared for GitHub repository setup at **https://github.com/r-json/Group-3_AI-Sperm-Analysis**.
 
 ---
 
@@ -191,11 +191,11 @@ Your AI-assisted diagnosis project is now professionally prepared and ready for 
 - **Research collaboration** and open source contribution
 - **Clinical applications** and real-world deployment
 
-**Next step**: Install Git and follow the commit instructions above to publish your work at https://github.com/r-json/Project-CUM
+**Next step**: Install Git and follow the commit instructions above to publish your work at https://github.com/r-json/Group-3_AI-Sperm-Analysis
 
 ---
 
 **Project**: AI-Assisted Diagnosis of Male Fertility: Morphological Classification of Sperm Cells  
-**Team**: Group 3, BSCS 3-1N  
+**Team**: Group 3, BSCS 2-1N  
 **Institution**: Polytechnic University of the Philippines  
 **Status**: ✅ READY FOR GITHUB COMMIT
