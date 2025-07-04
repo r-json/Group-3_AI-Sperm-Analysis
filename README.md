@@ -241,8 +241,8 @@ We welcome contributions to improve this project! Please follow these guidelines
 ### Development Setup
 ```bash
 # Clone the repository
-git clone https://github.com/r-json/Project-CUM.git
-cd Project-CUM
+git clone https://github.com/r-json/Group-3_AI-Sperm-Analysis.git
+cd Group-3_AI-Sperm-Analysis
 
 # Create virtual environment
 python -m venv venv
