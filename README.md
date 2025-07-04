@@ -104,8 +104,8 @@ Input Image (170x170) → Preprocessing → Feature Extraction → Classificatio
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/r-json/Project-CUM.git
-cd Project-CUM
+git clone https://github.com/r-json/Group-3_AI-Sperm-Analysis.git
+cd Group-3_AI-Sperm-Analysis
 ```
 
 ### 2. Install Dependencies
