@@ -1,0 +1,36 @@
+experiment: main
+dataset: hushem
+classes:
+- Normal
+- Tapered
+- Pyriform
+- Amorphous
+model_id: mobilenetv3-ft
+backbone: mobilenetv3_large
+timm_name: mobilenetv3_large_100.ra_in1k
+fold: 0
+train:
+  mode: finetune
+  image_size: 224
+  batch_size: 16
+  dropout: 0.2
+  warmup_epochs: 3
+  warmup_lr: 0.001
+  max_epochs: 60
+  lr: 0.0002
+  weight_decay: 0.0001
+  patience: 10
+  min_epochs: 3
+  probe_C_grid:
+  - 0.0001
+  - 0.0003
+  - 0.001
+  - 0.003
+  - 0.01
+  - 0.03
+  - 0.1
+  - 0.3
+  - 1.0
+  - 10.0
+  seed: 20251005
+  num_threads: 8

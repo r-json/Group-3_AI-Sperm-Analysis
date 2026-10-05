@@ -1,0 +1,36 @@
+experiment: main
+dataset: hushem
+classes:
+- Normal
+- Tapered
+- Pyriform
+- Amorphous
+model_id: dinov2s-lp
+backbone: dinov2_vits14
+timm_name: vit_small_patch14_dinov2.lvd142m
+fold: 1
+train:
+  mode: linear_probe
+  image_size: 224
+  batch_size: 32
+  dropout: 0.2
+  warmup_epochs: 3
+  warmup_lr: 0.001
+  max_epochs: 30
+  lr: 0.0001
+  weight_decay: 0.0001
+  patience: 6
+  min_epochs: 3
+  probe_C_grid:
+  - 0.0001
+  - 0.0003
+  - 0.001
+  - 0.003
+  - 0.01
+  - 0.03
+  - 0.1
+  - 0.3
+  - 1.0
+  - 10.0
+  seed: 20251005
+  num_threads: 8

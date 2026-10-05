@@ -1,0 +1,339 @@
+{
+  "temperature": 0.8928224423090423,
+  "n": {
+    "val": 354,
+    "calib": 472,
+    "test": 589
+  },
+  "classification": {
+    "n": 589,
+    "accuracy": 0.8268251273344652,
+    "macro_f1": 0.827185391017152,
+    "macro_precision": 0.8282338062054521,
+    "macro_recall": 0.8267565424266454,
+    "kappa": 0.7401448109412712,
+    "mcc": 0.74044282247091,
+    "per_class": {
+      "precision": [
+        0.7772511848341233,
+        0.7807486631016043,
+        0.9267015706806283
+      ],
+      "recall": [
+        0.82,
+        0.7525773195876289,
+        0.9076923076923077
+      ],
+      "f1": [
+        0.7980535279805353,
+        0.7664041994750657,
+        0.917098445595855
+      ],
+      "support": [
+        200,
+        194,
+        195
+      ]
+    },
+    "confusion_matrix": [
+      [
+        164,
+        32,
+        4
+      ],
+      [
+        38,
+        146,
+        10
+      ],
+      [
+        9,
+        9,
+        177
+      ]
+    ]
+  },
+  "calibration": {
+    "uncalibrated": {
+      "ece": 0.04006925768793424,
+      "ece_adaptive": 0.04852046555661794,
+      "brier": 0.24956336250606154,
+      "nll": 0.43289904719418143,
+      "mean_confidence": 0.7928797431957283
+    },
+    "temperature_scaled": {
+      "ece": 0.016264391270476065,
+      "ece_adaptive": 0.0329015267298157,
+      "brier": 0.2477841525551212,
+      "nll": 0.4262319296854016,
+      "mean_confidence": 0.814418694706388
+    }
+  },
+  "selective": {
+    "msp": {
+      "aurc": 0.05877998255049701,
+      "eaurc": 0.04268896420571046,
+      "test_max_coverage_at_target": 0.5551782682512734,
+      "plugin": {
+        "threshold": 0.8508548220700322,
+        "calib_coverage": 0.5233050847457628,
+        "test": {
+          "coverage": 0.5195246179966044,
+          "deferral_rate": 0.48047538200339557,
+          "n_accepted": 306,
+          "selective_accuracy": 0.954248366013072,
+          "per_class_deferral": [
+            0.55,
+            0.6237113402061856,
+            0.2666666666666667
+          ]
+        }
+      },
+      "sgr": {
+        "threshold": null,
+        "calib_coverage": 0.0,
+        "risk_bound": 1.0,
+        "certified": false,
+        "test": {
+          "coverage": 0.0,
+          "deferral_rate": 1.0,
+          "n_accepted": 0,
+          "selective_accuracy": NaN,
+          "per_class_deferral": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "entropy": {
+      "aurc": 0.05939767898362153,
+      "eaurc": 0.04330666063883498,
+      "test_max_coverage_at_target": 0.5212224108658744,
+      "plugin": {
+        "threshold": -0.4824366317784887,
+        "calib_coverage": 0.538135593220339,
+        "test": {
+          "coverage": 0.5314091680814941,
+          "deferral_rate": 0.4685908319185059,
+          "n_accepted": 313,
+          "selective_accuracy": 0.9488817891373802,
+          "per_class_deferral": [
+            0.53,
+            0.6030927835051547,
+            0.27179487179487183
+          ]
+        }
+      },
+      "sgr": {
+        "threshold": null,
+        "calib_coverage": 0.0,
+        "risk_bound": 1.0,
+        "certified": false,
+        "test": {
+          "coverage": 0.0,
+          "deferral_rate": 1.0,
+          "n_accepted": 0,
+          "selective_accuracy": NaN,
+          "per_class_deferral": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "target_accuracy": 0.95,
+    "delta": 0.05
+  },
+  "conformal": {
+    "lac@0.10": {
+      "alpha": 0.1,
+      "method": "lac",
+      "threshold": [
+        0.7150247531951173
+      ],
+      "feasible": true,
+      "min_calibration_size": 9,
+      "coverage": 0.9049235993208828,
+      "mean_set_size": 1.1969439728353142,
+      "singleton_rate": 0.8064516129032258,
+      "empty_rate": 0.0,
+      "full_set_rate": 0.003395585738539898,
+      "per_class_coverage": [
+        0.91,
+        0.8762886597938144,
+        0.9282051282051282
+      ],
+      "worst_class_coverage": 0.8762886597938144,
+      "singleton_accuracy": 0.888421052631579
+    },
+    "aps@0.10": {
+      "alpha": 0.1,
+      "method": "aps",
+      "threshold": [
+        0.9931326766537012
+      ],
+      "feasible": true,
+      "min_calibration_size": 9,
+      "coverage": 0.99830220713073,
+      "mean_set_size": 2.6162988115449917,
+      "singleton_rate": 0.03225806451612903,
+      "empty_rate": 0.0,
+      "full_set_rate": 0.6485568760611206,
+      "per_class_coverage": [
+        1.0,
+        1.0,
+        0.9948717948717949
+      ],
+      "worst_class_coverage": 0.9948717948717949,
+      "singleton_accuracy": 1.0
+    },
+    "aps_rand@0.10": {
+      "alpha": 0.1,
+      "method": "aps_rand",
+      "threshold": [
+        0.9016294363110501
+      ],
+      "feasible": true,
+      "min_calibration_size": 9,
+      "coverage": 0.9117147707979627,
+      "mean_set_size": 1.3989813242784381,
+      "singleton_rate": 0.567062818336163,
+      "empty_rate": 0.03395585738539898,
+      "full_set_rate": 0.03395585738539898,
+      "per_class_coverage": [
+        0.915,
+        0.9020618556701031,
+        0.9179487179487179
+      ],
+      "worst_class_coverage": 0.9020618556701031,
+      "singleton_accuracy": 0.9131736526946108
+    },
+    "lac_classwise@0.10": {
+      "alpha": 0.1,
+      "method": "lac_classwise",
+      "threshold": [
+        0.7273869198592902,
+        0.7492784861832678,
+        0.7150247531951173
+      ],
+      "feasible": true,
+      "min_calibration_size": 9,
+      "coverage": 0.9083191850594228,
+      "mean_set_size": 1.227504244482173,
+      "singleton_rate": 0.7792869269949066,
+      "empty_rate": 0.0,
+      "full_set_rate": 0.006791171477079796,
+      "per_class_coverage": [
+        0.915,
+        0.8814432989690721,
+        0.9282051282051282
+      ],
+      "worst_class_coverage": 0.8814432989690721,
+      "singleton_accuracy": 0.8910675381263616
+    },
+    "lac@0.05": {
+      "alpha": 0.05,
+      "method": "lac",
+      "threshold": [
+        0.8724343568996085
+      ],
+      "feasible": true,
+      "min_calibration_size": 19,
+      "coverage": 0.9728353140916808,
+      "mean_set_size": 1.533106960950764,
+      "singleton_rate": 0.5432937181663837,
+      "empty_rate": 0.0,
+      "full_set_rate": 0.07640067911714771,
+      "per_class_coverage": [
+        0.965,
+        0.9742268041237113,
+        0.9794871794871794
+      ],
+      "worst_class_coverage": 0.965,
+      "singleton_accuracy": 0.959375
+    },
+    "aps@0.05": {
+      "alpha": 0.05,
+      "method": "aps",
+      "threshold": [
+        0.998070272037969
+      ],
+      "feasible": true,
+      "min_calibration_size": 19,
+      "coverage": 1.0,
+      "mean_set_size": 2.8879456706281834,
+      "singleton_rate": 0.001697792869269949,
+      "empty_rate": 0.0,
+      "full_set_rate": 0.8896434634974533,
+      "per_class_coverage": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "worst_class_coverage": 1.0,
+      "singleton_accuracy": 1.0
+    },
+    "aps_rand@0.05": {
+      "alpha": 0.05,
+      "method": "aps_rand",
+      "threshold": [
+        0.9547313812366528
+      ],
+      "feasible": true,
+      "min_calibration_size": 19,
+      "coverage": 0.9592529711375212,
+      "mean_set_size": 1.7096774193548387,
+      "singleton_rate": 0.3921901528013582,
+      "empty_rate": 0.013582342954159592,
+      "full_set_rate": 0.12903225806451613,
+      "per_class_coverage": [
+        0.95,
+        0.9536082474226805,
+        0.9743589743589743
+      ],
+      "worst_class_coverage": 0.95,
+      "singleton_accuracy": 0.948051948051948
+    },
+    "lac_classwise@0.05": {
+      "alpha": 0.05,
+      "method": "lac_classwise",
+      "threshold": [
+        0.8781654416566138,
+        0.8850185372217525,
+        0.9175410066780287
+      ],
+      "feasible": true,
+      "min_calibration_size": 19,
+      "coverage": 0.9728353140916808,
+      "mean_set_size": 1.5823429541595926,
+      "singleton_rate": 0.5144312393887945,
+      "empty_rate": 0.0,
+      "full_set_rate": 0.0967741935483871,
+      "per_class_coverage": [
+        0.965,
+        0.9742268041237113,
+        0.9794871794871794
+      ],
+      "worst_class_coverage": 0.965,
+      "singleton_accuracy": 0.9570957095709571
+    }
+  },
+  "run": {
+    "run_id": "main/smids/resnet50-lp/fold2@0f2f87178659",
+    "git_commit": "cafbaff721b5976ce1c4ce114bd1ec619216e7ef",
+    "dataset": "smids",
+    "model_id": "resnet50-lp",
+    "backbone": "resnet50",
+    "mode": "linear_probe",
+    "fold": 2,
+    "classes": [
+      "Normal",
+      "Abnormal",
+      "Non-sperm"
+    ],
+    "n_parameters": 23514179
+  }
+}
