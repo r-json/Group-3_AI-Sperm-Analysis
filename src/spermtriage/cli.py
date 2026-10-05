@@ -5,7 +5,9 @@ Commands
 data      download, verify, hash and split the official datasets
 train     run an experiment grid (dataset x model x fold)
 evaluate  post-hoc calibration, selective prediction and conformal analysis per run
-report    aggregate all runs into results/summary.csv, statistical tests and figures
+report    aggregate all runs into results/<exp>/summary.csv, statistical tests and figures
+benchmark CPU latency, parameters and size of each backbone
+register  add an evaluated run to models/registry.yaml (copies and hashes the weights)
 predict   classify images with a registered model (same Predictor the GUI uses)
 gui       launch the desktop application
 """
@@ -79,6 +81,51 @@ def _cmd_report(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_benchmark(args: argparse.Namespace) -> int:
+    from spermtriage.reporting.efficiency import benchmark
+
+    print(benchmark(args.experiment, runs=args.runs))
+    return 0
+
+
+def _cmd_register(args: argparse.Namespace) -> int:
+    import pandas as pd
+    import yaml
+
+    from spermtriage.inference.model_registry import register_run
+
+    run = Path(args.run).resolve()
+    cfg = yaml.safe_load((run / "config.yaml").read_text())
+    metrics: dict[str, object] = {}
+    agg_path = project_root() / "results" / cfg["experiment"] / "aggregate.csv"
+    if agg_path.exists():
+        agg = pd.read_csv(agg_path)
+        row = agg[(agg["dataset"] == cfg["dataset"]) & (agg["model_id"] == cfg["model_id"])]
+        if len(row):
+            r = row.iloc[0]
+            metrics = {
+                "source": f"{agg_path.relative_to(project_root()).as_posix()} (5-fold CV)",
+                **{
+                    k: round(float(r[k]), 4)
+                    for k in (
+                        "accuracy_mean",
+                        "accuracy_sd",
+                        "pooled_accuracy_ci_lo",
+                        "pooled_accuracy_ci_hi",
+                        "macro_f1_mean",
+                        "macro_f1_sd",
+                        "ece_ts_mean",
+                        "sgr_test_coverage_mean",
+                        "sgr_test_sel_acc_mean",
+                    )
+                    if k in r and pd.notna(r[k])
+                },
+            }
+    entry = register_run(run, args.version, args.conformal, args.alpha, metrics=metrics)
+    print(f"Registered {entry.id} v{entry.version} -> {entry.weights_path}")
+    return 0
+
+
 def _cmd_predict(args: argparse.Namespace) -> int:
     from spermtriage.inference.model_registry import ModelRegistry
     from spermtriage.inference.predictor import Predictor
@@ -130,6 +177,18 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("report", help="aggregate runs into tables and figures")
     p.add_argument("--experiment", default="main")
     p.set_defaults(func=_cmd_report)
+
+    p = sub.add_parser("benchmark", help="CPU latency and size of each backbone")
+    p.add_argument("--experiment", default="main")
+    p.add_argument("--runs", type=int, default=100)
+    p.set_defaults(func=_cmd_benchmark)
+
+    p = sub.add_parser("register", help="add an evaluated run to the model registry")
+    p.add_argument("--run", required=True, help="results/runs/<exp>/<dataset>/<model>/fold<k>")
+    p.add_argument("--version", required=True)
+    p.add_argument("--conformal", default="lac", choices=["lac", "aps", "lac_classwise"])
+    p.add_argument("--alpha", type=float, default=0.10)
+    p.set_defaults(func=_cmd_register)
 
     default_registry = str(project_root() / "models" / "registry.yaml")
     p = sub.add_parser("predict", help="classify images with a registered model")
