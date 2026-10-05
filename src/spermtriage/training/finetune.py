@@ -38,7 +38,10 @@ class FitResult:
 @torch.no_grad()
 def predict_logits(model: Classifier, images: torch.Tensor, batch_size: int = 64) -> torch.Tensor:
     model.eval()
-    outs = [model(images[i : i + batch_size]) for i in range(0, len(images), batch_size)]
+    dev = next(model.parameters()).device
+    outs = [
+        model(images[i : i + batch_size].to(dev)).cpu() for i in range(0, len(images), batch_size)
+    ]
     if not outs:
         raise ValueError("predict_logits needs at least one image")
     return torch.cat(outs)
@@ -61,7 +64,9 @@ def _train_epoch(
     if freeze_bn:
         model.backbone.eval()
     total, loss_sum, correct = 0, 0.0, 0
+    dev = next(model.parameters()).device
     for x, y in loader:
+        x, y = x.to(dev), y.to(dev)
         optimizer.zero_grad(set_to_none=True)
         logits = model(x)
         loss = nn.functional.cross_entropy(logits, y)

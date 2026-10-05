@@ -140,3 +140,12 @@ def test_stacked_fit_predict_on_separable_synthetic_data():
     assert res.proba.shape == (30, 3) and np.allclose(res.proba.sum(1), 1)
     assert (res.proba.argmax(1) == y[idx[90:]]).mean() > 0.9
     assert "stack" in res.inner_acc and "beta" in res.selected["deep_canon"]
+
+
+def test_cbam_resnet50_backbone_shapes():
+    from spermtriage.method.gpu_baselines import CBAM, cbam_resnet50
+
+    x = torch.randn(2, 64, 8, 8)
+    assert CBAM(64)(x).shape == x.shape
+    net = Classifier(cbam_resnet50(pretrained=False), 3, 64, backbone_key="cbam_resnet50")
+    assert net(torch.randint(0, 255, (2, 3, 64, 64), dtype=torch.uint8)).shape == (2, 3)
