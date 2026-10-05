@@ -143,7 +143,9 @@ def run_finetune(experiment: str, cache: DatasetCache, model: ModelEntry, cfg: T
     seed_everything(cfg.seed + fold)
     images = cache.images(cfg.image_size)
     roles = cache.role_indices(fold)
-    net = Classifier.build(model.backbone, cache.spec.num_classes, cfg.image_size, cfg.dropout)
+    net = Classifier.build(
+        model.backbone, cache.spec.num_classes, cfg.image_size, cfg.dropout, cfg.pretrained
+    )
     fit = fit_finetune(
         net,
         images[roles["train"]],
@@ -181,7 +183,9 @@ def _probe_features(cache: DatasetCache, model: ModelEntry, cfg: TrainConfig) ->
         if len(feats) == len(cache.manifest):
             return feats
     seed_everything(cfg.seed)
-    net = Classifier.build(model.backbone, cache.spec.num_classes, cfg.image_size, 0.0)
+    net = Classifier.build(
+        model.backbone, cache.spec.num_classes, cfg.image_size, 0.0, cfg.pretrained
+    )
     log.info("Extracting %s features for %s", model.backbone, cache.spec.name)
     feats = extract_features(net, cache.images(cfg.image_size))
     path.parent.mkdir(parents=True, exist_ok=True)

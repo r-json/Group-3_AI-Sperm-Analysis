@@ -115,6 +115,7 @@ class TrainConfig:
     """Hyperparameters for one model on one dataset."""
 
     mode: str = "finetune"  # "finetune" or "linear_probe"
+    pretrained: bool = True  # False only in offline tests
     image_size: int = 224
     batch_size: int = 32
     dropout: float = 0.2
