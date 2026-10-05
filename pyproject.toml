@@ -1,0 +1,99 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spermtriage"
+version = "1.0.0.dev0"
+description = "Calibrated, uncertainty-aware sperm morphology classification with refer-to-expert deferral and conformal prediction sets. Research software, not a diagnostic device."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+authors = [
+  { name = "Lawrence Ivan P. Agarin" },
+  { name = "Arjay N. Rosel" },
+  { name = "Aaliyah Reign T. Sanchez" },
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Scientific/Engineering :: Image Recognition",
+  "Intended Audience :: Science/Research",
+]
+# Lower bounds are the versions the published results were produced with
+# (see requirements-lock.txt for the exact environment).
+dependencies = [
+  "numpy>=2.0",
+  "pandas>=2.2",
+  "scipy>=1.13",
+  "scikit-learn>=1.5",
+  "pillow>=10.0",
+  "pyyaml>=6.0",
+  "matplotlib>=3.8",
+  "torch>=2.4",
+  "torchvision>=0.19",
+  "timm>=1.0",
+]
+
+[project.optional-dependencies]
+gui = ["PySide6>=6.7"]
+data = ["libarchive-c>=5.1"]
+dev = [
+  "pytest>=8",
+  "pytest-cov>=5",
+  "pytest-qt>=4.4",
+  "ruff>=0.6",
+  "mypy>=1.11",
+  "pandas-stubs",
+  "types-PyYAML",
+  "pre-commit>=3.7",
+]
+
+[project.scripts]
+spermtriage = "spermtriage.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+spermtriage = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+extend-exclude = ["legacy", "notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "SIM", "RUF"]
+ignore = ["N803", "N806", "RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.11"
+mypy_path = "src"
+packages = ["spermtriage"]
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+check_untyped_defs = true
+exclude = ["spermtriage/app/"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+  "slow: trains a tiny model end to end (still CPU-only, < 1 min)",
+  "gui: requires PySide6 and pytest-qt",
+]
+
+[tool.coverage.run]
+source = ["spermtriage"]
+omit = ["*/spermtriage/app/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

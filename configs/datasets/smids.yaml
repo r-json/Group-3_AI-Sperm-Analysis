@@ -1,0 +1,31 @@
+# Sperm Morphology Image Data Set (SMIDS).
+# Ilhan, H. O., Sigirci, I. O., Serbes, G., & Aydin, N. (2020). A fully automated hybrid
+# human sperm detection and classification system based on mobile-net and the performance
+# comparison with conventional methods. Medical & Biological Engineering & Computing,
+# 58, 1047-1068.
+name: smids
+display_name: SMIDS
+doi: 10.17632/6xvdhc9fyb.1
+license: CC BY 4.0
+source_url: https://data.mendeley.com/datasets/6xvdhc9fyb/1
+archive:
+  filename: SMIDS.zip
+  url: https://data.mendeley.com/public-files/datasets/6xvdhc9fyb/files/f8b3773f-d9c0-4f60-bfaf-5085378b4a1f/file_downloaded
+  sha256: f46868e3a957414da55793973f75394ad2469fed48d3368e7f7f8a3aa59780a3
+  root: SMIDS
+classes:
+  Normal_Sperm: Normal
+  Abnormal_Sperm: Abnormal
+  Non-Sperm: Non-sperm
+expected_counts:
+  Normal: 1021
+  Abnormal: 1005
+  Non-sperm: 974
+# Folder names used by the legacy copy committed to this repository (v0, commit fa4ada5).
+# Verified by SHA-256 against the official release: every legacy file maps to exactly one
+# official file, and these folder names map consistently to the official labels. The
+# legacy *file names* (e.g. "Normal_*.bmp" inside "Acrosome Abnormality") are NOT labels.
+legacy_folder_map:
+  Sperm: Normal
+  Acrosome Abnormality: Abnormal
+  Boya: Non-sperm

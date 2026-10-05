@@ -1,0 +1,27 @@
+# Human Sperm Head Morphology dataset (HuSHeM).
+# Shaker, F., Monadjemi, S. A., Alirezaie, J., & Naghsh-Nilchi, A. R. (2017).
+# A dictionary learning approach for human sperm heads classification.
+# Computers in Biology and Medicine, 91, 181-190.
+name: hushem
+display_name: HuSHeM
+doi: 10.17632/tt3yj2pf38.3
+license: CC BY 4.0
+source_url: https://data.mendeley.com/datasets/tt3yj2pf38/3
+archive:
+  filename: HuSHem.rar
+  url: https://data.mendeley.com/public-files/datasets/tt3yj2pf38/files/cb128460-9945-43a1-a88b-7233276d5fde/file_downloaded
+  sha256: aec7c19643a298386cae2399fb225b6b382a149b78d3a6d9239e842cce95de00
+  root: HuSHem            # top-level folder inside the archive
+# Folder in the official release -> label used everywhere in this project.
+# The order of this mapping defines the class index.
+classes:
+  01_Normal: Normal
+  02_Tapered: Tapered
+  03_Pyriform: Pyriform
+  04_Amorphous: Amorphous
+# Counts in the official release; integrity checks fail if these differ.
+expected_counts:
+  Normal: 54
+  Tapered: 53
+  Pyriform: 57
+  Amorphous: 52
