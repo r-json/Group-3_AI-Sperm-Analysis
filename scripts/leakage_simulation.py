@@ -37,11 +37,7 @@ def simulate(repeats: int) -> pd.DataFrame:
                     "n_test": len(te),
                     "test_images_with_identical_train_image": int(leaked.sum()),
                     "leaked_with_conflicting_label": int(
-                        sum(
-                            1
-                            for i in te[leaked]
-                            if set(y[tr][pix[tr] == pix[i]]) - {y[i]}
-                        )
+                        sum(1 for i in te[leaked] if set(y[tr][pix[tr] == pix[i]]) - {y[i]})
                     ),
                 }
             )

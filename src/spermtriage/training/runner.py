@@ -94,6 +94,7 @@ def _write_run(
     history: list[dict[str, object]],
     extra: dict[str, object],
     started: float,
+    code_commit: str,
 ) -> None:
     out.mkdir(parents=True, exist_ok=True)
     rows = []
@@ -124,11 +125,12 @@ def _write_run(
             sort_keys=False,
         )
     )
-    commit = git_commit(project_root())
     provenance = {
         "status": "complete",
-        "run_id": f"{experiment}/{cache.spec.name}/{model.id}/fold{fold}@{commit[:12]}",
-        "git_commit": commit,
+        "run_id": f"{experiment}/{cache.spec.name}/{model.id}/fold{fold}@{code_commit[:12]}",
+        # The commit checked out when this training process started, i.e. the code that ran.
+        "git_commit": code_commit,
+        "code_commit": code_commit,
         "started_utc": datetime.fromtimestamp(started, UTC).isoformat(),
         "finished_utc": datetime.now(UTC).isoformat(),
         "wall_seconds": round(time.time() - started, 1),
@@ -140,7 +142,12 @@ def _write_run(
 
 
 def run_finetune(
-    experiment: str, cache: DatasetCache, model: ModelEntry, cfg: TrainConfig, fold: int
+    experiment: str,
+    cache: DatasetCache,
+    model: ModelEntry,
+    cfg: TrainConfig,
+    fold: int,
+    code_commit: str,
 ) -> None:
     out = run_dir(experiment, cache.spec.name, model.id, fold)
     started = time.time()
@@ -177,6 +184,7 @@ def run_finetune(
             "n_parameters": count_parameters(net),
         },
         started=started,
+        code_commit=code_commit,
     )
 
 
@@ -203,7 +211,12 @@ def _probe_features(cache: DatasetCache, model: ModelEntry, cfg: TrainConfig) ->
 
 
 def run_probe(
-    experiment: str, cache: DatasetCache, model: ModelEntry, cfg: TrainConfig, fold: int
+    experiment: str,
+    cache: DatasetCache,
+    model: ModelEntry,
+    cfg: TrainConfig,
+    fold: int,
+    code_commit: str,
 ) -> None:
     out = run_dir(experiment, cache.spec.name, model.id, fold)
     started = time.time()
@@ -238,6 +251,7 @@ def run_probe(
         history=probe.history,  # type: ignore[arg-type]
         extra={"selected_C": probe.C, "n_parameters": backbone_params + W.size + b.size},
         started=started,
+        code_commit=code_commit,
     )
 
 
@@ -249,6 +263,9 @@ def run_experiment(
     force: bool = False,
 ) -> None:
     exp = ExperimentConfig.from_yaml(config_path)
+    code_commit = git_commit(project_root())  # captured once: the code this process runs
+    if code_commit.endswith("-dirty"):
+        log.warning("Uncommitted changes in src/ or configs/: results will be marked -dirty")
     for dataset in datasets or exp.datasets:
         cache = DatasetCache(dataset)
         for model in exp.models:
@@ -264,4 +281,4 @@ def run_experiment(
                     continue
                 log.info("=== %s | %s | %s | fold %d ===", exp.name, dataset, model.id, fold)
                 runner = run_finetune if cfg.mode == "finetune" else run_probe
-                runner(exp.name, cache, model, cfg, fold)
+                runner(exp.name, cache, model, cfg, fold, code_commit)
