@@ -93,11 +93,11 @@ expert" state is driven by the certified rule.
 
 * **RQ1:** Under the leakage-free protocol, how do a fine-tuned lightweight CNN and
   frozen-feature linear probes (supervised CNNs and a self-supervised ViT) compare in
-  accuracy, macro-F1 and calibration? *H0₁:* no pairwise difference in macro-F1 or ECE
-  (corrected resampled t-test, Holm).
+  accuracy, macro-F1 and calibration? *H0₁:* no pairwise difference in macro-F1, Brier score
+  or NLL (corrected resampled t-test, Holm).
 * **RQ2:** Does temperature scaling, fitted on a validation split, reduce calibration error
   on unseen test folds? *H0₂:* per-image NLL and Brier score are unchanged (Wilcoxon, Holm);
-  the ΔECE bootstrap CI includes 0.
+  the change in pooled ECE is reported descriptively.
 * **RQ3:** What share of cells can be auto-classified with a *certified* selective accuracy of
   at least 95% (δ = 0.05), and which classes are referred? How does an uncertified plug-in
   threshold behave on the test folds?

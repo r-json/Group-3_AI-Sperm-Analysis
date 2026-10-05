@@ -11,7 +11,7 @@ in Chapter 5.
 | 1.1 | "Your models are far below the state of the art (HuSHeM 79% vs reported 85-98%). Conclusions about calibration and deferral may not transfer to stronger models." | The methods are post-hoc and model-agnostic. The budget is CPU-only (ADR 0003). The paper says plainly that accuracy is not the contribution. A stronger model is one YAML file away (adviser question 6). | Limitation L1; plain statement in Results |
 | 1.2 | "One seed per fold confounds training randomness with data variation." | True. Fold-level SDs mix both sources. | Limitation L2; repeated seeds in Future Work |
 | 1.3 | "The temperature is fitted on the same validation split used for early stopping. The chosen checkpoint minimises validation NLL, so T is biased toward 1." | Correct. This selection bias plausibly explains T ≈ 1 on HuSHeM. Fitting T on a separate split would cut a 26-image validation set further. | Limitation L3; Discussion hook |
-| 1.4 | "ECE on 43 images with 15 bins is meaningless." | Agreed. Table C now reports **pooled** ECE (216 / 2,947 images) with bootstrap CIs. NLL and Brier, which are proper scoring rules, carry the inference (per-image Wilcoxon). | **Addressed** (report changed) |
+| 1.4 | "ECE on 43 images with 15 bins is meaningless." | Agreed. Table C now reports **pooled** ECE (216 / 2,947 images) as a point estimate. We tried bootstrap CIs for ECE and found them miscentred: resampling inflates binned ECE, percentile intervals can exclude the estimate, and bias-corrected intervals collapse. NLL and Brier, which are proper scoring rules, carry the inference (bootstrap CIs and per-image Wilcoxon). | **Addressed** (report changed) |
 | 1.5 | "A corrected t-test with k = 5 has little power; 'no significant difference' is not equivalence." | Stated explicitly. Effect sizes and CIs are reported. No "outperforms" claim without a significant Holm-adjusted test. | **Addressed** (Results wording rule) |
 | 1.6 | "Deterministic APS is a straw man: it is known to be conservative." | Randomised APS was added and evaluated. Deterministic APS is kept because a clinical tool should not give different sets for the same image. | **Addressed** (method added) |
 | 1.7 | "Conformal and SGR guarantees assume exchangeability. Images from one patient may span train, calibration and test." | Pixel duplicates are removed. Patient-level grouping is impossible (no identifiers). Guarantees hold at image level only. | Limitation L4 |
@@ -41,7 +41,7 @@ in Chapter 5.
 
 ## Revisions triggered by this review
 
-1. Table C switched to pooled ECE with bootstrap CIs (1.4).
+1. Table C switched to pooled ECE point estimates, with calibration inference on NLL and Brier (1.4). Model comparisons on ECE were replaced by Brier and NLL.
 2. Randomised APS added to the conformal evaluation (1.6).
 3. Results wording rule: no "outperforms" without a significant Holm-adjusted corrected test;
    non-significance is not reported as equivalence (1.5).

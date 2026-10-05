@@ -61,7 +61,7 @@ leakage-free protocol.
   * *Answered by:* 2 datasets × 4 models × 5 folds (Experiment 1).
 * **RQ2:** Does temperature scaling, fitted on a validation split, reduce calibration error
   on unseen test folds?
-  * *Measured by:* per-image NLL and Brier score, pooled ECE.
+  * *Measured by:* per-image NLL and Brier score (inference); pooled ECE (descriptive).
   * *Answered by:* paired comparison before and after scaling (Experiment 2).
 * **RQ3:** What share of cells can be classified automatically with a *certified* selective
   accuracy of at least 95%, and which classes are referred to an expert?
@@ -83,13 +83,14 @@ leakage-free protocol.
 * **RQ1.**
   * H0₁ₐ: no pair of models differs in mean macro-F1 across folds.
   * H1₁ₐ: at least one pair differs.
-  * H0₁ᵦ: likewise for pooled-test ECE after temperature scaling.
+  * H0₁ᵦ: likewise for Brier score and NLL after temperature scaling (proper scoring rules;
+    ECE is reported descriptively).
   * *Test:* corrected resampled t-test, Holm-adjusted.
 * **RQ2.**
   * H0₂: temperature scaling does not change per-image NLL or Brier score.
   * H1₂: it changes them.
-  * *Test:* Wilcoxon signed-rank on pooled test images, Holm-adjusted; bootstrap 95% CI
-    of ΔECE.
+  * *Test:* Wilcoxon signed-rank on pooled test images, Holm-adjusted. The change in
+    pooled ECE is reported descriptively.
 * **RQ3.** Descriptive with a guarantee; no null hypothesis. SGR certifies that, with
   probability ≥ 95%, the accepted predictions have accuracy ≥ 95%. We report whether the
   test folds meet this.

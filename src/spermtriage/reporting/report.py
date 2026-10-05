@@ -169,7 +169,15 @@ def _mean_of(values: np.ndarray) -> Callable[[np.ndarray], float]:
 
 
 def pooled_statistics(p: dict[str, np.ndarray], n_boot: int, seed: int) -> dict[str, Any]:
-    """Metrics on all test predictions pooled over folds, with percentile bootstrap CIs."""
+    """Metrics on all test predictions pooled over folds.
+
+    Percentile-bootstrap CIs are attached to metrics that are means of per-image quantities
+    (accuracy, Brier, NLL, coverage, set size) or smooth functions of them (macro-F1).
+    Binned ECE gets a point estimate only: resampling with replacement duplicates images
+    into the same bins and inflates ECE, so its bootstrap distribution is shifted and both
+    percentile and bias-corrected intervals are miscentred. Calibration inference therefore
+    uses the proper scoring rules NLL and Brier.
+    """
     y, pr, pt = p["y"], p["p_raw"], p["p_ts"]
     pred = pt.argmax(1)
     correct = pred == y
@@ -185,13 +193,10 @@ def pooled_statistics(p: dict[str, np.ndarray], n_boot: int, seed: int) -> dict[
     fns: dict[str, Callable[[np.ndarray], float]] = {
         "accuracy": lambda i: float(correct[i].mean()),
         "macro_f1": macro_f1,
-        "ece_raw": lambda i: ece(pr[i], y[i]),
-        "ece_ts": lambda i: ece(pt[i], y[i]),
         "brier_raw": lambda i: brier(pr[i], y[i]),
         "brier_ts": lambda i: brier(pt[i], y[i]),
         "nll_raw": lambda i: nll(pr[i], y[i]),
         "nll_ts": lambda i: nll(pt[i], y[i]),
-        "delta_ece": lambda i: ece(pr[i], y[i]) - ece(pt[i], y[i]),
     }
     acc = p["accept_sgr"]
     if acc.any():
@@ -209,7 +214,13 @@ def pooled_statistics(p: dict[str, np.ndarray], n_boot: int, seed: int) -> dict[
         size = sets.sum(1)
         fns[f"cov_{col[4:]}"] = _mean_of(cov)
         fns[f"size_{col[4:]}"] = _mean_of(size)
-    out: dict[str, Any] = {"n_pooled": len(y)}
+    out: dict[str, Any] = {
+        "n_pooled": len(y),
+        "ece_raw": ece(pr, y),
+        "ece_ts": ece(pt, y),
+        "ece_adaptive_raw": ece(pr, y, adaptive=True),
+        "ece_adaptive_ts": ece(pt, y, adaptive=True),
+    }
     all_idx = np.arange(len(y))
     for name, fn in fns.items():
         lo, hi = bootstrap_ci(fn, len(y), n_boot, seed)
@@ -266,7 +277,7 @@ def statistical_tests(
         for metric, higher_better in (
             ("accuracy", True),
             ("macro_f1", True),
-            ("ece_ts", False),
+            ("brier_ts", False),
             ("nll_ts", False),
         ):
             family: list[dict[str, Any]] = []
@@ -409,21 +420,23 @@ def tables_markdown(
             "",
             "### Table C - Calibration before and after temperature scaling",
             "",
-            "ECE (15 equal-width bins) is computed on the pooled test predictions, because ECE on a",
-            "single small test fold is a noisy, upward-biased estimate; per-fold values are in",
-            "`summary.csv`. Brier and NLL are mean ± SD over folds.",
+            "ECE (15 equal-width bins) and adaptive ECE (aECE, 15 equal-mass bins) are point",
+            "estimates on the pooled test predictions; per-fold values are in `summary.csv`. No CI",
+            "is given for ECE because bootstrap resampling inflates binned ECE. Brier and NLL",
+            "(proper scoring rules) carry the inference: pooled value [95% bootstrap CI]; tests below.",
             "",
-            "| Model | T | ECE raw [95% CI] | ECE TS [95% CI] | ΔECE (raw - TS) 95% CI | Brier raw | Brier TS | NLL raw | NLL TS |",
-            "| --- | --- | --- | --- | --- | --- | --- | --- | --- |",
+            "| Model | T (mean ± SD) | ECE raw | ECE TS | aECE raw | aECE TS | Brier raw | Brier TS | NLL raw | NLL TS |",
+            "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
         ]
         for _, r in g.iterrows():
             out.append(
                 f"| {r['model_id']} | {_num(r['temperature_mean'], r['temperature_sd'], 2)} "
-                f"| {_num(r['pooled_ece_raw'])} {_ci(r, 'ece_raw', pct=False)} "
-                f"| {_num(r['pooled_ece_ts'])} {_ci(r, 'ece_ts', pct=False)} "
-                f"| {_ci(r, 'delta_ece', pct=False)} "
-                f"| {_num(r['brier_raw_mean'], r['brier_raw_sd'])} | {_num(r['brier_ts_mean'], r['brier_ts_sd'])} "
-                f"| {_num(r['nll_raw_mean'], r['nll_raw_sd'])} | {_num(r['nll_ts_mean'], r['nll_ts_sd'])} |"
+                f"| {_num(r['pooled_ece_raw'])} | {_num(r['pooled_ece_ts'])} "
+                f"| {_num(r['pooled_ece_adaptive_raw'])} | {_num(r['pooled_ece_adaptive_ts'])} "
+                f"| {_num(r['pooled_brier_raw'])} {_ci(r, 'brier_raw', pct=False)} "
+                f"| {_num(r['pooled_brier_ts'])} {_ci(r, 'brier_ts', pct=False)} "
+                f"| {_num(r['pooled_nll_raw'])} {_ci(r, 'nll_raw', pct=False)} "
+                f"| {_num(r['pooled_nll_ts'])} {_ci(r, 'nll_ts', pct=False)} |"
             )
         out += [
             "",

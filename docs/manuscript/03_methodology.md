@@ -215,10 +215,17 @@ temperature-scaled probabilities. Four score functions:
 **Per-fold values and pooled CIs.** Per-fold values are summarised as mean ± SD (n = 5
 folds). Each image is in exactly one test fold, so pooled test predictions (216 HuSHeM and
 2,947 SMIDS images) are summarised with 95% percentile-bootstrap CIs (2,000 resamples,
-seed 12345). Pooled ECE is preferred because ECE on a single small fold is a noisy,
-upward-biased estimate.
+seed 12345). This applies to metrics that are means of per-image quantities (accuracy,
+Brier, NLL, coverage, set size) or smooth functions of them (macro-F1).
 
-**Model comparisons** use the corrected resampled t-test (Nadeau & Bengio, 2003):
+Binned ECE is reported as a pooled point estimate without a CI. Resampling with
+replacement places duplicated images in the same bins and inflates ECE, so its bootstrap
+distribution is shifted. We found that percentile intervals can exclude the point estimate
+and bias-corrected intervals collapse onto the lower tail. Calibration inference therefore
+uses NLL and Brier, which are proper scoring rules.
+
+**Model comparisons** (accuracy, macro-F1, Brier and NLL after temperature scaling) use
+the corrected resampled t-test (Nadeau & Bengio, 2003):
 t = d̄ / √((1/k + n_test/n_train)·s²_d), df = k − 1. A naive paired t-test over CV folds is
 optimistic: the folds share most of their training data, so the per-fold differences are
 correlated, and their variance is underestimated.

@@ -32,8 +32,9 @@ the test data and disjoint from training.
    No hyperparameter was tuned on any test fold.
 5. **Statistics.**
    * Mean ± SD over folds.
-   * Percentile bootstrap CIs (2,000 resamples) on pooled test predictions; each image is
-     tested exactly once.
+   * Percentile bootstrap CIs (2,000 resamples) on pooled test predictions for per-image
+     means (accuracy, Brier, NLL, coverage) and macro-F1; each image is tested exactly once.
+     ECE is a point estimate only, because resampling inflates binned ECE.
    * Corrected resampled t-test (Nadeau & Bengio, 2003) for model comparisons.
    * Per-image Wilcoxon signed-rank tests for temperature-scaling effects.
    * Holm correction within each family.
