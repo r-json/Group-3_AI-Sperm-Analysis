@@ -97,12 +97,13 @@ def test_frame_averaged_features_are_rotation_invariant(angle, flip):
     a, b = averaged(img), averaged(rotate_image(img, angle, flip))
     cos = float(a @ b / (np.linalg.norm(a) * np.linalg.norm(b)))
     assert cos > 0.98
+
     # Without the frame (raw input), the same network is far from invariant.
-    with torch.no_grad():
-        raw = lambda x: net.features(
-            torch.from_numpy(x).permute(2, 0, 1)[None].contiguous()
-        ).numpy()[0]
-        ra, rb = raw(img), raw(rotate_image(img, angle, flip))
+    def raw(x: np.ndarray) -> np.ndarray:
+        with torch.no_grad():
+            return net.features(torch.from_numpy(x).permute(2, 0, 1)[None].contiguous()).numpy()[0]
+
+    ra, rb = raw(img), raw(rotate_image(img, angle, flip))
     assert cos > float(ra @ rb / (np.linalg.norm(ra) * np.linalg.norm(rb)))
 
 
