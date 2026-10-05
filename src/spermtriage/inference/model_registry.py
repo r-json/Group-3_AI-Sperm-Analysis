@@ -178,7 +178,7 @@ def register_run(
         weights_path=dest.relative_to(root).as_posix(),
         weights_sha256=sha256_file(dest),
         source_run=run_path.relative_to(root).as_posix(),
-        source_commit=prov["git_commit"],
+        source_commit=prov.get("code_commit", prov["git_commit"]),
         metrics=metrics or {},
     )
     registry = ModelRegistry.load(registry_path or root / "models" / "registry.yaml")
