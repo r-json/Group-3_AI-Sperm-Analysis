@@ -67,6 +67,12 @@ python scripts/leakage_simulation.py   # results/main/leakage_simulation.csv
    --fold 3 4` at commit `819cf68`; the runner skips completed runs.
    `git diff 582fa0e 819cf68 -- src configs` touches only `reporting/report.py`, so the
    training code is identical. Each run's `provenance.json` records its own commit.
+
+   This incidentally tested reproducibility. All 10 epochs that the killed and the resumed
+   fold-3 runs share (3 warm-up and 7 fine-tuning epochs) logged identical training and
+   validation loss and accuracy at the logged precision (`results/logs/train_main.log`,
+   01:01-01:28 vs 06:41-07:00). Seeded CPU training was therefore repeatable on this
+   machine.
 4. **Corrections to the prompt pack** are listed in `docs/research/01_audit.md`, section B.
 
 ## 4. Remaining limitations and open items
