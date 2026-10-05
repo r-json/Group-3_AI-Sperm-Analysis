@@ -27,8 +27,8 @@ jobs:
           pip install -e ".[gui,dev]"
       - name: Lint
         run: |
-          ruff check src tests
-          ruff format --check src tests
+          ruff check src tests scripts
+          ruff format --check src tests scripts
       - name: Type-check
         run: mypy
       - name: Tests (offline, tiny synthetic fixtures)

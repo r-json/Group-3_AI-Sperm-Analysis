@@ -33,6 +33,10 @@ All notable changes to this project are documented here. The format follows
 - The GUI applied SMIDS labels to the HuSHeM model and ignored the model selector.
 
 ### Removed
+- Committed dataset copies (about 14,000 images); data are now downloaded and hash-verified.
+- The legacy notebook and PyQt5 GUI, partly adapted from an unlicensed third-party project
+  (see NOTICE.md); they remain in git history at `fa4ada5`.
+- Superseded helper docs and scripts, moved to `docs/legacy/`.
 - Results with no producing run: MobileNet/GoogleNet results and precision/recall/F1 values.
 - Claims of features that were not implemented: grid search, ablation, significance tests
   and ensembling.
@@ -42,4 +46,5 @@ All notable changes to this project are documented here. The format follows
 Initial commit (`87431a0`): TensorFlow notebook, PyQt5 GUI and committed datasets. An earlier
 version of this file listed it as "1.0.0 (2024-12-30)" with accuracy and feature claims that
 the audit (`docs/research/01_audit.md`) found unsupported, so it is renumbered here. The
-code is kept under `legacy/` and `notebooks/legacy/` for provenance only.
+notebook, GUI and dataset copies were removed from the default branch and remain in git
+history at `fa4ada5`.

@@ -62,7 +62,6 @@ spermtriage = ["py.typed"]
 line-length = 100
 target-version = "py311"
 src = ["src", "tests"]
-extend-exclude = ["legacy", "notebooks"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "N", "SIM", "RUF"]

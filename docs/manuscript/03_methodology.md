@@ -258,8 +258,9 @@ The software's intended use is research decision support. It is not a medical de
 must not be used for diagnosis. The GUI shows this notice permanently, and it refers every
 image it cannot certify.
 
-Code adapted from an unlicensed student project is confined to `legacy/` and credited. The
-`spermtriage` package is an independent implementation (NOTICE.md).
+The legacy code, partly adapted from an unlicensed student project, is credited and has
+been removed from the released software. The `spermtriage` package is an independent
+implementation (NOTICE.md).
 
 ### 3.12 Reproducibility
 

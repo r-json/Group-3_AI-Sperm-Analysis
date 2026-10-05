@@ -1,7 +1,7 @@
 """One-off provenance correction for the runs written on 2026-10-05 (documented in REPORT.md).
 
-Before commit c61a69b ("fix(provenance)"), `_write_run` recorded the git commit at the moment each run
-*finished*. Because the code was being committed while training ran, some runs recorded a
+Before commit c61a69b ("fix(provenance)"), `_write_run` recorded the git commit at the
+moment each run *finished*. Because the code was being committed while training ran, some runs recorded a
 later commit or a "-dirty" flag. The code that actually ran is HEAD when each training
 process *started*, recovered here from the training log:
 

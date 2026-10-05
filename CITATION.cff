@@ -46,9 +46,10 @@ references:
   - type: software
     title: "midterm-project: Classification Of Image Datasets With Deep Learning"
     notes: >-
-      The legacy notebook and GUI (legacy/, notebooks/legacy/) were adapted from this
-      student project (Yildiz Technical University, 2020). It has no licence. The
-      spermtriage package is a separate implementation.
+      Parts of the project's 2025 notebook and GUI (git history, commit fa4ada5) were
+      adapted from this student project (Yildiz Technical University, 2020), which has no
+      licence. They were removed from the default branch; the spermtriage package is a
+      separate implementation.
     authors:
       - family-names: Tortumlu
         given-names: Ömer L.

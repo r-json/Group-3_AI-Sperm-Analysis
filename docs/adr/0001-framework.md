@@ -4,7 +4,7 @@
 
 ## Context
 
-The legacy code (`notebooks/legacy/Finish.ipynb`) uses TensorFlow/Keras. The research
+The legacy code (`Finish.ipynb` at commit `fa4ada5`) uses TensorFlow/Keras. The research
 question needs CNNs and at least one transformer, including self-supervised checkpoints
 (DINOv2), and everything has to run on a CPU-only laptop.
 
@@ -23,4 +23,4 @@ with versioned pretrained tags (`mobilenetv3_large_100.ra_in1k`, `resnet50.tv_in
 
 * Training restarts from ImageNet/DINOv2 checkpoints; no legacy weights are carried over.
 * Pretrained checkpoints are fetched from the Hugging Face hub on first use, then cached.
-* The TensorFlow notebook stays in `notebooks/legacy/` for provenance only.
+* The TensorFlow notebook is preserved in git history (commit `fa4ada5`) for provenance only.
