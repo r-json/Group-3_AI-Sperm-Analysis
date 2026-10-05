@@ -154,3 +154,19 @@ def test_infinite_threshold_gives_full_sets():
     assert predict_sets("lac", probs, math.inf).all()
     res = evaluate_sets(predict_sets("lac", probs, math.inf), y, 3)
     assert res["coverage"] == 1.0 and res["full_set_rate"] == 1.0
+
+
+def test_randomised_aps_has_exact_coverage_and_smaller_sets():
+    rng = np.random.default_rng(0)
+    covs, sizes, det_sizes = [], [], []
+    for t in range(40):
+        pc, yc = _synthetic(500, k=4, seed=5000 + t)
+        pt, yt = _synthetic(1000, k=4, seed=6000 + t)
+        q = calibrate("aps_rand", pc, yc, 0.1, 4, rng)
+        res = evaluate_sets(predict_sets("aps_rand", pt, q, rng), yt, 4)
+        covs.append(res["coverage"])
+        sizes.append(res["mean_set_size"])
+        q_det = calibrate("aps", pc, yc, 0.1, 4)
+        det_sizes.append(evaluate_sets(predict_sets("aps", pt, q_det), yt, 4)["mean_set_size"])
+    assert abs(np.mean(covs) - 0.9) < 0.01
+    assert np.mean(sizes) < np.mean(det_sizes)

@@ -9,7 +9,10 @@ Scores
 ------
 * LAC (Sadinle et al., 2019): ``s = 1 - p_y``; gives the smallest average sets.
 * APS (Romano et al., 2020), non-randomised: total probability mass of all classes ranked
-  at or above ``y``; adapts set size to the difficulty of each image.
+  at or above ``y``; adapts set size to the difficulty of each image. Conservative.
+* APS randomised (``aps_rand``): the original randomised score, mass strictly above ``y``
+  plus ``U * p_y`` with ``U ~ Uniform(0, 1)``. Exact coverage and smaller sets, but the same
+  image can receive different sets, so it is evaluated here and not offered in the tool.
 """
 
 from __future__ import annotations
@@ -42,6 +45,21 @@ def aps_scores(probs: np.ndarray, y: np.ndarray) -> np.ndarray:
     return np.sum(np.where(probs >= p_true, probs, 0.0), axis=1)
 
 
+def aps_rand_scores(probs: np.ndarray, y: np.ndarray, rng: np.random.Generator) -> np.ndarray:
+    p_true = probs[np.arange(len(y)), y]
+    above = np.sum(np.where(probs > p_true[:, None], probs, 0.0), axis=1)
+    return above + rng.uniform(size=len(y)) * p_true
+
+
+def aps_rand_sets(probs: np.ndarray, q: float, rng: np.random.Generator) -> np.ndarray:
+    """Class j is in the set iff its randomised score would be <= q (may be empty)."""
+    if not math.isfinite(q):
+        return np.ones_like(probs, dtype=bool)
+    above = np.sum(np.where(probs[:, None, :] > probs[:, :, None], probs[:, None, :], 0.0), axis=2)
+    u = rng.uniform(size=(len(probs), 1))
+    return (above + u * probs) <= q
+
+
 def lac_sets(probs: np.ndarray, q: float | np.ndarray) -> np.ndarray:
     """Boolean ``n x K`` membership matrix. ``q`` may be per-class (Mondrian, shape ``K``)."""
     return (1.0 - probs) <= np.broadcast_to(np.asarray(q, dtype=float), probs.shape[1:])
@@ -64,24 +82,38 @@ def aps_sets(probs: np.ndarray, q: float) -> np.ndarray:
 
 
 def calibrate(
-    method: str, probs: np.ndarray, y: np.ndarray, alpha: float, num_classes: int
+    method: str,
+    probs: np.ndarray,
+    y: np.ndarray,
+    alpha: float,
+    num_classes: int,
+    rng: np.random.Generator | None = None,
 ) -> float | np.ndarray:
-    """Return the threshold(s) for ``method`` in {"lac", "aps", "lac_classwise"}."""
+    """Threshold(s) for ``method`` in {"lac", "aps", "aps_rand", "lac_classwise"}."""
     if method == "lac":
         return conformal_quantile(lac_scores(probs, y), alpha)
     if method == "aps":
         return conformal_quantile(aps_scores(probs, y), alpha)
+    if method == "aps_rand":
+        return conformal_quantile(aps_rand_scores(probs, y, rng or np.random.default_rng(0)), alpha)
     if method == "lac_classwise":
         s = lac_scores(probs, y)
         return np.array([conformal_quantile(s[y == c], alpha) for c in range(num_classes)])
     raise ValueError(f"unknown conformal method '{method}'")
 
 
-def predict_sets(method: str, probs: np.ndarray, q: float | np.ndarray) -> np.ndarray:
+def predict_sets(
+    method: str,
+    probs: np.ndarray,
+    q: float | np.ndarray,
+    rng: np.random.Generator | None = None,
+) -> np.ndarray:
     if method in ("lac", "lac_classwise"):
         return lac_sets(probs, q)
     if method == "aps":
         return aps_sets(probs, float(q))
+    if method == "aps_rand":
+        return aps_rand_sets(probs, float(q), rng or np.random.default_rng(0))
     raise ValueError(f"unknown conformal method '{method}'")
 
 

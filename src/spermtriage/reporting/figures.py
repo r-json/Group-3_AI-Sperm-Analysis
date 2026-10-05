@@ -107,7 +107,9 @@ def risk_coverage_figure(
             ms=4,
         )
     ax.axhline(target_risk, color=INK_2, lw=1, ls=":")
-    ax.text(0.01, target_risk, " 5% risk target", va="bottom", fontsize=7.5, color=INK_2)
+    ax.text(
+        0.99, target_risk, "5% risk target ", va="bottom", ha="right", fontsize=7.5, color=INK_2
+    )
     ax.set_xlabel("Coverage (share of cells auto-classified)")
     ax.set_ylabel("Selective risk (error rate)")
     ax.set_xlim(0, 1)

@@ -409,13 +409,18 @@ def tables_markdown(
             "",
             "### Table C - Calibration before and after temperature scaling",
             "",
-            "| Model | T | ECE raw | ECE TS | ΔECE 95% CI | Brier raw | Brier TS | NLL raw | NLL TS |",
+            "ECE (15 equal-width bins) is computed on the pooled test predictions, because ECE on a",
+            "single small test fold is a noisy, upward-biased estimate; per-fold values are in",
+            "`summary.csv`. Brier and NLL are mean ± SD over folds.",
+            "",
+            "| Model | T | ECE raw [95% CI] | ECE TS [95% CI] | ΔECE (raw - TS) 95% CI | Brier raw | Brier TS | NLL raw | NLL TS |",
             "| --- | --- | --- | --- | --- | --- | --- | --- | --- |",
         ]
         for _, r in g.iterrows():
             out.append(
                 f"| {r['model_id']} | {_num(r['temperature_mean'], r['temperature_sd'], 2)} "
-                f"| {_num(r['ece_raw_mean'], r['ece_raw_sd'])} | {_num(r['ece_ts_mean'], r['ece_ts_sd'])} "
+                f"| {_num(r['pooled_ece_raw'])} {_ci(r, 'ece_raw', pct=False)} "
+                f"| {_num(r['pooled_ece_ts'])} {_ci(r, 'ece_ts', pct=False)} "
                 f"| {_ci(r, 'delta_ece', pct=False)} "
                 f"| {_num(r['brier_raw_mean'], r['brier_raw_sd'])} | {_num(r['brier_ts_mean'], r['brier_ts_sd'])} "
                 f"| {_num(r['nll_raw_mean'], r['nll_raw_sd'])} | {_num(r['nll_ts_mean'], r['nll_ts_sd'])} |"

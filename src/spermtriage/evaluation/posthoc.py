@@ -41,7 +41,7 @@ from spermtriage.evaluation.selective import (
 
 log = logging.getLogger(__name__)
 
-CONFORMAL_METHODS = ("lac", "aps", "lac_classwise")
+CONFORMAL_METHODS = ("lac", "aps", "aps_rand", "lac_classwise")
 
 
 def _split(df: pd.DataFrame, role: str) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -118,8 +118,11 @@ def analyse_predictions(
     set_columns: dict[str, list[str]] = {}
     for alpha in cfg.alphas:
         for method in CONFORMAL_METHODS:
-            q = calibrate(method, pc, yc, alpha, num_classes)
-            sets = predict_sets(method, pt, q)
+            # Fixed seeds keep the randomised APS sets reproducible run to run.
+            q = calibrate(
+                method, pc, yc, alpha, num_classes, np.random.default_rng(cfg.bootstrap_seed)
+            )
+            sets = predict_sets(method, pt, q, np.random.default_rng(cfg.bootstrap_seed + 1))
             key = f"{method}@{alpha:.2f}"
             q_list = np.atleast_1d(q).astype(float)
             conformal[key] = {
