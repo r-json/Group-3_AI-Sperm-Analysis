@@ -73,11 +73,16 @@ def pad_to_square(arr: np.ndarray) -> np.ndarray:
     return np.pad(arr, pad, mode="edge")
 
 
-def load_square(path: str | Path, size: int) -> np.ndarray:
-    """Read, pad to square and resize to ``size x size`` (bilinear, antialiased)."""
-    arr = pad_to_square(read_rgb(path))
+def square_resize(arr: np.ndarray, size: int) -> np.ndarray:
+    """Pad an RGB array to square and resize to ``size x size`` (bilinear, antialiased)."""
+    arr = pad_to_square(arr)
     if arr.shape[0] != size:
         arr = np.asarray(
             Image.fromarray(arr).resize((size, size), Image.Resampling.BILINEAR), dtype=np.uint8
         )
     return arr
+
+
+def load_square(path: str | Path, size: int) -> np.ndarray:
+    """Read, validate, pad to square and resize: the one preprocessing path."""
+    return square_resize(read_rgb(path), size)
