@@ -89,7 +89,8 @@ def _flatten(r: dict[str, Any]) -> dict[str, Any]:
 def collect(experiment: str) -> tuple[pd.DataFrame, dict[tuple[str, str], dict[str, np.ndarray]]]:
     """Return the per-run summary and pooled test predictions per (dataset, model)."""
     runs_root = project_root() / "results" / "runs" / experiment
-    rows, pooled_parts = [], {}
+    rows: list[dict[str, Any]] = []
+    pooled_parts: dict[tuple[str, str], list[dict[str, np.ndarray]]] = {}
     for run_path in sorted(runs_root.glob("*/*/fold*")):
         ph = run_path / "posthoc.json"
         if not ph.exists():
@@ -109,11 +110,7 @@ def collect(experiment: str) -> tuple[pd.DataFrame, dict[tuple[str, str], dict[s
                 "p_raw": softmax(logits),
                 "p_ts": softmax(logits, r["temperature"]),
                 "accept_sgr": scored["accept_sgr"].astype(str).str.lower().eq("true").to_numpy(),
-                **{
-                    c: scored[c].to_numpy()
-                    for c in scored.columns
-                    if c.startswith("set_")
-                },
+                **{c: scored[c].to_numpy() for c in scored.columns if c.startswith("set_")},
             }
         )
     summary = pd.DataFrame(rows)
@@ -159,6 +156,18 @@ def _set_membership(col: np.ndarray, k: int) -> np.ndarray:
     return out
 
 
+def best_model(agg_rows: pd.DataFrame) -> str:
+    """Model with the highest mean macro-F1 among the rows of one dataset."""
+    return str(agg_rows["model_id"].iloc[int(np.argmax(agg_rows["macro_f1_mean"].to_numpy()))])
+
+
+def _mean_of(values: np.ndarray) -> Callable[[np.ndarray], float]:
+    def stat(idx: np.ndarray) -> float:
+        return float(values[idx].mean())
+
+    return stat
+
+
 def pooled_statistics(p: dict[str, np.ndarray], n_boot: int, seed: int) -> dict[str, Any]:
     """Metrics on all test predictions pooled over folds, with percentile bootstrap CIs."""
     y, pr, pt = p["y"], p["p_raw"], p["p_ts"]
@@ -169,7 +178,9 @@ def pooled_statistics(p: dict[str, np.ndarray], n_boot: int, seed: int) -> dict[
     def macro_f1(idx: np.ndarray) -> float:
         from sklearn.metrics import f1_score
 
-        return float(f1_score(y[idx], pred[idx], labels=list(range(k)), average="macro", zero_division=0))
+        return float(
+            f1_score(y[idx], pred[idx], labels=list(range(k)), average="macro", zero_division=0)
+        )
 
     fns: dict[str, Callable[[np.ndarray], float]] = {
         "accuracy": lambda i: float(correct[i].mean()),
@@ -184,14 +195,20 @@ def pooled_statistics(p: dict[str, np.ndarray], n_boot: int, seed: int) -> dict[
     }
     acc = p["accept_sgr"]
     if acc.any():
-        fns["sgr_coverage"] = lambda i: float(acc[i].mean())
-        fns["sgr_sel_acc"] = lambda i: float(correct[i][acc[i]].mean()) if acc[i].any() else np.nan
+
+        def sgr_coverage(i: np.ndarray) -> float:
+            return float(acc[i].mean())
+
+        def sgr_sel_acc(i: np.ndarray) -> float:
+            return float(correct[i][acc[i]].mean()) if acc[i].any() else float("nan")
+
+        fns["sgr_coverage"], fns["sgr_sel_acc"] = sgr_coverage, sgr_sel_acc
     for col in [c for c in p if c.startswith("set_")]:
         sets = _set_membership(p[col], k)
         cov = sets[np.arange(len(y)), y]
         size = sets.sum(1)
-        fns[f"cov_{col[4:]}"] = lambda i, cov=cov: float(cov[i].mean())
-        fns[f"size_{col[4:]}"] = lambda i, size=size: float(size[i].mean())
+        fns[f"cov_{col[4:]}"] = _mean_of(cov)
+        fns[f"size_{col[4:]}"] = _mean_of(size)
     out: dict[str, Any] = {"n_pooled": len(y)}
     all_idx = np.arange(len(y))
     for name, fn in fns.items():
@@ -201,7 +218,12 @@ def pooled_statistics(p: dict[str, np.ndarray], n_boot: int, seed: int) -> dict[
     return out
 
 
-def aggregate(summary: pd.DataFrame, pooled: dict[tuple[str, str], dict[str, np.ndarray]], n_boot: int, seed: int) -> pd.DataFrame:
+def aggregate(
+    summary: pd.DataFrame,
+    pooled: dict[tuple[str, str], dict[str, np.ndarray]],
+    n_boot: int,
+    seed: int,
+) -> pd.DataFrame:
     rows = []
     for (ds, model), grp in summary.groupby(["dataset", "model_id"], sort=False):
         row: dict[str, Any] = {"dataset": ds, "model_id": model, "n_folds": len(grp)}
@@ -209,7 +231,9 @@ def aggregate(summary: pd.DataFrame, pooled: dict[tuple[str, str], dict[str, np.
             vals = pd.to_numeric(grp[m], errors="coerce")
             row[f"{m}_mean"], row[f"{m}_sd"] = vals.mean(), vals.std(ddof=1)
         row["sgr_certified_folds"] = int(grp["sgr_certified"].sum())
-        for c in [c for c in grp.columns if c.startswith(("cov_", "size_", "worstcls_", "singleton_"))]:
+        for c in [
+            c for c in grp.columns if c.startswith(("cov_", "size_", "worstcls_", "singleton_"))
+        ]:
             row[f"{c}_mean"] = grp[c].mean()
             row[f"{c}_sd"] = grp[c].std(ddof=1)
         for c in [c for c in grp.columns if c.startswith("feasible_")]:
@@ -217,22 +241,35 @@ def aggregate(summary: pd.DataFrame, pooled: dict[tuple[str, str], dict[str, np.
         row["n_parameters"] = grp["n_parameters"].iloc[0]
         row["test_fold_sizes"] = "/".join(str(v) for v in grp.sort_values("fold")["n_test"])
         row["calib_sizes"] = "/".join(str(v) for v in grp.sort_values("fold")["n_calib"])
-        row.update({f"pooled_{k}": v for k, v in pooled_statistics(pooled[(ds, model)], n_boot, seed).items()})
+        row.update(
+            {
+                f"pooled_{k}": v
+                for k, v in pooled_statistics(pooled[(str(ds), str(model))], n_boot, seed).items()
+            }
+        )
         row["git_commits"] = ";".join(sorted(set(grp["git_commit"])))
         rows.append(row)
     return pd.DataFrame(rows)
 
 
 # ---------------------------------------------------------------------- statistics
-def statistical_tests(summary: pd.DataFrame, pooled: dict[tuple[str, str], dict[str, np.ndarray]]) -> pd.DataFrame:
+def statistical_tests(
+    summary: pd.DataFrame, pooled: dict[tuple[str, str], dict[str, np.ndarray]]
+) -> pd.DataFrame:
     rows: list[dict[str, Any]] = []
     # (1) Pairwise model comparisons per dataset: corrected resampled t-test over folds.
-    for ds, grp in summary.groupby("dataset", sort=False):
-        models = list(dict.fromkeys(grp["model_id"]))
+    for ds_key, grp in summary.groupby("dataset", sort=False):
+        ds = str(ds_key)
+        models = [str(m) for m in dict.fromkeys(grp["model_id"])]
         n_total = int(grp.groupby("model_id")["n_test"].sum().iloc[0])
         n_test = n_total / grp["fold"].nunique()
-        for metric, higher_better in (("accuracy", True), ("macro_f1", True), ("ece_ts", False), ("nll_ts", False)):
-            family = []
+        for metric, higher_better in (
+            ("accuracy", True),
+            ("macro_f1", True),
+            ("ece_ts", False),
+            ("nll_ts", False),
+        ):
+            family: list[dict[str, Any]] = []
             for a, b in combinations(models, 2):
                 ga = grp[grp["model_id"] == a].set_index("fold")[metric]
                 gb = grp[grp["model_id"] == b].set_index("fold")[metric]
@@ -258,20 +295,20 @@ def statistical_tests(summary: pd.DataFrame, pooled: dict[tuple[str, str], dict[
                 row["p_holm"] = padj
             rows += family
     # (2) Temperature scaling: paired per-image Wilcoxon on NLL and Brier contributions.
-    for ds in summary["dataset"].unique():
+    for ds in map(str, summary["dataset"].unique()):
         for metric in ("nll", "brier"):
             family = []
-            for (d2, model), p in pooled.items():
+            for (d2, model), preds in pooled.items():
                 if d2 != ds:
                     continue
-                y = p["y"]
+                y, p_raw, p_ts = preds["y"], preds["p_raw"], preds["p_ts"]
                 if metric == "nll":
-                    a = -np.log(np.clip(p["p_raw"][np.arange(len(y)), y], 1e-12, 1))
-                    b = -np.log(np.clip(p["p_ts"][np.arange(len(y)), y], 1e-12, 1))
+                    a = -np.log(np.clip(p_raw[np.arange(len(y)), y], 1e-12, 1))
+                    b = -np.log(np.clip(p_ts[np.arange(len(y)), y], 1e-12, 1))
                 else:
-                    onehot = np.eye(p["p_raw"].shape[1])[y]
-                    a = ((p["p_raw"] - onehot) ** 2).sum(1)
-                    b = ((p["p_ts"] - onehot) ** 2).sum(1)
+                    onehot = np.eye(p_raw.shape[1])[y]
+                    a = ((p_raw - onehot) ** 2).sum(1)
+                    b = ((p_ts - onehot) ** 2).sum(1)
                 stat, pv = wilcoxon_paired(a, b)
                 diff = a - b
                 family.append(
@@ -299,7 +336,9 @@ def statistical_tests(summary: pd.DataFrame, pooled: dict[tuple[str, str], dict[
 def _pct(m: float, s: float | None = None) -> str:
     if m is None or (isinstance(m, float) and np.isnan(m)):
         return "n/a"
-    return f"{100 * m:.1f} ± {100 * s:.1f}" if s is not None and not np.isnan(s) else f"{100 * m:.1f}"
+    return (
+        f"{100 * m:.1f} ± {100 * s:.1f}" if s is not None and not np.isnan(s) else f"{100 * m:.1f}"
+    )
 
 
 def _num(m: float, s: float | None = None, d: int = 3) -> str:
@@ -310,8 +349,9 @@ def _num(m: float, s: float | None = None, d: int = 3) -> str:
 
 def _ci(row: pd.Series, key: str, pct: bool = True, d: int = 3) -> str:
     lo, hi = row.get(f"pooled_{key}_ci_lo"), row.get(f"pooled_{key}_ci_hi")
-    if lo is None or pd.isna(lo):
+    if lo is None or hi is None or pd.isna(lo):
         return "n/a"
+    lo, hi = float(lo), float(hi)
     return f"[{100 * lo:.1f}, {100 * hi:.1f}]" if pct else f"[{lo:.{d}f}, {hi:.{d}f}]"
 
 
@@ -319,7 +359,13 @@ def _p(p: float) -> str:
     return "< 0.001" if p < 0.001 else f"{p:.3f}"
 
 
-def tables_markdown(agg: pd.DataFrame, summary: pd.DataFrame, tests: pd.DataFrame, classes: dict[str, list[str]], experiment: str) -> str:
+def tables_markdown(
+    agg: pd.DataFrame,
+    summary: pd.DataFrame,
+    tests: pd.DataFrame,
+    classes: dict[str, list[str]],
+    experiment: str,
+) -> str:
     out = [
         f"# Results tables - experiment `{experiment}`",
         "",
@@ -329,7 +375,8 @@ def tables_markdown(agg: pd.DataFrame, summary: pd.DataFrame, tests: pd.DataFram
         "test predictions (each image is tested exactly once).",
         "",
     ]
-    for ds, g in agg.groupby("dataset", sort=False):
+    for ds_key, g in agg.groupby("dataset", sort=False):
+        ds = str(ds_key)
         best_f1 = g["macro_f1_mean"].max()
         out += [
             f"## {ds}",
@@ -351,10 +398,12 @@ def tables_markdown(agg: pd.DataFrame, summary: pd.DataFrame, tests: pd.DataFram
                 f"| {_num(r['mcc_mean'], r['mcc_sd'])} |"
             )
         # Table B: per-class metrics of the best model (by mean macro-F1), pooled over folds.
-        best = g.loc[g["macro_f1_mean"].idxmax(), "model_id"]
-        s = summary[(summary["dataset"] == ds) & (summary["model_id"] == best)]
+        best = best_model(g)
         out += ["", f"### Table B - Per-class results of the best model ({best}), pooled test", ""]
-        out += ["| Class | Precision (%) | Recall (%) | F1 (%) | Support |", "| --- | --- | --- | --- | --- |"]
+        out += [
+            "| Class | Precision (%) | Recall (%) | F1 (%) | Support |",
+            "| --- | --- | --- | --- | --- |",
+        ]
         out += _per_class_rows(ds, best, classes[ds], experiment)
         out += [
             "",
@@ -466,7 +515,12 @@ def _deferral_rows(ds: str, g: pd.DataFrame, names: list[str], experiment: str) 
 def _efficiency_table(experiment: str) -> list[str]:
     path = project_root() / "results" / experiment / "efficiency.csv"
     if not path.exists():
-        return ["### Table F - Efficiency", "", "Not yet measured: run `spermtriage benchmark`.", ""]
+        return [
+            "### Table F - Efficiency",
+            "",
+            "Not yet measured: run `spermtriage benchmark`.",
+            "",
+        ]
     eff = pd.read_csv(path)
     rows = [
         "### Table F - Efficiency (CPU, batch size 1)",
@@ -507,12 +561,16 @@ def _published_table() -> list[str]:
 
 # ---------------------------------------------------------------------- driver
 def build_report(experiment: str) -> Path:
-    exp_cfg = ExperimentConfig.from_yaml(project_root() / "configs" / "experiments" / f"{experiment}.yaml")
+    exp_cfg = ExperimentConfig.from_yaml(
+        project_root() / "configs" / "experiments" / f"{experiment}.yaml"
+    )
     out = project_root() / "results" / experiment
     out.mkdir(parents=True, exist_ok=True)
     summary, pooled = collect(experiment)
     if summary.empty:
-        raise RuntimeError(f"No evaluated runs for '{experiment}'. Run `spermtriage evaluate` first.")
+        raise RuntimeError(
+            f"No evaluated runs for '{experiment}'. Run `spermtriage evaluate` first."
+        )
     order = {m.id: i for i, m in enumerate(exp_cfg.models)}
     summary = summary.sort_values(
         ["dataset", "model_id", "fold"], key=lambda s: s.map(order) if s.name == "model_id" else s
@@ -523,7 +581,11 @@ def build_report(experiment: str) -> Path:
     tests = statistical_tests(summary, pooled)
     tests.to_csv(out / "statistical_tests.csv", index=False, float_format="%.6g")
     classes = {
-        ds: json.loads(next((project_root() / "results" / "runs" / experiment / ds).glob("*/fold*/posthoc.json")).read_text())["run"]["classes"]
+        ds: json.loads(
+            next(
+                (project_root() / "results" / "runs" / experiment / ds).glob("*/fold*/posthoc.json")
+            ).read_text()
+        )["run"]["classes"]
         for ds in summary["dataset"].unique()
     }
     (out / "tables.md").write_text(tables_markdown(agg, summary, tests, classes, experiment))

@@ -37,7 +37,7 @@ def test_corrected_ttest_zero_variance():
 def test_cohen_dz_and_wilcoxon():
     a = np.array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
     assert cohen_dz(a - a) == 0.0
-    stat, p = wilcoxon_paired(a + 1, a)
+    _stat, p = wilcoxon_paired(a + 1, a)
     assert p < 0.05
     assert wilcoxon_paired(a, a) == (0.0, 1.0)
 

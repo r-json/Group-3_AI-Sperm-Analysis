@@ -33,7 +33,7 @@ def download_archive(spec: DatasetSpec, dest_dir: Path | None = None, force: boo
         return target
     log.info("Downloading %s from %s", spec.display_name, spec.archive.url)
     tmp = target.with_suffix(target.suffix + ".part")
-    with urllib.request.urlopen(spec.archive.url, timeout=300) as resp, open(tmp, "wb") as out:  # noqa: S310
+    with urllib.request.urlopen(spec.archive.url, timeout=300) as resp, open(tmp, "wb") as out:
         shutil.copyfileobj(resp, out)
     digest = sha256_file(tmp)
     if digest != spec.archive.sha256:
@@ -54,7 +54,7 @@ def extract_archive(archive: Path, dest_dir: Path) -> None:
             zf.extractall(dest_dir)
         return
     try:
-        import libarchive  # type: ignore[import-not-found]
+        import libarchive
 
         cwd = Path.cwd()
         try:

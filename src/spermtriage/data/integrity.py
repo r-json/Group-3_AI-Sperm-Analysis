@@ -83,12 +83,12 @@ def apply_duplicate_policy(df: pd.DataFrame) -> pd.DataFrame:
     for pix, idx in df.groupby("pixel_sha256").groups.items():
         if len(idx) < 2:
             continue
-        idx = sorted(idx)
-        df.loc[idx, "dup_group"] = str(pix)[:16]
-        if df.loc[idx, "label"].nunique() > 1:
-            df.loc[idx, "status"] = "label_conflict"
+        members = sorted(idx)
+        df.loc[members, "dup_group"] = str(pix)[:16]
+        if df.loc[members, "label"].nunique() > 1:
+            df.loc[members, "status"] = "label_conflict"
         else:
-            df.loc[idx[1:], "status"] = "duplicate"
+            df.loc[members[1:], "status"] = "duplicate"
     return df[MANIFEST_COLUMNS]
 
 
@@ -112,12 +112,12 @@ def build_manifest(spec: DatasetSpec, image_dir: Path | None = None) -> pd.DataF
 def verify_against_manifest(spec: DatasetSpec, manifest: pd.DataFrame, image_dir: Path) -> None:
     """Re-hash files on disk and compare with a committed manifest (fails on any drift)."""
     problems = []
-    for row in manifest.itertuples():
-        path = image_dir / row.relpath
+    for relpath, expected in zip(manifest["relpath"], manifest["file_sha256"], strict=True):
+        path = image_dir / str(relpath)
         if not path.exists():
-            problems.append(f"missing: {row.relpath}")
-        elif sha256_file(path) != row.file_sha256:
-            problems.append(f"hash mismatch: {row.relpath}")
+            problems.append(f"missing: {relpath}")
+        elif sha256_file(path) != expected:
+            problems.append(f"hash mismatch: {relpath}")
     if problems:
         head = "\n  ".join(problems[:10])
         raise IntegrityError(f"{len(problems)} manifest problems, e.g.\n  {head}")
@@ -174,9 +174,9 @@ def near_duplicate_pairs(manifest: pd.DataFrame, max_distance: int = 0) -> tuple
 
 def integrity_report(dataset: str, manifest: pd.DataFrame) -> IntegrityReport:
     groups: dict[str, set[str]] = defaultdict(set)
-    for row in manifest.itertuples():
-        if row.dup_group:
-            groups[row.dup_group].add(row.label)
+    for group, label in zip(manifest["dup_group"], manifest["label"], strict=True):
+        if group:
+            groups[str(group)].add(str(label))
     kept = manifest[manifest["status"] == "ok"]
     near, near_cross = near_duplicate_pairs(manifest)
     return IntegrityReport(

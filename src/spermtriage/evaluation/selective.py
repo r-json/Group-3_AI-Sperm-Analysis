@@ -77,7 +77,9 @@ class SelectiveThreshold:
     method: str
 
 
-def plugin_threshold(scores: np.ndarray, correct: np.ndarray, target_accuracy: float) -> SelectiveThreshold:
+def plugin_threshold(
+    scores: np.ndarray, correct: np.ndarray, target_accuracy: float
+) -> SelectiveThreshold:
     order = np.argsort(-scores, kind="stable")
     s, c = scores[order], correct[order].astype(float)
     k = np.arange(1, len(s) + 1)
@@ -88,7 +90,9 @@ def plugin_threshold(scores: np.ndarray, correct: np.ndarray, target_accuracy: f
     if len(ok) == 0:
         return SelectiveThreshold(math.inf, 0.0, 0.0, 0.0, "plugin")
     j = ok[-1]
-    return SelectiveThreshold(float(s[j]), float(k[j] / len(s)), float(risk[j]), float(risk[j]), "plugin")
+    return SelectiveThreshold(
+        float(s[j]), float(k[j] / len(s)), float(risk[j]), float(risk[j]), "plugin"
+    )
 
 
 def guaranteed_threshold(

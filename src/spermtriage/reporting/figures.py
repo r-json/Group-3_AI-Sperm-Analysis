@@ -12,12 +12,12 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
-import numpy as np  # noqa: E402
-import pandas as pd  # noqa: E402
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
-from spermtriage.evaluation.calibration import reliability_bins  # noqa: E402
-from spermtriage.evaluation.selective import risk_coverage_curve  # noqa: E402
+from spermtriage.evaluation.calibration import reliability_bins
+from spermtriage.evaluation.selective import risk_coverage_curve
 
 SERIES = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
 MARKERS = ["o", "s", "^", "D", "v", "P", "X", "*"]
@@ -65,8 +65,14 @@ def reliability_figure(path: Path, pooled: dict, dataset: str, order: list[str])
         for key, style, label in (("p_raw", "--", "Before TS"), ("p_ts", "-", "After TS")):
             b = reliability_bins(p[key], p["y"], 15)
             ax.plot(
-                b.confidence, b.accuracy, ls=style, marker=marker, ms=4, color=color,
-                alpha=0.55 if key == "p_raw" else 1.0, label=label,
+                b.confidence,
+                b.accuracy,
+                ls=style,
+                marker=marker,
+                ms=4,
+                color=color,
+                alpha=0.55 if key == "p_raw" else 1.0,
+                label=label,
             )
         ax.set_title(model)
         ax.set_xlabel("Confidence")
@@ -74,20 +80,32 @@ def reliability_figure(path: Path, pooled: dict, dataset: str, order: list[str])
         ax.set_ylim(0, 1)
     axes[0].set_ylabel("Accuracy")
     axes[0].legend(loc="upper left", fontsize=7.5)
-    fig.suptitle(f"{dataset}: reliability diagrams, pooled test folds (15 equal-width bins)", fontsize=10)
+    fig.suptitle(
+        f"{dataset}: reliability diagrams, pooled test folds (15 equal-width bins)", fontsize=10
+    )
     fig.tight_layout()
     fig.savefig(path, dpi=300)
     plt.close(fig)
 
 
-def risk_coverage_figure(path: Path, pooled: dict, dataset: str, order: list[str], target_risk: float = 0.05) -> None:
+def risk_coverage_figure(
+    path: Path, pooled: dict, dataset: str, order: list[str], target_risk: float = 0.05
+) -> None:
     fig, ax = plt.subplots(figsize=(4.6, 3.3))
     for model in [m for m in order if (dataset, m) in pooled]:
         p = pooled[(dataset, model)]
         correct = p["p_ts"].argmax(1) == p["y"]
         cov, risk = risk_coverage_curve(p["p_ts"].max(1), correct)
         color, marker = _color(model, order)
-        ax.plot(cov, risk, color=color, label=model, marker=marker, markevery=max(1, len(cov) // 8), ms=4)
+        ax.plot(
+            cov,
+            risk,
+            color=color,
+            label=model,
+            marker=marker,
+            markevery=max(1, len(cov) // 8),
+            ms=4,
+        )
     ax.axhline(target_risk, color=INK_2, lw=1, ls=":")
     ax.text(0.01, target_risk, " 5% risk target", va="bottom", fontsize=7.5, color=INK_2)
     ax.set_xlabel("Coverage (share of cells auto-classified)")
@@ -115,7 +133,12 @@ def confusion_figure(path: Path, p: dict, names: list[str], title: str) -> None:
     for i in range(len(names)):
         for j in range(len(names)):
             ax.text(
-                j, i, f"{100 * norm[i, j]:.0f}%\n({cm[i, j]})", ha="center", va="center", fontsize=7.5,
+                j,
+                i,
+                f"{100 * norm[i, j]:.0f}%\n({cm[i, j]})",
+                ha="center",
+                va="center",
+                fontsize=7.5,
                 color="#ffffff" if norm[i, j] > 0.55 else INK,
             )
     ax.set_xticks(range(len(names)), names, rotation=30, ha="right")
@@ -128,7 +151,9 @@ def confusion_figure(path: Path, p: dict, names: list[str], title: str) -> None:
     plt.close(fig)
 
 
-def conformal_figure(path: Path, p: dict, names: list[str], title: str, alpha: float = 0.10) -> None:
+def conformal_figure(
+    path: Path, p: dict, names: list[str], title: str, alpha: float = 0.10
+) -> None:
     from spermtriage.reporting.report import _set_membership
 
     k = len(names)
@@ -143,7 +168,15 @@ def conformal_figure(path: Path, p: dict, names: list[str], title: str, alpha: f
         x = np.arange(k) + (mi - (len(methods) - 1) / 2) * width
         ax.bar(x, cov, width=width - 0.03, color=SERIES[mi], label=col[4:].split("@")[0], zorder=3)
     ax.axhline(1 - alpha, color=INK_2, lw=1, ls=":")
-    ax.text(k - 0.5, 1 - alpha, f" target {100 * (1 - alpha):.0f}%", va="bottom", ha="right", fontsize=7.5, color=INK_2)
+    ax.text(
+        k - 0.5,
+        1 - alpha,
+        f" target {100 * (1 - alpha):.0f}%",
+        va="bottom",
+        ha="right",
+        fontsize=7.5,
+        color=INK_2,
+    )
     ax.set_xticks(range(k), names)
     ax.set_ylim(0, 1.05)
     ax.set_ylabel("Per-class coverage")
@@ -154,18 +187,27 @@ def conformal_figure(path: Path, p: dict, names: list[str], title: str, alpha: f
     plt.close(fig)
 
 
-def make_figures(out: Path, pooled: dict, agg: pd.DataFrame, classes: dict[str, list[str]], order: list[str]) -> None:
+def make_figures(
+    out: Path, pooled: dict, agg: pd.DataFrame, classes: dict[str, list[str]], order: list[str]
+) -> None:
     _style()
     out.mkdir(parents=True, exist_ok=True)
-    for ds, g in agg.groupby("dataset", sort=False):
+    for ds_key, g in agg.groupby("dataset", sort=False):
+        ds = str(ds_key)
         reliability_figure(out / f"reliability_{ds}.png", pooled, ds, order)
         risk_coverage_figure(out / f"risk_coverage_{ds}.png", pooled, ds, order)
-        best = g.loc[g["macro_f1_mean"].idxmax(), "model_id"]
+        from spermtriage.reporting.report import best_model
+
+        best = best_model(g)
         confusion_figure(
-            out / f"confusion_{ds}.png", pooled[(ds, best)], classes[ds],
+            out / f"confusion_{ds}.png",
+            pooled[(ds, best)],
+            classes[ds],
             f"{ds}: {best}, row-normalised, pooled test",
         )
         conformal_figure(
-            out / f"conformal_per_class_{ds}.png", pooled[(ds, best)], classes[ds],
+            out / f"conformal_per_class_{ds}.png",
+            pooled[(ds, best)],
+            classes[ds],
             f"{ds}: {best}, conformal sets at α = 0.10",
         )

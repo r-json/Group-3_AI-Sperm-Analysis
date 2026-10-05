@@ -22,7 +22,9 @@ def _module(model: nn.Module, dotted: str) -> nn.Module:
     return m
 
 
-def gradcam(model: Classifier, x_uint8: torch.Tensor, layer: str, target: int | None = None) -> np.ndarray:
+def gradcam(
+    model: Classifier, x_uint8: torch.Tensor, layer: str, target: int | None = None
+) -> np.ndarray:
     """Return an ``H x W`` heat map in [0, 1] for one image (``1 x 3 x H x W`` uint8)."""
     acts: dict[str, torch.Tensor] = {}
 
@@ -43,17 +45,19 @@ def gradcam(model: Classifier, x_uint8: torch.Tensor, layer: str, target: int | 
         if a.dim() == 3:  # ViT: N x tokens x C -> N x C x h x w
             n_prefix = int(getattr(model.backbone, "num_prefix_tokens", 1))
             a, g = a[:, n_prefix:], g[:, n_prefix:]
-            side = int(round(a.shape[1] ** 0.5))
+            side = round(a.shape[1] ** 0.5)
             a = a.transpose(1, 2).reshape(a.shape[0], -1, side, side)
             g = g.transpose(1, 2).reshape(g.shape[0], -1, side, side)
         weights = g.mean(dim=(2, 3), keepdim=True)
         cam = torch.relu((weights * a).sum(1, keepdim=True))
-        cam = nn.functional.interpolate(cam, size=x_uint8.shape[-2:], mode="bilinear", align_corners=False)
-        cam = cam[0, 0].detach().numpy()
+        cam = nn.functional.interpolate(
+            cam, size=x_uint8.shape[-2:], mode="bilinear", align_corners=False
+        )
+        heat = cam[0, 0].detach().numpy()
     finally:
         handle.remove()
-    rng = cam.max() - cam.min()
-    return (cam - cam.min()) / rng if rng > 0 else np.zeros_like(cam)
+    span = float(heat.max() - heat.min())
+    return (heat - heat.min()) / span if span > 0 else np.zeros_like(heat)
 
 
 def overlay(image_rgb: np.ndarray, cam: np.ndarray, strength: float = 0.45) -> np.ndarray:

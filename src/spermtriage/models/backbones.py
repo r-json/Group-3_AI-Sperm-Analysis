@@ -11,6 +11,7 @@ old softmax.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 import timm
 import torch
@@ -24,7 +25,7 @@ class BackboneSpec:
     family: str  # "cnn" or "transformer"
     gradcam_layer: str
     pretraining: str
-    extra_kwargs: tuple[tuple[str, object], ...] = ()
+    extra_kwargs: tuple[tuple[str, Any], ...] = ()
 
 
 BACKBONES: dict[str, BackboneSpec] = {
@@ -40,7 +41,9 @@ BACKBONES: dict[str, BackboneSpec] = {
         BackboneSpec(
             "efficientnet_b0", "efficientnet_b0.ra_in1k", "cnn", "conv_head", "ImageNet-1k"
         ),
-        BackboneSpec("resnet50", "resnet50.tv_in1k", "cnn", "layer4", "ImageNet-1k, supervised (torchvision)"),
+        BackboneSpec(
+            "resnet50", "resnet50.tv_in1k", "cnn", "layer4", "ImageNet-1k, supervised (torchvision)"
+        ),
         BackboneSpec(
             "dinov2_vits14",
             "vit_small_patch14_dinov2.lvd142m",

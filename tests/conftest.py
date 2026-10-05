@@ -41,7 +41,9 @@ def tiny_project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     for i, folder in enumerate(CLASSES):
         (img_dir / folder).mkdir(parents=True)
         for j in range(PER_CLASS):
-            Image.fromarray(_ellipse(0.5 + 0.5 * i, rng)).save(img_dir / folder / f"img_{j:02d}.bmp")
+            Image.fromarray(_ellipse(0.5 + 0.5 * i, rng)).save(
+                img_dir / folder / f"img_{j:02d}.bmp"
+            )
     (root / "configs" / "datasets" / "tiny.yaml").write_text(
         textwrap.dedent(
             f"""
@@ -61,7 +63,9 @@ def tiny_project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     monkeypatch.setitem(
         backbones.BACKBONES,
         "tiny_test",
-        backbones.BackboneSpec("tiny_test", "test_efficientnet", "cnn", "blocks", "none (random init)"),
+        backbones.BackboneSpec(
+            "tiny_test", "test_efficientnet", "cnn", "blocks", "none (random init)"
+        ),
     )
     yield root
     shutil.rmtree(root, ignore_errors=True)

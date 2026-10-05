@@ -63,7 +63,9 @@ def aps_sets(probs: np.ndarray, q: float) -> np.ndarray:
     return sets
 
 
-def calibrate(method: str, probs: np.ndarray, y: np.ndarray, alpha: float, num_classes: int) -> float | np.ndarray:
+def calibrate(
+    method: str, probs: np.ndarray, y: np.ndarray, alpha: float, num_classes: int
+) -> float | np.ndarray:
     """Return the threshold(s) for ``method`` in {"lac", "aps", "lac_classwise"}."""
     if method == "lac":
         return conformal_quantile(lac_scores(probs, y), alpha)
@@ -86,7 +88,10 @@ def predict_sets(method: str, probs: np.ndarray, q: float | np.ndarray) -> np.nd
 def evaluate_sets(sets: np.ndarray, y: np.ndarray, num_classes: int) -> dict[str, object]:
     covered = sets[np.arange(len(y)), y]
     size = sets.sum(axis=1)
-    per_class = [float(covered[y == c].mean()) if np.any(y == c) else float("nan") for c in range(num_classes)]
+    per_class = [
+        float(covered[y == c].mean()) if np.any(y == c) else float("nan")
+        for c in range(num_classes)
+    ]
     return {
         "coverage": float(covered.mean()),
         "mean_set_size": float(size.mean()),
@@ -95,5 +100,7 @@ def evaluate_sets(sets: np.ndarray, y: np.ndarray, num_classes: int) -> dict[str
         "full_set_rate": float(np.mean(size == num_classes)),
         "per_class_coverage": per_class,
         "worst_class_coverage": float(np.nanmin(per_class)),
-        "singleton_accuracy": float(covered[size == 1].mean()) if np.any(size == 1) else float("nan"),
+        "singleton_accuracy": float(covered[size == 1].mean())
+        if np.any(size == 1)
+        else float("nan"),
     }

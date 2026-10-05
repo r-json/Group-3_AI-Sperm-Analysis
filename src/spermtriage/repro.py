@@ -55,7 +55,7 @@ def environment_info() -> dict[str, Any]:
     for mod in ("numpy", "pandas", "scipy", "sklearn", "torch", "torchvision", "timm", "PIL"):
         try:
             info[mod] = __import__(mod).__version__
-        except Exception:  # noqa: BLE001 - optional modules
+        except Exception:
             info[mod] = None
     try:
         import torch

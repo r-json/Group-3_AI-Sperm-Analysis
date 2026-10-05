@@ -28,7 +28,9 @@ def brier(probs: np.ndarray, y: np.ndarray) -> float:
     return float(np.mean(np.sum((probs - onehot) ** 2, axis=1)))
 
 
-def fit_temperature(logits: np.ndarray, y: np.ndarray, bounds: tuple[float, float] = (0.05, 20.0)) -> float:
+def fit_temperature(
+    logits: np.ndarray, y: np.ndarray, bounds: tuple[float, float] = (0.05, 20.0)
+) -> float:
     """Return the temperature that minimises NLL of ``softmax(logits / T)`` on (logits, y)."""
 
     def objective(log_t: float) -> float:
@@ -48,7 +50,9 @@ class ReliabilityBins:
     edges: np.ndarray
 
 
-def reliability_bins(probs: np.ndarray, y: np.ndarray, n_bins: int = 15, adaptive: bool = False) -> ReliabilityBins:
+def reliability_bins(
+    probs: np.ndarray, y: np.ndarray, n_bins: int = 15, adaptive: bool = False
+) -> ReliabilityBins:
     """Top-label reliability bins. Equal-width by default; equal-mass if ``adaptive``."""
     conf = probs.max(axis=1)
     correct = (probs.argmax(axis=1) == y).astype(float)

@@ -99,7 +99,9 @@ def _write_run(
     rows = []
     for role in ("val", "calib", "test"):
         ids = cache.manifest["image_id"].to_numpy()[roles[role]]
-        frame = pd.DataFrame(logits[role], columns=[f"logit_{c}" for c in range(logits[role].shape[1])])
+        frame = pd.DataFrame(
+            logits[role], columns=[f"logit_{c}" for c in range(logits[role].shape[1])]
+        )
         frame.insert(0, "label_idx", cache.labels[roles[role]])
         frame.insert(0, "role", role)
         frame.insert(0, "image_id", ids)
@@ -137,7 +139,9 @@ def _write_run(
     (out / "provenance.json").write_text(json.dumps(provenance, indent=2, default=str))
 
 
-def run_finetune(experiment: str, cache: DatasetCache, model: ModelEntry, cfg: TrainConfig, fold: int) -> None:
+def run_finetune(
+    experiment: str, cache: DatasetCache, model: ModelEntry, cfg: TrainConfig, fold: int
+) -> None:
     out = run_dir(experiment, cache.spec.name, model.id, fold)
     started = time.time()
     seed_everything(cfg.seed + fold)
@@ -177,7 +181,12 @@ def run_finetune(experiment: str, cache: DatasetCache, model: ModelEntry, cfg: T
 
 
 def _probe_features(cache: DatasetCache, model: ModelEntry, cfg: TrainConfig) -> np.ndarray:
-    path = results_root() / "cache" / "features" / f"{cache.spec.name}__{model.backbone}__{cfg.image_size}.npy"
+    path = (
+        results_root()
+        / "cache"
+        / "features"
+        / f"{cache.spec.name}__{model.backbone}__{cfg.image_size}.npy"
+    )
     if path.exists():
         feats = np.load(path)
         if len(feats) == len(cache.manifest):
@@ -193,7 +202,9 @@ def _probe_features(cache: DatasetCache, model: ModelEntry, cfg: TrainConfig) ->
     return feats
 
 
-def run_probe(experiment: str, cache: DatasetCache, model: ModelEntry, cfg: TrainConfig, fold: int) -> None:
+def run_probe(
+    experiment: str, cache: DatasetCache, model: ModelEntry, cfg: TrainConfig, fold: int
+) -> None:
     out = run_dir(experiment, cache.spec.name, model.id, fold)
     started = time.time()
     feats = _probe_features(cache, model, cfg)
@@ -211,7 +222,9 @@ def run_probe(experiment: str, cache: DatasetCache, model: ModelEntry, cfg: Trai
     out.mkdir(parents=True, exist_ok=True)
     np.savez(out / "head.npz", weight=W, bias=b)
     backbone_params = count_parameters(
-        Classifier.build(model.backbone, cache.spec.num_classes, cfg.image_size, 0.0, pretrained=False).backbone
+        Classifier.build(
+            model.backbone, cache.spec.num_classes, cfg.image_size, 0.0, pretrained=False
+        ).backbone
     )
     _write_run(
         out,

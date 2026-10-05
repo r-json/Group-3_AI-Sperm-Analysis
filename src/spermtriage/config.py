@@ -129,7 +129,9 @@ class TrainConfig:
     patience: int = 6
     min_epochs: int = 3
     # Linear probe: inverse L2 strengths searched on the validation split.
-    probe_C_grid: list[float] = field(default_factory=lambda: [1e-4, 3e-4, 1e-3, 3e-3, 1e-2, 3e-2, 0.1, 0.3, 1.0, 10.0])
+    probe_C_grid: list[float] = field(
+        default_factory=lambda: [1e-4, 3e-4, 1e-3, 3e-3, 1e-2, 3e-2, 0.1, 0.3, 1.0, 10.0]
+    )
     seed: int = 20251005
     num_threads: int = 0  # 0 = let PyTorch decide
 

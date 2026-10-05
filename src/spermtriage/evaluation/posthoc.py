@@ -47,14 +47,20 @@ CONFORMAL_METHODS = ("lac", "aps", "lac_classwise")
 def _split(df: pd.DataFrame, role: str) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     sub = df[df["role"] == role]
     logit_cols = [c for c in df.columns if c.startswith("logit_")]
-    return sub[logit_cols].to_numpy(float), sub["label_idx"].to_numpy(int), sub["image_id"].to_numpy()
+    return (
+        sub[logit_cols].to_numpy(float),
+        sub["label_idx"].to_numpy(int),
+        sub["image_id"].to_numpy(),
+    )
 
 
 def _finite(x: float) -> float | None:
     return float(x) if math.isfinite(x) else None
 
 
-def analyse_predictions(df: pd.DataFrame, num_classes: int, cfg: EvalConfig) -> tuple[dict[str, Any], pd.DataFrame]:
+def analyse_predictions(
+    df: pd.DataFrame, num_classes: int, cfg: EvalConfig
+) -> tuple[dict[str, Any], pd.DataFrame]:
     lv, yv, _ = _split(df, "val")
     lc, yc, _ = _split(df, "calib")
     lt, yt, idt = _split(df, "test")
@@ -81,7 +87,9 @@ def analyse_predictions(df: pd.DataFrame, num_classes: int, cfg: EvalConfig) -> 
     for kind in ("msp", "entropy"):
         st, sc = confidence_scores(pt, kind), confidence_scores(pc, kind)
         plug = plugin_threshold(sc, correct_c, cfg.target_selective_accuracy)
-        sgr = guaranteed_threshold(sc, correct_c, cfg.target_selective_accuracy, cfg.selective_delta)
+        sgr = guaranteed_threshold(
+            sc, correct_c, cfg.target_selective_accuracy, cfg.selective_delta
+        )
         selective[kind] = {
             "aurc": aurc(st, correct_t),
             "eaurc": eaurc(st, correct_t),

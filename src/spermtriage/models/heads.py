@@ -13,6 +13,9 @@ from spermtriage.models.backbones import create_backbone, feature_dim, normaliza
 
 
 class Classifier(nn.Module):
+    mean: torch.Tensor
+    std: torch.Tensor
+
     def __init__(
         self,
         backbone: nn.Module,

@@ -39,7 +39,9 @@ class FitResult:
 def predict_logits(model: Classifier, images: torch.Tensor, batch_size: int = 64) -> torch.Tensor:
     model.eval()
     outs = [model(images[i : i + batch_size]) for i in range(0, len(images), batch_size)]
-    return torch.cat(outs) if outs else torch.empty(0, model.head[-1].out_features)
+    if not outs:
+        raise ValueError("predict_logits needs at least one image")
+    return torch.cat(outs)
 
 
 def _evaluate(model: Classifier, images: torch.Tensor, labels: torch.Tensor) -> tuple[float, float]:
@@ -87,7 +89,7 @@ def fit_finetune(
 
     def log_epoch(stage: str, epoch: int, tl: float, ta: float, lr: float, t0: float) -> float:
         vl, va = _evaluate(model, val_images, yv)
-        row = {
+        row: dict[str, float | int | str] = {
             "stage": stage,
             "epoch": epoch,
             "train_loss": tl,

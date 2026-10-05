@@ -66,7 +66,7 @@ extend-exclude = ["legacy", "notebooks"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "N", "SIM", "RUF"]
-ignore = ["N803", "N806", "RUF001", "RUF002", "RUF003"]
+ignore = ["N803", "N806", "N815", "RUF001", "RUF002", "RUF003"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -97,3 +97,7 @@ omit = ["*/spermtriage/app/*"]
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
+
+[tool.ruff.lint.per-file-ignores]
+# Markdown table templates are clearer as single long string literals.
+"src/spermtriage/reporting/report.py" = ["E501"]

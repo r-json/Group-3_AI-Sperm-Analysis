@@ -11,10 +11,11 @@ from __future__ import annotations
 from collections.abc import Callable, Sequence
 
 import numpy as np
+from numpy.typing import ArrayLike
 from scipy import stats
 
 
-def corrected_resampled_ttest(diffs: Sequence[float], n_train: int, n_test: int) -> tuple[float, float]:
+def corrected_resampled_ttest(diffs: ArrayLike, n_train: int, n_test: int) -> tuple[float, float]:
     """Return (t, two-sided p) for per-fold differences ``diffs`` (Nadeau & Bengio, 2003)."""
     d = np.asarray(diffs, dtype=float)
     k = len(d)
@@ -26,7 +27,7 @@ def corrected_resampled_ttest(diffs: Sequence[float], n_train: int, n_test: int)
     return float(t), float(p)
 
 
-def cohen_dz(diffs: Sequence[float]) -> float:
+def cohen_dz(diffs: ArrayLike) -> float:
     """Standardised mean of paired differences (effect size for paired designs)."""
     d = np.asarray(diffs, dtype=float)
     sd = d.std(ddof=1)
@@ -46,7 +47,7 @@ def holm(pvalues: Sequence[float]) -> list[float]:
     return adjusted.tolist()
 
 
-def wilcoxon_paired(a: Sequence[float], b: Sequence[float]) -> tuple[float, float]:
+def wilcoxon_paired(a: ArrayLike, b: ArrayLike) -> tuple[float, float]:
     """Two-sided Wilcoxon signed-rank test on paired samples (zero differences dropped)."""
     d = np.asarray(a, dtype=float) - np.asarray(b, dtype=float)
     if np.allclose(d, 0):
