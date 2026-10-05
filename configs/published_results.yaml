@@ -1,0 +1,48 @@
+# Published results used ONLY as context (Table G). Values are as reported by the cited
+# papers; protocols, preprocessing and splits differ, so these are not head-to-head
+# comparisons with this study. "verified_via" records where each number was checked.
+- citation: Shaker et al. (2017), Comput. Biol. Med.
+  method: Dictionary learning + SVM (manual preprocessing)
+  hushem: 92.2
+  smids: null
+  verified_via: Aktas et al. (2025) Table 7
+- citation: Riordon et al. (2019), Comput. Biol. Med.
+  method: VGG16 transfer learning (manual cropping/rotation)
+  hushem: 94.0
+  smids: null
+  verified_via: Aktas et al. (2025) Table 7
+- citation: Yuzkat, Ilhan & Aydin (2021), Comput. Biol. Med.
+  method: Six CNNs + soft-voting fusion
+  hushem: 85.18
+  smids: 90.73
+  verified_via: Aktas et al. (2025) Table 7; ITU research portal abstract
+- citation: Ilhan & Serbes (2022), Biomed. Signal Process. Control
+  method: Two-stage fine-tuned VGG16 + GoogleNet fusion
+  hushem: 92.13
+  smids: 90.87
+  verified_via: Aktas et al. (2025) Table 7
+- citation: Spencer et al. (2022)
+  method: Meta-classifier over 4 CNNs (semi-manual preprocessing)
+  hushem: 98.2
+  smids: null
+  verified_via: Aktas et al. (2025) Table 7
+- citation: Mahali et al. (2023), Sensors
+  method: SwinMobile fusion + autoencoder
+  hushem: 97.6
+  smids: 91.7
+  verified_via: Aktas et al. (2025) Table 7
+- citation: Aktas, Serbes & Ilhan (2025), PeerJ Comput. Sci. 11:e3173
+  method: BEiT-Base fine-tuned, 5-fold CV
+  hushem: 93.52
+  smids: 92.5
+  verified_via: PMC12453802 full text
+- citation: Kilic (2025), PLOS ONE, doi:10.1371/journal.pone.0330914
+  method: CBAM-ResNet50 + deep feature engineering
+  hushem: 96.77
+  smids: 96.08
+  verified_via: PLOS ONE full text
+- citation: Asghari Varzaneh et al. (2026), arXiv:2606.20438 (preprint)
+  method: EfficientNet-B0 + CBAM
+  hushem: 93.9
+  smids: 90.2
+  verified_via: arXiv abstract page
