@@ -1,105 +1,45 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project are documented here. The format follows
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-### Added
-- Comprehensive documentation structure
-- Professional GitHub repository setup
-- Contributing guidelines and templates
-
-## [1.0.0] - 2024-12-30
+## [Unreleased] - research-grade rewrite (`spermtriage`)
 
 ### Added
-- Initial release of AI-assisted sperm morphology classification system
-- Deep learning models for HuSHeM and SMIDS datasets
-- Modern PyQt5 GUI application with blue gradient theme
-- Transfer learning implementation with Xception, MobileNet, and GoogleNet
-- Model performance evaluation and validation framework
-- Diagnostic tools for system troubleshooting
-- Comprehensive project documentation
+- `spermtriage` Python package (src layout) replacing the notebook and the legacy GUI.
+- Official-dataset download with SHA-256 verification, hashed manifests, a pixel-level
+  duplicate policy and leakage-free stratified 5-fold splits with separate validation and
+  calibration subsets.
+- PyTorch + timm backbones, two-stage fine-tuning and frozen-feature linear probes.
+- Post-hoc temperature scaling, certified selective prediction (SGR), and split conformal
+  prediction (LAC, APS, randomised APS, class-conditional LAC).
+- Statistics: pooled bootstrap CIs, corrected resampled t-tests, Wilcoxon tests and Holm
+  correction.
+- `spermtriage report`: `results/main/summary.csv`, `aggregate.csv`, `statistical_tests.csv`,
+  `tables.md` and 300-dpi figures.
+- Model registry with weights hashing; one `Predictor` shared by the CLI and the GUI.
+- PySide6 desktop app with a certified "Refer to expert" state, batch analysis, Grad-CAM
+  and CSV export.
+- Tests (unit, integration, GUI), CI, ruff, mypy, pre-commit, lockfile, ADRs, data card,
+  model card, CITATION.cff.
 
-### Features
-- **Multi-Dataset Support**: HuSHeM (4 classes) and SMIDS (3 classes)
-- **High Accuracy Models**: 64.4% on HuSHeM, 81.5% on SMIDS
-- **Modern GUI Interface**: User-friendly drag-and-drop functionality
-- **Real-time Analysis**: Instant classification with confidence scores
-- **Model Selection**: Support for multiple neural network architectures
-- **Robust Error Handling**: Comprehensive exception management
-- **Professional Documentation**: Academic-quality documentation and guides
+### Fixed
+- Dataset sizes and class names: HuSHeM has 216 images, not 1,540. SMIDS has 3,000 images
+  in the classes Normal, Abnormal and Non-sperm.
+- Transfer learning stacked a new head on the old softmax; heads are now rebuilt from
+  features.
+- Backbone-specific input normalisation was never applied.
+- The GUI applied SMIDS labels to the HuSHeM model and ignored the model selector.
 
-### Technical Implementation
-- TensorFlow 2.x with Keras for deep learning
-- PyQt5 for modern desktop GUI
-- Transfer learning from ImageNet pre-trained models
-- 5-fold cross-validation for model evaluation
-- Automated image preprocessing and augmentation
-- Model ensemble capabilities for improved accuracy
+### Removed
+- Results with no producing run: MobileNet/GoogleNet results and precision/recall/F1 values.
+- Claims of features that were not implemented: grid search, ablation, significance tests
+  and ensembling.
 
-### Performance Metrics
-- **HuSHeM Dataset**:
-  - Xception: 64.4% accuracy
-  - MobileNet: 61.2% accuracy
-  - GoogleNet: 58.9% accuracy
-- **SMIDS Dataset** (Transfer Learning):
-  - Xception: 81.5% accuracy
-  - MobileNet: 78.3% accuracy
-  - GoogleNet: 75.1% accuracy
+## [0.1.0-legacy] - 2025-07-03
 
-### Dataset Classifications
-- **HuSHeM**: Normal, Tapered, Pyriform, Amorphous sperm morphologies
-- **SMIDS**: Acrosome Abnormality, Boya, Normal Sperm classifications
-
-### Project Structure
-```
-├── Finish.ipynb                     # Main training notebook
-├── Interface/
-│   ├── Application_Modern.py        # Modern PyQt5 GUI
-│   ├── modules.py                   # Core model functionality
-│   ├── diagnose.py                  # Diagnostic utilities
-│   └── img/                         # UI assets and images
-├── HuSHeM-20250630T085035Z-1-001/   # HuSHeM dataset and models
-├── SMIDS-20250630T085408Z-1-001/    # SMIDS dataset
-├── requirements.txt                 # Python dependencies
-├── README.md                        # Comprehensive project documentation
-├── LICENSE                          # MIT license
-└── CONTRIBUTING.md                  # Contribution guidelines
-```
-
-### Academic Context
-- Developed by Group 3, BSCS 3-1N
-- Polytechnic University of the Philippines
-- Academic Year 2024-2025
-- Focus on biomedical image classification and clinical applications
-
-### Known Issues
-- None at this release
-
-### Dependencies
-- Python 3.8+
-- TensorFlow 2.x
-- PyQt5
-- OpenCV
-- NumPy
-- Matplotlib
-- Jupyter Notebook
-
----
-
-## Version History
-
-### [1.0.0] - 2024-12-30
-- Initial stable release
-- Complete feature set implementation
-- Professional documentation and repository setup
-
----
-
-**Note**: This project follows semantic versioning. Version numbers indicate:
-- **MAJOR**: Incompatible API changes
-- **MINOR**: Backward-compatible functionality additions
-- **PATCH**: Backward-compatible bug fixes
+Initial commit (`87431a0`): TensorFlow notebook, PyQt5 GUI and committed datasets. An earlier
+version of this file listed it as "1.0.0 (2024-12-30)" with accuracy and feature claims that
+the audit (`docs/research/01_audit.md`) found unsupported, so it is renumbered here. The
+code is kept under `legacy/` and `notebooks/legacy/` for provenance only.

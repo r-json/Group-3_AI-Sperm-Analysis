@@ -1,0 +1,57 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite it as below, and also cite the HuSHeM and SMIDS
+  datasets listed under "references".
+title: "SpermTriage: calibrated, uncertainty-aware sperm morphology classification with certified referral to experts"
+type: software
+authors:
+  - family-names: Agarin
+    given-names: Lawrence Ivan P.
+    affiliation: Polytechnic University of the Philippines
+  - family-names: Rosel
+    given-names: Arjay N.
+    affiliation: Polytechnic University of the Philippines
+  - family-names: Sanchez
+    given-names: Aaliyah Reign T.
+    affiliation: Polytechnic University of the Philippines
+repository-code: "https://github.com/r-json/sperm-morphology-triage"
+license: MIT
+version: 1.0.0.dev0
+keywords:
+  - sperm morphology
+  - medical image classification
+  - calibration
+  - selective prediction
+  - conformal prediction
+  - reproducible research
+references:
+  - type: dataset
+    title: "Human Sperm Head Morphology dataset (HuSHeM)"
+    authors:
+      - family-names: Shaker
+        given-names: Fariba
+    doi: 10.17632/tt3yj2pf38.3
+    publisher:
+      name: Mendeley Data
+    license: CC-BY-4.0
+  - type: dataset
+    title: "Sperm Morphology Image Data Set (SMIDS)"
+    authors:
+      - family-names: Ilhan
+        given-names: Hamza Osman
+    doi: 10.17632/6xvdhc9fyb.1
+    publisher:
+      name: Mendeley Data
+    license: CC-BY-4.0
+  - type: software
+    title: "midterm-project: Classification Of Image Datasets With Deep Learning"
+    notes: >-
+      The legacy notebook and GUI (legacy/, notebooks/legacy/) were adapted from this
+      student project (Yildiz Technical University, 2020). It has no licence. The
+      spermtriage package is a separate implementation.
+    authors:
+      - family-names: Tortumlu
+        given-names: Ömer L.
+      - family-names: Başkut
+        given-names: K.
+    url: "https://github.com/omertortumlu/midterm-project"
