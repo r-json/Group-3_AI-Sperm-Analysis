@@ -101,7 +101,7 @@ def test_frame_averaged_features_are_rotation_invariant(angle, flip):
     with torch.no_grad():
         raw = lambda x: net.features(
             torch.from_numpy(x).permute(2, 0, 1)[None].contiguous()
-        ).numpy()[0]  # noqa: E731
+        ).numpy()[0]
         ra, rb = raw(img), raw(rotate_image(img, angle, flip))
     assert cos > float(ra @ rb / (np.linalg.norm(ra) * np.linalg.norm(rb)))
 
