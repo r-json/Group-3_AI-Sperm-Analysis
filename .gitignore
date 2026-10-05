@@ -204,3 +204,14 @@ logs/
 .Trashes
 ehthumbs.db
 Thumbs.db
+# --- spermtriage (research-grade refactor) ---
+# Official datasets are downloaded by `spermtriage data`; never commit them.
+data/raw/
+# Generated artefacts that are large or derivable. Small result tables, per-run
+# predictions and provenance ARE committed so every reported number is auditable.
+results/cache/
+results/**/model.pt
+results/**/head.npz
+models/weights/
+*.pt
+*.safetensors
