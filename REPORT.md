@@ -60,7 +60,14 @@ python scripts/leakage_simulation.py   # results/main/leakage_simulation.csv
 2. **Laptop sleep.** HuSHeM fine-tuning epochs were interrupted by system suspend (one epoch
    logged 4,734 s). Suspend pauses the process and does not change the computation. A
    sleep inhibitor was used for the remainder of the run.
-3. **Corrections to the prompt pack** are listed in `docs/research/01_audit.md`, section B.
+3. **Interrupted fine-tuning, resumed.** The SMIDS fine-tuning process (started at commit
+   `582fa0e`) was killed during fold 3 when the controlling session exited on 2026-10-06
+   at about 01:28. Folds 0-2 had already completed and were kept. Folds 3 and 4 were
+   re-run from scratch with `spermtriage train --dataset smids --model mobilenetv3-ft
+   --fold 3 4` at commit `819cf68`; the runner skips completed runs.
+   `git diff 582fa0e 819cf68 -- src configs` touches only `reporting/report.py`, so the
+   training code is identical. Each run's `provenance.json` records its own commit.
+4. **Corrections to the prompt pack** are listed in `docs/research/01_audit.md`, section B.
 
 ## 4. Remaining limitations and open items
 
