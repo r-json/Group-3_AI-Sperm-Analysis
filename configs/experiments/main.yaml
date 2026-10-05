@@ -1,0 +1,55 @@
+# Main experiment of the paper. Sized for a 4-core laptop CPU (no GPU); see
+# docs/adr/0003-compute-budget.md for the reasoning behind the model choices.
+name: main
+datasets: [hushem, smids]
+
+split:
+  n_folds: 5
+  val_fraction: 0.15     # of each outer training fold: early stopping + temperature
+  calib_fraction: 0.20   # of each outer training fold: conformal + selective thresholds
+  seed: 20251005
+  version: v1
+
+eval:
+  alphas: [0.10, 0.05]               # conformal miscoverage levels
+  target_selective_accuracy: 0.95     # deferral target
+  selective_delta: 0.05               # confidence level of the risk guarantee (1 - delta)
+  ece_bins: 15
+  bootstrap_resamples: 2000
+  bootstrap_seed: 12345
+
+models:
+  # Fine-tuned lightweight CNN (the deployable model in the desktop tool).
+  - id: mobilenetv3-ft
+    backbone: mobilenetv3_large
+    train:
+      mode: finetune
+      image_size: 224
+      batch_size: 32
+      dropout: 0.2
+      warmup_epochs: 3
+      warmup_lr: 1.0e-3
+      max_epochs: 25
+      lr: 2.0e-4
+      weight_decay: 1.0e-4
+      patience: 5
+      min_epochs: 3
+      seed: 20251005
+      num_threads: 8
+
+  # Frozen features + multinomial logistic regression (forward passes only).
+  - id: mobilenetv3-lp
+    backbone: mobilenetv3_large
+    train: {mode: linear_probe, image_size: 224, seed: 20251005, num_threads: 8}
+  - id: resnet50-lp
+    backbone: resnet50
+    train: {mode: linear_probe, image_size: 224, seed: 20251005, num_threads: 8}
+  - id: dinov2s-lp
+    backbone: dinov2_vits14
+    train: {mode: linear_probe, image_size: 224, seed: 20251005, num_threads: 8}
+
+# HuSHeM has ~112 training images per fold, so an epoch takes seconds: allow more epochs
+# and a smaller batch so each epoch still has several optimiser steps.
+dataset_overrides:
+  hushem:
+    mobilenetv3-ft: {batch_size: 16, max_epochs: 60, patience: 10}
