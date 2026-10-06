@@ -78,7 +78,8 @@ python scripts/leakage_simulation.py   # results/main/leakage_simulation.csv
    This incidentally tested reproducibility. Every epoch that a killed fold-3 run shared with
    its re-run logged identical training and validation loss and accuracy at the logged
    precision (`results/logs/`). Seeded CPU training was therefore repeatable on this machine.
-   A further four-hour stall came from editing `run_pipeline.sh` while it was running;
+   A further ~13-hour stall (12:23 on 6 Oct to 01:21 on 7 Oct) came from editing
+   `run_pipeline.sh` while it was running;
    the script is now parsed in full before execution.
 4. **Corrections to the prompt pack** are listed in `docs/research/01_audit.md`, section B.
 
