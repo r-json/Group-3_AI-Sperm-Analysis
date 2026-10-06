@@ -149,3 +149,23 @@ def test_cbam_resnet50_backbone_shapes():
     assert CBAM(64)(x).shape == x.shape
     net = Classifier(cbam_resnet50(pretrained=False), 3, 64, backbone_key="cbam_resnet50")
     assert net(torch.randint(0, 255, (2, 3, 64, 64), dtype=torch.uint8)).shape == (2, 3)
+
+
+def test_view_feature_extraction_resumes_from_checkpoint(tiny_project, tiny_spec):
+    from spermtriage.data.integrity import build_manifest, manifest_path
+    from spermtriage.method.features import cache_dir, frames_and_shape, view_features
+
+    manifest = build_manifest(tiny_spec)
+    manifest_path("tiny").parent.mkdir(parents=True, exist_ok=True)
+    manifest.to_csv(manifest_path("tiny"), index=False)
+    frames, shape = frames_and_shape("tiny")
+    assert shape.shape == (36, len(FEATURE_NAMES))
+    full = view_features("tiny", "tiny_test", True, frames, checkpoint_every=10)
+    assert full.shape[:2] == (36, 8)
+    # Simulate a crash after 20 images: only the checkpoint survives.
+    final = cache_dir() / "tiny__tiny_test__canon.npy"
+    partial = cache_dir() / "tiny__tiny_test__canon.partial.npy"
+    np.save(partial, full[:20])
+    final.unlink()
+    resumed = view_features("tiny", "tiny_test", True, frames, checkpoint_every=10)
+    assert np.allclose(resumed, full, atol=1e-5) and not partial.exists()

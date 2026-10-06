@@ -103,7 +103,7 @@ def svm_model(hp: dict[str, Any], seed: int) -> Any:
 def deep_lr(
     source: str, betas: list[float] | None = None, Cs: list[float] | None = None
 ) -> Learner:
-    grid: dict[str, list[Any]] = {"C": Cs or [0.003, 0.01, 0.03, 0.1]}
+    grid: dict[str, list[Any]] = {"C": Cs or [0.01, 0.03, 0.1]}
     if source == "canon":
         grid["beta"] = betas if betas is not None else [0.0, 1.0, 4.0, math.inf]
     return Learner(
@@ -117,7 +117,7 @@ def deep_lr(
 def shape_svm() -> Learner:
     return Learner(
         "shape_svm",
-        {"C": [1.0, 10.0, 100.0], "gamma": ["scale", 0.01]},
+        {"C": [1.0, 10.0, 100.0], "gamma": ["scale"]},
         lambda inp, idx, hp: inp.shape[idx],  # type: ignore[index]
         svm_model,
     )
@@ -127,7 +127,7 @@ def kilic_lite(extra_key: str = "resnet50_raw") -> Learner:
     """Kılıç (2025) pipeline without CBAM fine-tuning: GAP features -> PCA -> SVM-RBF."""
     return Learner(
         "kilic_lite",
-        {"n_pca": [16, 32, 64, 128], "C": [1.0, 10.0], "gamma": ["scale"]},
+        {"n_pca": [32, 64, 128], "C": [1.0, 10.0], "gamma": ["scale"]},
         lambda inp, idx, hp: inp.extra[extra_key][idx],
         pca_svm_model,
     )

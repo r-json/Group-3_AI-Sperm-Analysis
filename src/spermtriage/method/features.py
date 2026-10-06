@@ -68,47 +68,71 @@ def frames_and_shape(dataset: str) -> tuple[pd.DataFrame, np.ndarray]:
     frames = pd.DataFrame(rows)
     frames.to_csv(fpath, index=False)
     arr = np.stack(feats)
-    np.save(spath, arr)
+    _atomic_save(spath, arr)
     log.info("%s: %d frames, %d shape features", dataset, len(frames), len(FEATURE_NAMES))
     return frames, arr
 
 
+def _atomic_save(path: Path, arr: np.ndarray) -> None:
+    tmp = path.with_name(path.name + ".tmp.npy")
+    np.save(tmp, arr)
+    tmp.replace(path)
+
+
 @torch.no_grad()
 def view_features(
-    dataset: str, backbone: str, anchored: bool, frames: pd.DataFrame, batch_images: int = 8
+    dataset: str,
+    backbone: str,
+    anchored: bool,
+    frames: pd.DataFrame,
+    batch_images: int = 8,
+    checkpoint_every: int = 200,
 ) -> np.ndarray:
+    """Per-view features, checkpointed every ``checkpoint_every`` images so an interrupted
+    run (crash, suspend) resumes where it stopped. Writes are atomic."""
     tag = "canon" if anchored else "d4"
     path = cache_dir() / f"{dataset}__{backbone}__{tag}.npy"
+    partial = path.with_name(path.stem + ".partial.npy")
     manifest = load_manifest(dataset)
-    if path.exists():
+    if path.exists() and path.stat().st_size > 0:
         arr = np.load(path)
         if len(arr) == len(manifest):
             return arr
+    done: list[np.ndarray] = []
+    if partial.exists() and partial.stat().st_size > 0:
+        done = [np.load(partial)]
+        log.info("%s %s %s: resuming at %d", dataset, backbone, tag, len(done[0]))
+    start = int(sum(len(d) for d in done))
     spec = load_dataset_spec(dataset)
     net = Classifier.build(backbone, spec.num_classes, OUT_SIZE, dropout=0.0).eval()
-    out: list[np.ndarray] = []
     buf: list[torch.Tensor] = []
 
     def flush() -> None:
         if buf:
             x = torch.cat(buf)
-            out.append(net.features(x).numpy().reshape(len(buf), 8, -1).astype(np.float32))
+            done.append(net.features(x).numpy().reshape(len(buf), 8, -1).astype(np.float32))
             buf.clear()
 
-    for k, rel in enumerate(manifest["relpath"]):
-        img = read_rgb(spec.extracted_dir / rel)
+    for k in range(start, len(manifest)):
+        img = read_rgb(spec.extracted_dir / manifest["relpath"].iloc[k])
         r = frames.iloc[k]
         fr = Frame(
             (r["cx"], r["cy"]), r["phi0"], r["anisotropy"], (1.0, 1.0), bool(r["mask_found"])
         )
-        buf.append(sample_views(img, fr, WINDOW[dataset], OUT_SIZE, anchored=anchored))
+        window = WINDOW.get(dataset, float(max(img.shape[:2])))
+        buf.append(sample_views(img, fr, window, OUT_SIZE, anchored=anchored))
         if len(buf) == batch_images:
             flush()
-        if (k + 1) % 200 == 0:
+        if (k + 1) % checkpoint_every == 0:
+            flush()
+            done = [np.concatenate(done)]
+            _atomic_save(partial, done[0])
             log.info("%s %s %s: %d/%d", dataset, backbone, tag, k + 1, len(manifest))
     flush()
-    arr = np.concatenate(out)
-    np.save(path, arr)
+    arr = np.concatenate(done)
+    assert len(arr) == len(manifest)
+    _atomic_save(path, arr)
+    partial.unlink(missing_ok=True)
     return arr
 
 
@@ -126,6 +150,7 @@ def views_for_images(
             fr = moment_frame(mask)
             rows.append({"anisotropy": fr.anisotropy})
             shapes.append(shape_features(img, mask))
-            v = sample_views(img, fr, WINDOW[dataset], OUT_SIZE, anchored=True)
+            window = WINDOW.get(dataset, float(max(img.shape[:2])))
+            v = sample_views(img, fr, window, OUT_SIZE, anchored=True)
             feats.append(net.features(v).numpy().astype(np.float32))
     return np.stack(feats), np.stack(shapes), pd.DataFrame(rows)

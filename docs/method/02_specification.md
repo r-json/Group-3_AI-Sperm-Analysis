@@ -92,8 +92,11 @@ z(g·x) = z(x) and s(g·x) = s(x) for every rotation or reflection g (and transl
   out-of-fold log-probabilities of A and B.
 * **Selection.** Inside each outer training fold, by inner stratified K-fold log-loss
   (K = 5 for HuSHeM, 3 for SMIDS):
-  * β ∈ {0, 1, 4, ∞} and C_A ∈ {0.003, 0.01, 0.03, 0.1};
-  * (C_B, γ_B) ∈ {1, 10, 100} × {scale, 0.01}.
+  * β ∈ {0, 1, 4, ∞} and C_A ∈ {0.01, 0.03, 0.1};
+  * C_B ∈ {1, 10, 100}, with γ_B = "scale".
+
+  The Kılıç-lite baseline searches n_PCA ∈ {32, 64, 128} × C ∈ {1, 10}. These grids were
+  fixed on 6 Oct 2026, before any outer test evaluation, to fit the CPU budget.
 
 ## Pseudocode
 
@@ -147,7 +150,7 @@ Training needs no backpropagation.
 | --- | --- | --- |
 | Feature cache | DINOv2 on 8 anchored views (and 8 unanchored D4 views for the ablation): HuSHeM 3.5k passes, SMIDS 47k passes | ~2.5 h |
 | Main comparison | anifa, frozen_raw_lr, kilic_lite × 5 repeats × 5 folds | ~1-2 h |
-| Ablations | 6 variants × repeat 0 | ~1 h |
+| Ablations | 6 variants × repeat 0 (the unanchored-D4 variant on HuSHeM only, to save about 1 h of SMIDS feature extraction) | ~1 h |
 | Invariance | HuSHeM (all folds), SMIDS (fold 0): 17 extra passes per test image | ~45 min |
 | Data efficiency | 3 methods × {25, 50, 75}% × repeat 0 | ~30 min |
 | GPU (Colab, not run here) | CBAM-ResNet50 fine-tuning (full Kılıç), Ilhan & Serbes two-stage fusion, AniFA + fine-tuning (C8) | `notebooks/gpu_baselines.md` |

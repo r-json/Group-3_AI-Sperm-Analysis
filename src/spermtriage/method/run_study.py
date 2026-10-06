@@ -58,7 +58,8 @@ def main() -> None:
         if args.stage == "features":
             fr, _ = frames_and_shape(ds)
             view_features(ds, BACKBONE, True, fr)
-            view_features(ds, BACKBONE, False, fr)
+            if ds == "hushem":  # unanchored-D4 ablation features: HuSHeM only (CPU budget)
+                view_features(ds, BACKBONE, False, fr)
         elif args.stage == "inner":
             experiment.run(
                 ds,
@@ -72,7 +73,8 @@ def main() -> None:
         elif args.stage == "main":
             experiment.run(ds, MAIN, args.tag, BACKBONE, args.repeats, inner_k=INNER_K[ds])
         elif args.stage == "ablations":
-            experiment.run(ds, ABLATIONS, args.tag, BACKBONE, 1, inner_k=INNER_K[ds])
+            abl = [a for a in ABLATIONS if ds == "hushem" or a != "anifa_unanchored_d4"]
+            experiment.run(ds, abl, args.tag, BACKBONE, 1, inner_k=INNER_K[ds])
         elif args.stage == "efficiency":
             for frac in (0.25, 0.5, 0.75):
                 experiment.run(

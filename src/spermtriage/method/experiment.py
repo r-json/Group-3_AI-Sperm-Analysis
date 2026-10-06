@@ -110,6 +110,12 @@ def run(
     splits = outer_splits(dataset, repeats)
     commit = git_commit(project_root())
     for name in methods:
+        suffix = f"__frac{train_fraction:g}" if train_fraction < 1 else ""
+        mode = "inner" if inner_only else "outer"
+        done = out_dir / f"{name}{suffix}__{mode}_meta.json"
+        if done.exists():  # resumable: a completed method run is never repeated
+            log.info("skip (complete): %s", done)
+            continue
         rows, meta = [], []
         t0 = time.time()
         for r, k, tr, te in splits:
@@ -140,8 +146,10 @@ def run(
                 }
             )
             log.info("%s %s r%d f%d inner %s", dataset, name, r, k, res.inner_acc)
-        suffix = f"__frac{train_fraction:g}" if train_fraction < 1 else ""
-        mode = "inner" if inner_only else "outer"
+        if rows:
+            pd.DataFrame(rows).to_csv(
+                out_dir / f"{name}{suffix}__predictions.csv", index=False, float_format="%.6f"
+            )
         (out_dir / f"{name}{suffix}__{mode}_meta.json").write_text(
             json.dumps(
                 {
@@ -159,10 +167,6 @@ def run(
                 default=str,
             )
         )
-        if rows:
-            pd.DataFrame(rows).to_csv(
-                out_dir / f"{name}{suffix}__predictions.csv", index=False, float_format="%.6f"
-            )
         _log_experiment(tag, dataset, name, mode, train_fraction, commit, meta, rows)
     return out_dir
 
