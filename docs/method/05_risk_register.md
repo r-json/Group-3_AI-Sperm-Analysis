@@ -1,0 +1,13 @@
+# AniFA - risk register
+
+| # | Risk | Likelihood | Impact | Mitigation in place | Fallback |
+| --- | --- | --- | --- | --- | --- |
+| R1 | **98% is unreachable honestly.** HuSHeM's 216 images cannot statistically separate 96.8% from 98% (exact McNemar p ≥ 0.25 for a 3-image gap). SMIDS label noise may cap accuracy | High | High | Ceiling analysis (confident learning), error counts and an error taxonomy are reported | Reframe the contribution on measurable axes: provable invariance, robustness under rotation, data efficiency, no configuration search, no backpropagation |
+| R2 | **Segmentation fails** on cluttered SMIDS patches (several heads, debris), giving a wrong frame | Medium | Medium | Component scoring by area and centrality; a fallback frame when no mask is found (a = 0, uniform weights); the deep branch still sees the full window | Report the failure rate; future work on a learned in-fold segmenter |
+| R3 | **Near-isotropic heads** (a ≈ 0) have an unstable principal axis, so the canonical frame jumps | Medium | Low-Med | Anisotropy-dependent weights tend to uniform anchored-D4 averaging; β is chosen by inner CV | Dense rotation grids (more views); continuous weighted frames (Dym et al., 2024) |
+| R4 | **Frozen features underfit** compared with fine-tuned GPU models | High | Medium | Stacking with explicit shape descriptors | C8: fine-tune the backbone on canonical views (GPU notebook) |
+| R5 | **Baseline gap.** The CBAM fine-tuning and Ilhan & Serbes baselines need a GPU, so the CPU study compares against `kilic_lite` only | Certain (on this machine) | Medium | Ready-to-run GPU code on the same folds; paired statistics apply unchanged | State the limitation; run the notebook before submission |
+| R6 | **Hidden leakage** (near-duplicates beyond identical dHash) | Low | High | Pixel-hash dedup, dHash groups, group-aware folds; any result ≥ 99% triggers a leakage hunt | Looser perceptual grouping as a sensitivity analysis |
+| R7 | **Selection overfitting** in the inner loop on HuSHeM (about 35 images per inner fold) | Medium | Medium | Small, pre-registered grids; log-loss rather than accuracy for selection | Fix β = ∞ (hard frame) a priori, as reported in the ablation |
+| R8 | **Compute and hardware.** The laptop crashed twice on resume from suspend (amdgpu) | Occurred | Medium | Checkpointed, atomic and resumable stages; sleep inhibitor; detached pipeline | Run `scripts/run_pipeline.sh` again; it resumes |
+| R9 | **Novelty overlap** with an unretrieved paper (e.g. the Applied Sciences 2024 pose network's details; SHMC-Net) | Medium | Medium | Claims scoped to "training-free, label-free, invariance by construction" | Re-check in Scopus and IEEE Xplore; adjust the claims |
