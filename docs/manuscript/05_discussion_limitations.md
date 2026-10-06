@@ -5,7 +5,35 @@
 
 ## 5.1 Discussion hooks (interpretation kept out of Results)
 
-<!-- DISCUSSION: filled after the final report -->
+1. **Certification needs data more than accuracy.**
+   * The fine-tuned SMIDS model certified 95% selective accuracy in 4 of 5 folds, with 471-472
+     calibration images.
+   * No HuSHeM model could, with 34-35 calibration images, even though the plug-in threshold
+     suggested 45% of HuSHeM cells could be auto-classified.
+   * For small medical datasets, calibration-set size is therefore a design constraint, not
+     an afterthought.
+2. **Uncertified thresholds are optimistic.** Plug-in thresholds chosen to give 95% accuracy
+   on calibration data delivered less than 95% on test data in 2-4 of 5 folds for every
+   model. That is the expected winner's-curse effect of picking the largest coverage that
+   *looks* safe.
+3. **Calibration was already good, so temperature scaling had little to fix.** On SMIDS the
+   pooled ECE was 0.015-0.030 before scaling. Logistic-regression probes are fitted by NLL
+   and are well calibrated by construction. The fine-tuned network was early-stopped on
+   validation NLL, which also limits over-confidence. Fitting T on the same split used for
+   early stopping (L3) may bias T toward 1.
+4. **Conformal sets are informative only when the classifier is strong.** SMIDS LAC sets
+   were single labels 94% of the time, but HuSHeM sets averaged 1.46 labels. On HuSHeM the
+   worst class fell to 77.8% coverage, which illustrates the gap between marginal and
+   class-conditional guarantees (Mehrtens et al., 2025). The class-conditional fix was
+   infeasible there.
+5. **Accuracy gap to the literature.** Our CPU-feasible models trail published accuracies
+   by about 6-19 points (HuSHeM) and 2-8 points (SMIDS). Part of the gap is model capacity
+   and compute; part may be protocol (duplicates, selection on test folds, manual
+   preprocessing in some studies). The companion AniFA study (`docs/method/`) addresses
+   orientation, the main nuisance for small datasets.
+6. **Duplicates matter for every SMIDS result.** About 2.6% of a naïve test fold has a
+   pixel-identical training twin. That is enough to inflate accuracy by up to about 2.6
+   points on its own, comparable to the differences reported between recent methods.
 
 ## 5.2 Limitations
 

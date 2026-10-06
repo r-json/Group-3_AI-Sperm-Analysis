@@ -23,18 +23,30 @@ model_comparison,hushem,nll_ts,mobilenetv3-ft - dinov2s-lp,5,0.0194765,0.30037,0
 model_comparison,hushem,nll_ts,mobilenetv3-lp - resnet50-lp,5,-0.190099,-2.48389,0.0679275,-1.66624,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.330011
 model_comparison,hushem,nll_ts,mobilenetv3-lp - dinov2s-lp,5,0.117937,2.51078,0.0660022,1.68428,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.330011
 model_comparison,hushem,nll_ts,resnet50-lp - dinov2s-lp,5,0.308036,4.03627,0.0156522,2.70761,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.093913
-model_comparison,smids,accuracy,mobilenetv3-lp - resnet50-lp,5,0.0169664,2.19735,0.092927,1.47385,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.278781
+model_comparison,smids,accuracy,mobilenetv3-ft - mobilenetv3-lp,5,0.0407136,2.50824,0.0661819,1.68238,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.330909
+model_comparison,smids,accuracy,mobilenetv3-ft - resnet50-lp,5,0.0576801,4.58635,0.0101347,3.07625,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.0608085
+model_comparison,smids,accuracy,mobilenetv3-ft - dinov2s-lp,5,0.0339346,1.67167,0.169908,1.12126,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.371708
+model_comparison,smids,accuracy,mobilenetv3-lp - resnet50-lp,5,0.0169664,2.19735,0.092927,1.47385,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.371708
 model_comparison,smids,accuracy,mobilenetv3-lp - dinov2s-lp,5,-0.00677909,-0.484398,0.653432,-0.324906,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.653432
-model_comparison,smids,accuracy,resnet50-lp - dinov2s-lp,5,-0.0237455,-2.1054,0.103024,-1.41218,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.278781
-model_comparison,smids,macro_f1,mobilenetv3-lp - resnet50-lp,5,0.0172423,2.37486,0.0764155,1.59292,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.229246
+model_comparison,smids,accuracy,resnet50-lp - dinov2s-lp,5,-0.0237455,-2.1054,0.103024,-1.41218,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.371708
+model_comparison,smids,macro_f1,mobilenetv3-ft - mobilenetv3-lp,5,0.0397187,2.42507,0.0723652,1.6266,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.361826
+model_comparison,smids,macro_f1,mobilenetv3-ft - resnet50-lp,5,0.056961,4.51531,0.0106966,3.0286,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.0641796
+model_comparison,smids,macro_f1,mobilenetv3-ft - dinov2s-lp,5,0.0329225,1.61705,0.181174,1.08462,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.362348
+model_comparison,smids,macro_f1,mobilenetv3-lp - resnet50-lp,5,0.0172423,2.37486,0.0764155,1.59292,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.361826
 model_comparison,smids,macro_f1,mobilenetv3-lp - dinov2s-lp,5,-0.00679623,-0.492306,0.6483,-0.33021,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.6483
-model_comparison,smids,macro_f1,resnet50-lp - dinov2s-lp,5,-0.0240386,-2.1759,0.0951794,-1.45947,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.229246
-model_comparison,smids,brier_ts,mobilenetv3-lp - resnet50-lp,5,-0.0225243,-3.36048,0.0282923,-2.25401,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.0565847
+model_comparison,smids,macro_f1,resnet50-lp - dinov2s-lp,5,-0.0240386,-2.1759,0.0951794,-1.45947,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",True,0.361826
+model_comparison,smids,brier_ts,mobilenetv3-ft - mobilenetv3-lp,5,-0.0606137,-3.29403,0.0301013,-2.20944,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.113169
+model_comparison,smids,brier_ts,mobilenetv3-ft - resnet50-lp,5,-0.083138,-5.48361,0.00538579,-3.67809,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.0323147
+model_comparison,smids,brier_ts,mobilenetv3-ft - dinov2s-lp,5,-0.0468318,-2.42443,0.0724152,-1.62617,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.14483
+model_comparison,smids,brier_ts,mobilenetv3-lp - resnet50-lp,5,-0.0225243,-3.36048,0.0282923,-2.25401,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.113169
 model_comparison,smids,brier_ts,mobilenetv3-lp - dinov2s-lp,5,0.0137819,1.08926,0.337268,0.730611,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.337268
-model_comparison,smids,brier_ts,resnet50-lp - dinov2s-lp,5,0.0363062,4.36824,0.0119846,2.92996,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.0359538
-model_comparison,smids,nll_ts,mobilenetv3-lp - resnet50-lp,5,-0.0441321,-5.09209,0.00702122,-3.41547,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.0140424
+model_comparison,smids,brier_ts,resnet50-lp - dinov2s-lp,5,0.0363062,4.36824,0.0119846,2.92996,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.059923
+model_comparison,smids,nll_ts,mobilenetv3-ft - mobilenetv3-lp,5,-0.111357,-4.14572,0.0143098,-2.78071,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.0429295
+model_comparison,smids,nll_ts,mobilenetv3-ft - resnet50-lp,5,-0.155489,-5.95914,0.00398095,-3.99704,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.0199047
+model_comparison,smids,nll_ts,mobilenetv3-ft - dinov2s-lp,5,-0.0810913,-2.93826,0.0424626,-1.97081,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.0849252
+model_comparison,smids,nll_ts,mobilenetv3-lp - resnet50-lp,5,-0.0441321,-5.09209,0.00702122,-3.41547,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.0280849
 model_comparison,smids,nll_ts,mobilenetv3-lp - dinov2s-lp,5,0.030266,1.91106,0.128588,1.28183,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.128588
-model_comparison,smids,nll_ts,resnet50-lp - dinov2s-lp,5,0.0743982,7.18402,0.00198868,4.81862,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.00596604
+model_comparison,smids,nll_ts,resnet50-lp - dinov2s-lp,5,0.0743982,7.18402,0.00198868,4.81862,"corrected resampled t (Nadeau & Bengio 2003), df = k - 1",False,0.0119321
 temperature_scaling,hushem,nll,dinov2s-lp: raw - temperature-scaled,216,-0.000969883,7892,3.17493e-05,-0.0179529,Wilcoxon signed-rank on per-image scores (pooled test),False,0.000126997
 temperature_scaling,hushem,nll,mobilenetv3-ft: raw - temperature-scaled,216,-0.0528818,10599,0.223663,-0.116476,Wilcoxon signed-rank on per-image scores (pooled test),False,0.223663
 temperature_scaling,hushem,nll,mobilenetv3-lp: raw - temperature-scaled,216,-0.00443017,9455,0.0138599,-0.0709295,Wilcoxon signed-rank on per-image scores (pooled test),False,0.0415796
@@ -44,8 +56,10 @@ temperature_scaling,hushem,brier,mobilenetv3-ft: raw - temperature-scaled,216,-0
 temperature_scaling,hushem,brier,mobilenetv3-lp: raw - temperature-scaled,216,-0.00286065,9606,0.0216375,-0.102187,Wilcoxon signed-rank on per-image scores (pooled test),False,0.0733651
 temperature_scaling,hushem,brier,resnet50-lp: raw - temperature-scaled,216,0.00406993,10776,0.305662,0.0641359,Wilcoxon signed-rank on per-image scores (pooled test),False,0.305662
 temperature_scaling,smids,nll,dinov2s-lp: raw - temperature-scaled,2947,-0.00125145,2.13944e+06,0.481728,-0.0298558,Wilcoxon signed-rank on per-image scores (pooled test),False,0.481728
+temperature_scaling,smids,nll,mobilenetv3-ft: raw - temperature-scaled,2947,0.00971057,800418,1.02914e-193,0.0689804,Wilcoxon signed-rank on per-image scores (pooled test),False,4.11657e-193
 temperature_scaling,smids,nll,mobilenetv3-lp: raw - temperature-scaled,2947,0.00380668,1.91042e+06,1.50189e-08,0.0641385,Wilcoxon signed-rank on per-image scores (pooled test),False,3.00378e-08
 temperature_scaling,smids,nll,resnet50-lp: raw - temperature-scaled,2947,0.00269501,1.57584e+06,4.26078e-38,0.0583913,Wilcoxon signed-rank on per-image scores (pooled test),False,1.27823e-37
 temperature_scaling,smids,brier,dinov2s-lp: raw - temperature-scaled,2947,-0.000110418,2.06189e+06,0.017208,-0.00703306,Wilcoxon signed-rank on per-image scores (pooled test),False,0.017208
+temperature_scaling,smids,brier,mobilenetv3-ft: raw - temperature-scaled,2947,0.00234543,895142,3.72174e-168,0.0538678,Wilcoxon signed-rank on per-image scores (pooled test),False,1.4887e-167
 temperature_scaling,smids,brier,mobilenetv3-lp: raw - temperature-scaled,2947,0.00129781,2.01548e+06,0.00070643,0.0659267,Wilcoxon signed-rank on per-image scores (pooled test),False,0.00141286
 temperature_scaling,smids,brier,resnet50-lp: raw - temperature-scaled,2947,0.000706924,1.73578e+06,3.66585e-21,0.0385824,Wilcoxon signed-rank on per-image scores (pooled test),False,1.09975e-20

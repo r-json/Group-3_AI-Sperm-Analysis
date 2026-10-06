@@ -37,7 +37,13 @@ selective prediction (coverage and selective accuracy at the certified threshold
 conformal coverage and set size. Mean ± SD over 5 folds; 95% bootstrap CIs on pooled test
 predictions.
 
-<!-- METRICS-TABLE: filled from results/main/aggregate.csv after the final report -->
+| Registered model | Dataset | Accuracy (5-fold) | 95% CI (pooled) | Macro-F1 | Pooled ECE (TS) | Certified referral (SGR, 95% target) | Conformal LAC 90% |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `smids-mobilenetv3-ft-fold0` | SMIDS | 87.8 ± 1.8% | 86.6-89.0% | 87.8 ± 1.9% | 0.019 | 4/5 folds certified; 42.7 ± 26.6% auto-classified at 98.1 ± 1.7% accuracy. Deployed fold-0 threshold 0.959 (certified) | coverage 90.0 ± 2.5%, 1.05 labels per set |
+| `hushem-mobilenetv3-ft-fold0` | HuSHeM | 79.2 ± 6.7% | 73.6-84.3% | 78.5 ± 7.6% | 0.080 | 0/5 folds certified; **refers every image** | coverage 90.7 ± 3.7%, 1.46 labels per set |
+
+These metrics describe the 5-fold *configuration*; the deployed weights are its fold-0
+member. Per-class results, efficiency and the full tables are in `results/main/tables.md`.
 
 ## Training and evaluation data
 

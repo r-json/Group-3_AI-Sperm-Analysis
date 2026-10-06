@@ -147,17 +147,18 @@ Test-fold sizes: 590/590/589/589/589; calibration-split sizes: 471/471/472/472/4
 
 | Model | Accuracy (%) | 95% CI | Macro-F1 (%) | 95% CI | Cohen's κ | MCC |
 | --- | --- | --- | --- | --- | --- | --- |
+| mobilenetv3-ft | 87.8 ± 1.8 | [86.6, 89.0] | **87.8 ± 1.9** | [86.6, 88.9] | 0.817 ± 0.027 | 0.819 ± 0.027 |
 | mobilenetv3-lp | 83.7 ± 1.4 | [82.4, 85.0] | 83.8 ± 1.4 | [82.4, 85.1] | 0.756 ± 0.021 | 0.756 ± 0.021 |
 | resnet50-lp | 82.0 ± 0.4 | [80.6, 83.4] | 82.1 ± 0.4 | [80.6, 83.4] | 0.731 ± 0.006 | 0.731 ± 0.006 |
-| dinov2s-lp | 84.4 ± 1.6 | [83.1, 85.7] | **84.5 ± 1.6** | [83.2, 85.7] | 0.766 ± 0.024 | 0.767 ± 0.024 |
+| dinov2s-lp | 84.4 ± 1.6 | [83.1, 85.7] | 84.5 ± 1.6 | [83.2, 85.7] | 0.766 ± 0.024 | 0.767 ± 0.024 |
 
-### Table B - Per-class results of the best model (dinov2s-lp), pooled test
+### Table B - Per-class results of the best model (mobilenetv3-ft), pooled test
 
 | Class | Precision (%) | Recall (%) | F1 (%) | Support |
 | --- | --- | --- | --- | --- |
-| Normal | 82.2 | 83.1 | 82.7 | 1002 |
-| Abnormal | 78.7 | 79.2 | 79.0 | 972 |
-| Non-sperm | 92.6 | 91.0 | 91.8 | 973 |
+| Normal | 85.1 | 88.1 | 86.6 | 1002 |
+| Abnormal | 84.8 | 80.7 | 82.7 | 972 |
+| Non-sperm | 93.4 | 94.7 | 94.0 | 973 |
 
 ### Table C - Calibration before and after temperature scaling
 
@@ -168,6 +169,7 @@ is given for ECE because bootstrap resampling inflates binned ECE. Brier and NLL
 
 | Model | T (mean ± SD) | ECE raw | ECE TS | aECE raw | aECE TS | Brier raw | Brier TS | NLL raw | NLL TS |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| mobilenetv3-ft | 1.22 ± 0.15 | 0.030 | 0.019 | 0.030 | 0.017 | 0.178 [0.163, 0.194] | 0.176 [0.162, 0.190] | 0.311 [0.285, 0.338] | 0.302 [0.279, 0.324] |
 | mobilenetv3-lp | 1.03 ± 0.09 | 0.016 | 0.013 | 0.020 | 0.018 | 0.238 [0.223, 0.254] | 0.237 [0.222, 0.252] | 0.417 [0.393, 0.443] | 0.413 [0.390, 0.438] |
 | resnet50-lp | 0.97 ± 0.07 | 0.019 | 0.019 | 0.023 | 0.017 | 0.260 [0.245, 0.275] | 0.259 [0.243, 0.275] | 0.460 [0.434, 0.486] | 0.457 [0.431, 0.483] |
 | dinov2s-lp | 1.00 ± 0.07 | 0.015 | 0.022 | 0.021 | 0.018 | 0.223 [0.208, 0.238] | 0.223 [0.208, 0.238] | 0.382 [0.358, 0.405] | 0.383 [0.359, 0.406] |
@@ -181,6 +183,7 @@ SGR certifies risk ≤ 5% with probability ≥ 95% when it is feasible.
 
 | Model | AURC | Oracle cov. (%) | Plug-in cov. (%) | Plug-in sel. acc. (%) | SGR certified folds | SGR cov. (%) | SGR sel. acc. (%) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| mobilenetv3-ft | 0.028 ± 0.006 | 76.6 ± 5.2 | 79.2 ± 6.2 | 94.4 ± 2.2 | 4/5 | 42.7 ± 26.6 | 98.1 ± 1.7 |
 | mobilenetv3-lp | 0.054 ± 0.006 | 56.0 ± 4.9 | 58.7 ± 11.9 | 94.9 ± 1.6 | 1/5 | 5.2 ± 11.7 | 98.1 |
 | resnet50-lp | 0.066 ± 0.007 | 50.4 ± 3.0 | 54.0 ± 7.9 | 94.6 ± 1.6 | 0/5 | 0.0 ± 0.0 | n/a |
 | dinov2s-lp | 0.047 ± 0.006 | 61.3 ± 5.5 | 63.2 ± 10.7 | 94.0 ± 2.5 | 2/5 | 13.5 ± 19.0 | 97.6 ± 0.8 |
@@ -190,6 +193,7 @@ Per-class referral rate under the SGR threshold (pooled test; a class referred a
 
 | Model | Normal | Abnormal | Non-sperm |
 | --- | --- | --- | --- |
+| mobilenetv3-ft | 62.5 | 72.4 | 36.8 |
 | mobilenetv3-lp | 96.5 | 98.5 | 89.3 |
 | resnet50-lp | 100.0 | 100.0 | 100.0 |
 | dinov2s-lp | 91.6 | 92.8 | 74.9 |
@@ -198,6 +202,14 @@ Per-class referral rate under the SGR threshold (pooled test; a class referred a
 
 | Model | Method | Target cov. (%) | Empirical cov. (%) | Worst-class cov. (%) | Mean set size | Singletons (%) | Feasible folds |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| mobilenetv3-ft | aps | 95 | 100.0 ± 0.0 | 100.0 ± 0.0 | 2.83 ± 0.07 | 2.8 ± 0.8 | 5/5 |
+| mobilenetv3-ft | aps | 90 | 100.0 ± 0.0 | 100.0 ± 0.0 | 2.65 ± 0.05 | 7.1 ± 2.2 | 5/5 |
+| mobilenetv3-ft | aps_rand | 95 | 95.1 ± 1.2 | 93.6 ± 2.3 | 1.38 ± 0.07 | 62.3 ± 5.1 | 5/5 |
+| mobilenetv3-ft | aps_rand | 90 | 90.5 ± 1.9 | 88.1 ± 3.0 | 1.21 ± 0.06 | 71.9 ± 4.2 | 5/5 |
+| mobilenetv3-ft | lac | 95 | 94.8 ± 2.1 | 91.8 ± 3.3 | 1.22 ± 0.06 | 79.0 ± 5.4 | 5/5 |
+| mobilenetv3-ft | lac | 90 | 90.0 ± 2.5 | 84.1 ± 2.9 | 1.05 ± 0.03 | 94.1 ± 2.8 | 5/5 |
+| mobilenetv3-ft | lac_classwise | 95 | 95.1 ± 2.3 | 92.9 ± 3.7 | 1.23 ± 0.05 | 76.8 ± 3.8 | 5/5 |
+| mobilenetv3-ft | lac_classwise | 90 | 89.6 ± 2.5 | 87.1 ± 2.3 | 1.06 ± 0.03 | 90.2 ± 3.1 | 5/5 |
 | mobilenetv3-lp | aps | 95 | 100.0 ± 0.0 | 100.0 ± 0.0 | 2.80 ± 0.06 | 1.5 ± 1.0 | 5/5 |
 | mobilenetv3-lp | aps | 90 | 99.9 ± 0.2 | 99.9 ± 0.2 | 2.61 ± 0.07 | 5.3 ± 1.6 | 5/5 |
 | mobilenetv3-lp | aps_rand | 95 | 95.7 ± 1.1 | 94.6 ± 1.9 | 1.61 ± 0.07 | 45.4 ± 4.6 | 5/5 |
@@ -227,22 +239,36 @@ Per-class referral rate under the SGR threshold (pooled test; a class referred a
 
 | Family | Metric | Comparison | Mean diff. | Statistic | p | p (Holm) | d_z |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| model_comparison | accuracy | mobilenetv3-lp - resnet50-lp | 0.0170 | 2.197 | 0.093 | 0.279 | 1.47 |
+| model_comparison | accuracy | mobilenetv3-ft - mobilenetv3-lp | 0.0407 | 2.508 | 0.066 | 0.331 | 1.68 |
+| model_comparison | accuracy | mobilenetv3-ft - resnet50-lp | 0.0577 | 4.586 | 0.010 | 0.061 | 3.08 |
+| model_comparison | accuracy | mobilenetv3-ft - dinov2s-lp | 0.0339 | 1.672 | 0.170 | 0.372 | 1.12 |
+| model_comparison | accuracy | mobilenetv3-lp - resnet50-lp | 0.0170 | 2.197 | 0.093 | 0.372 | 1.47 |
 | model_comparison | accuracy | mobilenetv3-lp - dinov2s-lp | -0.0068 | -0.484 | 0.653 | 0.653 | -0.32 |
-| model_comparison | accuracy | resnet50-lp - dinov2s-lp | -0.0237 | -2.105 | 0.103 | 0.279 | -1.41 |
-| model_comparison | macro_f1 | mobilenetv3-lp - resnet50-lp | 0.0172 | 2.375 | 0.076 | 0.229 | 1.59 |
+| model_comparison | accuracy | resnet50-lp - dinov2s-lp | -0.0237 | -2.105 | 0.103 | 0.372 | -1.41 |
+| model_comparison | macro_f1 | mobilenetv3-ft - mobilenetv3-lp | 0.0397 | 2.425 | 0.072 | 0.362 | 1.63 |
+| model_comparison | macro_f1 | mobilenetv3-ft - resnet50-lp | 0.0570 | 4.515 | 0.011 | 0.064 | 3.03 |
+| model_comparison | macro_f1 | mobilenetv3-ft - dinov2s-lp | 0.0329 | 1.617 | 0.181 | 0.362 | 1.08 |
+| model_comparison | macro_f1 | mobilenetv3-lp - resnet50-lp | 0.0172 | 2.375 | 0.076 | 0.362 | 1.59 |
 | model_comparison | macro_f1 | mobilenetv3-lp - dinov2s-lp | -0.0068 | -0.492 | 0.648 | 0.648 | -0.33 |
-| model_comparison | macro_f1 | resnet50-lp - dinov2s-lp | -0.0240 | -2.176 | 0.095 | 0.229 | -1.46 |
-| model_comparison | brier_ts | mobilenetv3-lp - resnet50-lp | -0.0225 | -3.360 | 0.028 | 0.057 | -2.25 |
+| model_comparison | macro_f1 | resnet50-lp - dinov2s-lp | -0.0240 | -2.176 | 0.095 | 0.362 | -1.46 |
+| model_comparison | brier_ts | mobilenetv3-ft - mobilenetv3-lp | -0.0606 | -3.294 | 0.030 | 0.113 | -2.21 |
+| model_comparison | brier_ts | mobilenetv3-ft - resnet50-lp | -0.0831 | -5.484 | 0.005 | 0.032 | -3.68 |
+| model_comparison | brier_ts | mobilenetv3-ft - dinov2s-lp | -0.0468 | -2.424 | 0.072 | 0.145 | -1.63 |
+| model_comparison | brier_ts | mobilenetv3-lp - resnet50-lp | -0.0225 | -3.360 | 0.028 | 0.113 | -2.25 |
 | model_comparison | brier_ts | mobilenetv3-lp - dinov2s-lp | 0.0138 | 1.089 | 0.337 | 0.337 | 0.73 |
-| model_comparison | brier_ts | resnet50-lp - dinov2s-lp | 0.0363 | 4.368 | 0.012 | 0.036 | 2.93 |
-| model_comparison | nll_ts | mobilenetv3-lp - resnet50-lp | -0.0441 | -5.092 | 0.007 | 0.014 | -3.42 |
+| model_comparison | brier_ts | resnet50-lp - dinov2s-lp | 0.0363 | 4.368 | 0.012 | 0.060 | 2.93 |
+| model_comparison | nll_ts | mobilenetv3-ft - mobilenetv3-lp | -0.1114 | -4.146 | 0.014 | 0.043 | -2.78 |
+| model_comparison | nll_ts | mobilenetv3-ft - resnet50-lp | -0.1555 | -5.959 | 0.004 | 0.020 | -4.00 |
+| model_comparison | nll_ts | mobilenetv3-ft - dinov2s-lp | -0.0811 | -2.938 | 0.042 | 0.085 | -1.97 |
+| model_comparison | nll_ts | mobilenetv3-lp - resnet50-lp | -0.0441 | -5.092 | 0.007 | 0.028 | -3.42 |
 | model_comparison | nll_ts | mobilenetv3-lp - dinov2s-lp | 0.0303 | 1.911 | 0.129 | 0.129 | 1.28 |
-| model_comparison | nll_ts | resnet50-lp - dinov2s-lp | 0.0744 | 7.184 | 0.002 | 0.006 | 4.82 |
+| model_comparison | nll_ts | resnet50-lp - dinov2s-lp | 0.0744 | 7.184 | 0.002 | 0.012 | 4.82 |
 | temperature_scaling | nll | dinov2s-lp: raw - temperature-scaled | -0.0013 | 2139440.000 | 0.482 | 0.482 | -0.03 |
+| temperature_scaling | nll | mobilenetv3-ft: raw - temperature-scaled | 0.0097 | 800418.000 | < 0.001 | < 0.001 | 0.07 |
 | temperature_scaling | nll | mobilenetv3-lp: raw - temperature-scaled | 0.0038 | 1910416.000 | < 0.001 | < 0.001 | 0.06 |
 | temperature_scaling | nll | resnet50-lp: raw - temperature-scaled | 0.0027 | 1575835.000 | < 0.001 | < 0.001 | 0.06 |
 | temperature_scaling | brier | dinov2s-lp: raw - temperature-scaled | -0.0001 | 2061893.000 | 0.017 | 0.017 | -0.01 |
+| temperature_scaling | brier | mobilenetv3-ft: raw - temperature-scaled | 0.0023 | 895142.000 | < 0.001 | < 0.001 | 0.05 |
 | temperature_scaling | brier | mobilenetv3-lp: raw - temperature-scaled | 0.0013 | 2015475.000 | < 0.001 | 0.001 | 0.07 |
 | temperature_scaling | brier | resnet50-lp: raw - temperature-scaled | 0.0007 | 1735782.000 | < 0.001 | < 0.001 | 0.04 |
 
