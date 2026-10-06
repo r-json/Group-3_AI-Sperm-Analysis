@@ -6,6 +6,14 @@
 #   setsid nohup scripts/run_pipeline.sh > results/logs/pipeline.log 2>&1 < /dev/null &
 set -euo pipefail
 cd "$(dirname "$0")/.."
+
+# This laptop hangs when it resumes from suspend, which kills long jobs. While the pipeline
+# runs, block suspend from idle, the lid switch and the suspend key (released on exit).
+if [[ -z "${SPERMTRIAGE_INHIBITED:-}" ]] && command -v systemd-inhibit > /dev/null; then
+  export SPERMTRIAGE_INHIBITED=1
+  exec systemd-inhibit --what=sleep:idle:handle-lid-switch:handle-suspend-key \
+    --who=spermtriage --why="research pipeline running" --mode=block "$0" "$@"
+fi
 PY=.venv/bin/python
 MARK=results/logs/pipeline_markers
 mkdir -p "$MARK"
