@@ -1,0 +1,92 @@
+{
+ "method": "frozen_raw_lr",
+ "dataset": "smids",
+ "backbone": "dinov2_vits14",
+ "repeats": 1,
+ "train_fraction": 1.0,
+ "mode": "inner",
+ "code_commit": "ac81d0f3a697a0cac750fac335a3bc920c6450e2",
+ "seconds": 72.7,
+ "folds": [
+  {
+   "repeat": 0,
+   "fold": 0,
+   "n_train": 2357,
+   "selected": {
+    "deep_raw": {
+     "C": 0.01
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.37234067314498254
+   },
+   "inner_acc": {
+    "deep_raw": 0.8464149342384387
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 1,
+   "n_train": 2357,
+   "selected": {
+    "deep_raw": {
+     "C": 0.01
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.3696514767552672
+   },
+   "inner_acc": {
+    "deep_raw": 0.8561731014000848
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 2,
+   "n_train": 2358,
+   "selected": {
+    "deep_raw": {
+     "C": 0.01
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.38467291454807556
+   },
+   "inner_acc": {
+    "deep_raw": 0.8494486853265479
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 3,
+   "n_train": 2358,
+   "selected": {
+    "deep_raw": {
+     "C": 0.01
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.39027053634987235
+   },
+   "inner_acc": {
+    "deep_raw": 0.8477523324851569
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 4,
+   "n_train": 2358,
+   "selected": {
+    "deep_raw": {
+     "C": 0.01
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.37736436036952087
+   },
+   "inner_acc": {
+    "deep_raw": 0.8498727735368957
+   }
+  }
+ ]
+}

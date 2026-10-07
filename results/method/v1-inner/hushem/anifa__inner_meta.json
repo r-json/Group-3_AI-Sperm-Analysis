@@ -1,0 +1,137 @@
+{
+ "method": "anifa",
+ "dataset": "hushem",
+ "backbone": "dinov2_vits14",
+ "repeats": 1,
+ "train_fraction": 1.0,
+ "mode": "inner",
+ "code_commit": "ac81d0f3a697a0cac750fac335a3bc920c6450e2",
+ "seconds": 16.5,
+ "folds": [
+  {
+   "repeat": 0,
+   "fold": 0,
+   "n_train": 173,
+   "selected": {
+    "deep_canon": {
+     "C": 0.1,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.4968508712869688,
+    "shape_svm": 0.4716186431322022,
+    "stack": 0.4515616277180863
+   },
+   "inner_acc": {
+    "deep_canon": 0.8208092485549133,
+    "shape_svm": 0.8439306358381503,
+    "stack": 0.8208092485549133
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 1,
+   "n_train": 173,
+   "selected": {
+    "deep_canon": {
+     "C": 0.03,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.6361990375497688,
+    "shape_svm": 0.5349103409029998,
+    "stack": 0.47592074716847377
+   },
+   "inner_acc": {
+    "deep_canon": 0.7745664739884393,
+    "shape_svm": 0.8439306358381503,
+    "stack": 0.838150289017341
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 2,
+   "n_train": 172,
+   "selected": {
+    "deep_canon": {
+     "C": 0.1,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.5617841250943502,
+    "shape_svm": 0.5754558110242056,
+    "stack": 0.474976927254547
+   },
+   "inner_acc": {
+    "deep_canon": 0.7732558139534884,
+    "shape_svm": 0.8081395348837209,
+    "stack": 0.7965116279069767
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 3,
+   "n_train": 173,
+   "selected": {
+    "deep_canon": {
+     "C": 0.1,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.5354444263264857,
+    "shape_svm": 0.4954695816596963,
+    "stack": 0.4168639141517489
+   },
+   "inner_acc": {
+    "deep_canon": 0.7976878612716763,
+    "shape_svm": 0.8497109826589595,
+    "stack": 0.861271676300578
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 4,
+   "n_train": 173,
+   "selected": {
+    "deep_canon": {
+     "C": 0.1,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.4888870584297558,
+    "shape_svm": 0.5500915786512918,
+    "stack": 0.4462926079668818
+   },
+   "inner_acc": {
+    "deep_canon": 0.8323699421965318,
+    "shape_svm": 0.8265895953757225,
+    "stack": 0.838150289017341
+   }
+  }
+ ]
+}

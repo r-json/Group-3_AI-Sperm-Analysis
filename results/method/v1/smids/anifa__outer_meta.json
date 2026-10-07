@@ -1,0 +1,637 @@
+{
+ "method": "anifa",
+ "dataset": "smids",
+ "backbone": "dinov2_vits14",
+ "repeats": 5,
+ "train_fraction": 1.0,
+ "mode": "outer",
+ "code_commit": "ac81d0f3a697a0cac750fac335a3bc920c6450e2",
+ "seconds": 1767.3,
+ "folds": [
+  {
+   "repeat": 0,
+   "fold": 0,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3660877610216008,
+    "shape_svm": 0.47926938523912355,
+    "stack": 0.30793584000714264
+   },
+   "inner_acc": {
+    "deep_canon": 0.8515061518879932,
+    "shape_svm": 0.8565973695375477,
+    "stack": 0.886720407297412
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 1,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.35348826931730276,
+    "shape_svm": 0.5131295363938881,
+    "stack": 0.31422466210842354
+   },
+   "inner_acc": {
+    "deep_canon": 0.8536274925753076,
+    "shape_svm": 0.8370810352142554,
+    "stack": 0.8731438268985999
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 2,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3670896001182305,
+    "shape_svm": 0.5011755752645735,
+    "stack": 0.3136251633634548
+   },
+   "inner_acc": {
+    "deep_canon": 0.8545377438507209,
+    "shape_svm": 0.8498727735368957,
+    "stack": 0.8787107718405428
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 3,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3732469326058924,
+    "shape_svm": 0.5078194006563267,
+    "stack": 0.32063004642078125
+   },
+   "inner_acc": {
+    "deep_canon": 0.8486005089058524,
+    "shape_svm": 0.8486005089058524,
+    "stack": 0.8757421543681085
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 4,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3651878714041503,
+    "shape_svm": 0.5167015023121861,
+    "stack": 0.3220886550642999
+   },
+   "inner_acc": {
+    "deep_canon": 0.8456318914334181,
+    "shape_svm": 0.8464800678541137,
+    "stack": 0.8731976251060221
+   }
+  },
+  {
+   "repeat": 1,
+   "fold": 0,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.36492900155169156,
+    "shape_svm": 0.5245798321919329,
+    "stack": 0.32158297295477023
+   },
+   "inner_acc": {
+    "deep_canon": 0.8498090793381418,
+    "shape_svm": 0.838353839626644,
+    "stack": 0.8701739499363598
+   }
+  },
+  {
+   "repeat": 1,
+   "fold": 1,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.37126587956017554,
+    "shape_svm": 0.5138123396762632,
+    "stack": 0.32688439186255325
+   },
+   "inner_acc": {
+    "deep_canon": 0.8541136556403732,
+    "shape_svm": 0.8502968617472434,
+    "stack": 0.8710771840542832
+   }
+  },
+  {
+   "repeat": 1,
+   "fold": 2,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3515939614914886,
+    "shape_svm": 0.5167064561880766,
+    "stack": 0.3105847760052992
+   },
+   "inner_acc": {
+    "deep_canon": 0.8612643190496394,
+    "shape_svm": 0.8408994484514213,
+    "stack": 0.8816291896478574
+   }
+  },
+  {
+   "repeat": 1,
+   "fold": 3,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.37007095187438527,
+    "shape_svm": 0.5006716054429231,
+    "stack": 0.32451788531927006
+   },
+   "inner_acc": {
+    "deep_canon": 0.8490245971162002,
+    "shape_svm": 0.8481764206955047,
+    "stack": 0.8706530958439356
+   }
+  },
+  {
+   "repeat": 1,
+   "fold": 4,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.37523886133430145,
+    "shape_svm": 0.5008912632884486,
+    "stack": 0.3238730150387832
+   },
+   "inner_acc": {
+    "deep_canon": 0.8469041560644615,
+    "shape_svm": 0.8456318914334181,
+    "stack": 0.8744698897370653
+   }
+  },
+  {
+   "repeat": 2,
+   "fold": 0,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.37034875352134616,
+    "shape_svm": 0.5303586265544992,
+    "stack": 0.3282971740046848
+   },
+   "inner_acc": {
+    "deep_canon": 0.8485362749257531,
+    "shape_svm": 0.8319898175647009,
+    "stack": 0.8718710224862113
+   }
+  },
+  {
+   "repeat": 2,
+   "fold": 1,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.36817149991837983,
+    "shape_svm": 0.4990248682333014,
+    "stack": 0.31302511782442394
+   },
+   "inner_acc": {
+    "deep_canon": 0.8451421298260501,
+    "shape_svm": 0.8510818837505303,
+    "stack": 0.8841747984726347
+   }
+  },
+  {
+   "repeat": 2,
+   "fold": 2,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.35943561668936286,
+    "shape_svm": 0.5025408750757786,
+    "stack": 0.30798673765829854
+   },
+   "inner_acc": {
+    "deep_canon": 0.8507209499575912,
+    "shape_svm": 0.8481764206955047,
+    "stack": 0.8812553011026294
+   }
+  },
+  {
+   "repeat": 2,
+   "fold": 3,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.37073834832155955,
+    "shape_svm": 0.5046081929852037,
+    "stack": 0.3228503820538493
+   },
+   "inner_acc": {
+    "deep_canon": 0.8490245971162002,
+    "shape_svm": 0.8498727735368957,
+    "stack": 0.8744698897370653
+   }
+  },
+  {
+   "repeat": 2,
+   "fold": 4,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3584117175009347,
+    "shape_svm": 0.5149153640593366,
+    "stack": 0.30982321772908694
+   },
+   "inner_acc": {
+    "deep_canon": 0.859626802374894,
+    "shape_svm": 0.8435114503816794,
+    "stack": 0.8782866836301951
+   }
+  },
+  {
+   "repeat": 3,
+   "fold": 0,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.35374756141207975,
+    "shape_svm": 0.5043685272318115,
+    "stack": 0.3110350297820365
+   },
+   "inner_acc": {
+    "deep_canon": 0.8515061518879932,
+    "shape_svm": 0.8506576156130674,
+    "stack": 0.8744166313109886
+   }
+  },
+  {
+   "repeat": 3,
+   "fold": 1,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3706715973410126,
+    "shape_svm": 0.5111046268287399,
+    "stack": 0.3261698431536486
+   },
+   "inner_acc": {
+    "deep_canon": 0.8506576156130674,
+    "shape_svm": 0.8442935935511243,
+    "stack": 0.8722952906236742
+   }
+  },
+  {
+   "repeat": 3,
+   "fold": 2,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3707499207225108,
+    "shape_svm": 0.5064260596467663,
+    "stack": 0.31497075130754876
+   },
+   "inner_acc": {
+    "deep_canon": 0.8507209499575912,
+    "shape_svm": 0.8469041560644615,
+    "stack": 0.8753180661577609
+   }
+  },
+  {
+   "repeat": 3,
+   "fold": 3,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3595386464357326,
+    "shape_svm": 0.5115843918783919,
+    "stack": 0.31775387404333816
+   },
+   "inner_acc": {
+    "deep_canon": 0.8519932145886344,
+    "shape_svm": 0.8456318914334181,
+    "stack": 0.86980491942324
+   }
+  },
+  {
+   "repeat": 3,
+   "fold": 4,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.36595230244851296,
+    "shape_svm": 0.5148329308307806,
+    "stack": 0.3172179824704426
+   },
+   "inner_acc": {
+    "deep_canon": 0.851145038167939,
+    "shape_svm": 0.8418150975402884,
+    "stack": 0.8748939779474131
+   }
+  },
+  {
+   "repeat": 4,
+   "fold": 0,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.36578325377225007,
+    "shape_svm": 0.5115351733199028,
+    "stack": 0.3229939418712601
+   },
+   "inner_acc": {
+    "deep_canon": 0.8570216376750106,
+    "shape_svm": 0.848960543063216,
+    "stack": 0.8756894357233772
+   }
+  },
+  {
+   "repeat": 4,
+   "fold": 1,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.36053227286830997,
+    "shape_svm": 0.5072193599043098,
+    "stack": 0.3181537991728206
+   },
+   "inner_acc": {
+    "deep_canon": 0.8549618320610687,
+    "shape_svm": 0.8422391857506362,
+    "stack": 0.8740458015267175
+   }
+  },
+  {
+   "repeat": 4,
+   "fold": 2,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3478543722168626,
+    "shape_svm": 0.49481541675491286,
+    "stack": 0.3064655923938181
+   },
+   "inner_acc": {
+    "deep_canon": 0.8565973695375477,
+    "shape_svm": 0.8506576156130674,
+    "stack": 0.8790835808230801
+   }
+  },
+  {
+   "repeat": 4,
+   "fold": 3,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3650813969618888,
+    "shape_svm": 0.5117921405333578,
+    "stack": 0.3164273650701849
+   },
+   "inner_acc": {
+    "deep_canon": 0.8494486853265479,
+    "shape_svm": 0.8477523324851569,
+    "stack": 0.8778625954198473
+   }
+  },
+  {
+   "repeat": 4,
+   "fold": 4,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3751564913025484,
+    "shape_svm": 0.5156587297883648,
+    "stack": 0.32881266811859916
+   },
+   "inner_acc": {
+    "deep_canon": 0.8405428329092451,
+    "shape_svm": 0.8401187446988974,
+    "stack": 0.868108566581849
+   }
+  }
+ ]
+}

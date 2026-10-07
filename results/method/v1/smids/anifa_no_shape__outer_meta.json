@@ -1,0 +1,97 @@
+{
+ "method": "anifa_no_shape",
+ "dataset": "smids",
+ "backbone": "dinov2_vits14",
+ "repeats": 1,
+ "train_fraction": 1.0,
+ "mode": "outer",
+ "code_commit": "ac81d0f3a697a0cac750fac335a3bc920c6450e2",
+ "seconds": 318.6,
+ "folds": [
+  {
+   "repeat": 0,
+   "fold": 0,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3660877610216008
+   },
+   "inner_acc": {
+    "deep_canon": 0.8515061518879932
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 1,
+   "n_train": 2357,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.35348826931730276
+   },
+   "inner_acc": {
+    "deep_canon": 0.8536274925753076
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 2,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3670896001182305
+   },
+   "inner_acc": {
+    "deep_canon": 0.8545377438507209
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 3,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3732469326058924
+   },
+   "inner_acc": {
+    "deep_canon": 0.8486005089058524
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 4,
+   "n_train": 2358,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.3651878714041503
+   },
+   "inner_acc": {
+    "deep_canon": 0.8456318914334181
+   }
+  }
+ ]
+}

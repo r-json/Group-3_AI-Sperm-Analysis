@@ -1,0 +1,4 @@
+dataset,fold,method,n,acc_original,acc_transformed,changed_predictions
+smids,0,anifa,590,0.8440677966101695,0.8525423728813559,26
+smids,0,frozen_raw_lr,590,0.8491525423728814,0.811864406779661,84
+smids,0,kilic_lite,590,0.8355932203389831,0.8050847457627118,104

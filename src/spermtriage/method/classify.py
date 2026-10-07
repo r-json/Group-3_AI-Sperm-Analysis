@@ -80,10 +80,29 @@ def lr_model(hp: dict[str, Any], seed: int) -> Any:
     )
 
 
+class CappedPCA(PCA):
+    """PCA whose dimension is capped at what the training data allow (n_samples - 1 and
+    n_features). The cap only binds on very small training sets (e.g. 25% of HuSHeM), so it
+    leaves every full-data result unchanged."""
+
+    def _cap(self, X: Any) -> None:
+        n, d = np.shape(X)
+        requested = int(getattr(self, "n_components"))  # noqa: B009 - sklearn param, untyped
+        self.n_components = int(min(requested, n - 1, d))
+
+    def fit(self, X: Any, y: Any = None) -> CappedPCA:
+        self._cap(X)
+        return super().fit(X, y)
+
+    def fit_transform(self, X: Any, y: Any = None) -> Any:
+        self._cap(X)
+        return super().fit_transform(X, y)
+
+
 def pca_svm_model(hp: dict[str, Any], seed: int) -> Any:
     return make_pipeline(
         StandardScaler(),
-        PCA(n_components=hp["n_pca"], random_state=seed),
+        CappedPCA(n_components=hp["n_pca"], random_state=seed),
         _platt_svc(hp),
     )
 

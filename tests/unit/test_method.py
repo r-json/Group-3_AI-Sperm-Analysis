@@ -169,3 +169,11 @@ def test_view_feature_extraction_resumes_from_checkpoint(tiny_project, tiny_spec
     final.unlink()
     resumed = view_features("tiny", "tiny_test", True, frames, checkpoint_every=10)
     assert np.allclose(resumed, full, atol=1e-5) and not partial.exists()
+
+
+def test_capped_pca_on_tiny_training_sets():
+    from spermtriage.method.classify import CappedPCA
+
+    X = np.random.default_rng(0).normal(size=(20, 50))
+    assert CappedPCA(n_components=64).fit_transform(X).shape == (20, 19)
+    assert CappedPCA(n_components=8).fit(X).n_components_ == 8

@@ -1,0 +1,137 @@
+{
+ "method": "anifa",
+ "dataset": "hushem",
+ "backbone": "mobilenetv3_large",
+ "repeats": 1,
+ "train_fraction": 1.0,
+ "mode": "inner",
+ "code_commit": "69822d2a9b0a2a22f8c220b6c2fc7a706cead3c3",
+ "seconds": 365.0,
+ "folds": [
+  {
+   "repeat": 0,
+   "fold": 0,
+   "n_train": 173,
+   "selected": {
+    "deep_canon": {
+     "C": 0.03,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.5734733880787276,
+    "shape_svm": 0.391992047030044,
+    "stack": 0.353754004044785
+   },
+   "inner_acc": {
+    "deep_canon": 0.7687861271676301,
+    "shape_svm": 0.861271676300578,
+    "stack": 0.8786127167630058
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 1,
+   "n_train": 173,
+   "selected": {
+    "deep_canon": {
+     "C": 0.03,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": 0.01
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.567544466214593,
+    "shape_svm": 0.43071119619778125,
+    "stack": 0.3265522259562834
+   },
+   "inner_acc": {
+    "deep_canon": 0.7630057803468208,
+    "shape_svm": 0.8497109826589595,
+    "stack": 0.884393063583815
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 2,
+   "n_train": 172,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 0.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": 0.01
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.6321649010458639,
+    "shape_svm": 0.4702421953799107,
+    "stack": 0.484267084048428
+   },
+   "inner_acc": {
+    "deep_canon": 0.7325581395348837,
+    "shape_svm": 0.8081395348837209,
+    "stack": 0.8081395348837209
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 3,
+   "n_train": 173,
+   "selected": {
+    "deep_canon": {
+     "C": 0.01,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 1.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.6297742792553956,
+    "shape_svm": 0.40134534616245493,
+    "stack": 0.38754726750417495
+   },
+   "inner_acc": {
+    "deep_canon": 0.7456647398843931,
+    "shape_svm": 0.8554913294797688,
+    "stack": 0.8554913294797688
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 4,
+   "n_train": 173,
+   "selected": {
+    "deep_canon": {
+     "C": 0.03,
+     "beta": 1.0
+    },
+    "shape_svm": {
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "deep_canon": 0.5521691346022257,
+    "shape_svm": 0.4371516302035373,
+    "stack": 0.4305633412176439
+   },
+   "inner_acc": {
+    "deep_canon": 0.7630057803468208,
+    "shape_svm": 0.8497109826589595,
+    "stack": 0.838150289017341
+   }
+  }
+ ]
+}

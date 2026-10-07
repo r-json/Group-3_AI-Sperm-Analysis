@@ -1,0 +1,412 @@
+{
+ "method": "frozen_raw_lr",
+ "dataset": "hushem",
+ "backbone": "dinov2_vits14",
+ "repeats": 5,
+ "train_fraction": 1.0,
+ "mode": "outer",
+ "code_commit": "ac81d0f3a697a0cac750fac335a3bc920c6450e2",
+ "seconds": 12.2,
+ "folds": [
+  {
+   "repeat": 0,
+   "fold": 0,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.03
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.7247841513508796
+   },
+   "inner_acc": {
+    "deep_raw": 0.7398843930635838
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 1,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.03
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.7824634999555202
+   },
+   "inner_acc": {
+    "deep_raw": 0.6936416184971098
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 2,
+   "n_train": 172,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6004789357258459
+   },
+   "inner_acc": {
+    "deep_raw": 0.7325581395348837
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 3,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6822170182731548
+   },
+   "inner_acc": {
+    "deep_raw": 0.7283236994219653
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 4,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6005602112621145
+   },
+   "inner_acc": {
+    "deep_raw": 0.8092485549132948
+   }
+  },
+  {
+   "repeat": 1,
+   "fold": 0,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.7040071535433265
+   },
+   "inner_acc": {
+    "deep_raw": 0.7456647398843931
+   }
+  },
+  {
+   "repeat": 1,
+   "fold": 1,
+   "n_train": 172,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6400587127882059
+   },
+   "inner_acc": {
+    "deep_raw": 0.7674418604651163
+   }
+  },
+  {
+   "repeat": 1,
+   "fold": 2,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.03
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.7356468782078797
+   },
+   "inner_acc": {
+    "deep_raw": 0.7398843930635838
+   }
+  },
+  {
+   "repeat": 1,
+   "fold": 3,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6440748350699906
+   },
+   "inner_acc": {
+    "deep_raw": 0.7514450867052023
+   }
+  },
+  {
+   "repeat": 1,
+   "fold": 4,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.03
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6787389341398001
+   },
+   "inner_acc": {
+    "deep_raw": 0.7456647398843931
+   }
+  },
+  {
+   "repeat": 2,
+   "fold": 0,
+   "n_train": 172,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.618742514312888
+   },
+   "inner_acc": {
+    "deep_raw": 0.7151162790697675
+   }
+  },
+  {
+   "repeat": 2,
+   "fold": 1,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.03
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6992010744813817
+   },
+   "inner_acc": {
+    "deep_raw": 0.7456647398843931
+   }
+  },
+  {
+   "repeat": 2,
+   "fold": 2,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6540591798737175
+   },
+   "inner_acc": {
+    "deep_raw": 0.7861271676300579
+   }
+  },
+  {
+   "repeat": 2,
+   "fold": 3,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6244894159646673
+   },
+   "inner_acc": {
+    "deep_raw": 0.7514450867052023
+   }
+  },
+  {
+   "repeat": 2,
+   "fold": 4,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6614608685633674
+   },
+   "inner_acc": {
+    "deep_raw": 0.7283236994219653
+   }
+  },
+  {
+   "repeat": 3,
+   "fold": 0,
+   "n_train": 172,
+   "selected": {
+    "deep_raw": {
+     "C": 0.03
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6992641301402821
+   },
+   "inner_acc": {
+    "deep_raw": 0.7558139534883721
+   }
+  },
+  {
+   "repeat": 3,
+   "fold": 1,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6469074775250221
+   },
+   "inner_acc": {
+    "deep_raw": 0.7456647398843931
+   }
+  },
+  {
+   "repeat": 3,
+   "fold": 2,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6106459543677859
+   },
+   "inner_acc": {
+    "deep_raw": 0.7687861271676301
+   }
+  },
+  {
+   "repeat": 3,
+   "fold": 3,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.03
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.7186533844564548
+   },
+   "inner_acc": {
+    "deep_raw": 0.7225433526011561
+   }
+  },
+  {
+   "repeat": 3,
+   "fold": 4,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.7059484664586313
+   },
+   "inner_acc": {
+    "deep_raw": 0.7283236994219653
+   }
+  },
+  {
+   "repeat": 4,
+   "fold": 0,
+   "n_train": 172,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.7180794500038341
+   },
+   "inner_acc": {
+    "deep_raw": 0.75
+   }
+  },
+  {
+   "repeat": 4,
+   "fold": 1,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6817378324287873
+   },
+   "inner_acc": {
+    "deep_raw": 0.7398843930635838
+   }
+  },
+  {
+   "repeat": 4,
+   "fold": 2,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6730668130018802
+   },
+   "inner_acc": {
+    "deep_raw": 0.7630057803468208
+   }
+  },
+  {
+   "repeat": 4,
+   "fold": 3,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6107948123630725
+   },
+   "inner_acc": {
+    "deep_raw": 0.7745664739884393
+   }
+  },
+  {
+   "repeat": 4,
+   "fold": 4,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.1
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.6104512512377701
+   },
+   "inner_acc": {
+    "deep_raw": 0.7976878612716763
+   }
+  }
+ ]
+}

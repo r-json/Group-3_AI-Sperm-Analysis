@@ -1,0 +1,92 @@
+{
+ "method": "frozen_raw_lr",
+ "dataset": "hushem",
+ "backbone": "mobilenetv3_large",
+ "repeats": 1,
+ "train_fraction": 1.0,
+ "mode": "inner",
+ "code_commit": "69822d2a9b0a2a22f8c220b6c2fc7a706cead3c3",
+ "seconds": 63.2,
+ "folds": [
+  {
+   "repeat": 0,
+   "fold": 0,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.01
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.718551853847386
+   },
+   "inner_acc": {
+    "deep_raw": 0.7225433526011561
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 1,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.01
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.762982567904387
+   },
+   "inner_acc": {
+    "deep_raw": 0.7225433526011561
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 2,
+   "n_train": 172,
+   "selected": {
+    "deep_raw": {
+     "C": 0.01
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.7482598323392532
+   },
+   "inner_acc": {
+    "deep_raw": 0.7267441860465116
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 3,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.03
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.7429194086856574
+   },
+   "inner_acc": {
+    "deep_raw": 0.7398843930635838
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 4,
+   "n_train": 173,
+   "selected": {
+    "deep_raw": {
+     "C": 0.03
+    }
+   },
+   "inner_logloss": {
+    "deep_raw": 0.630167716971409
+   },
+   "inner_acc": {
+    "deep_raw": 0.7687861271676301
+   }
+  }
+ ]
+}
