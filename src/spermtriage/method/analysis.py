@@ -155,6 +155,26 @@ def extended_inputs(
     ]
     net = Classifier.build(backbone, spec.num_classes, 224, dropout=0.0).eval()
     canon, shape, frames = views_for_images(imgs, dataset, backbone, net)
+    d4 = None
+    if base.d4 is not None:  # plain D4 orbit about the image centre (ablation)
+        from spermtriage.method.canonical import Frame, sample_views
+        from spermtriage.method.features import OUT_SIZE, WINDOW
+
+        with torch.no_grad():
+            d4 = np.stack(
+                [
+                    net.features(
+                        sample_views(
+                            im,
+                            Frame((0.0, 0.0), 0.0, 0.0, (1.0, 1.0), False),
+                            WINDOW.get(dataset, float(max(im.shape[:2]))),
+                            OUT_SIZE,
+                            anchored=False,
+                        )
+                    ).numpy()
+                    for im in imgs
+                ]
+            )
     res = Classifier.build("resnet50", spec.num_classes, 224, dropout=0.0).eval()
 
     def raw_feats(model: Classifier) -> np.ndarray:
@@ -169,7 +189,7 @@ def extended_inputs(
         y=np.concatenate([base.y, base.y[idx]]),
         anisotropy=np.concatenate([base.anisotropy, frames["anisotropy"].to_numpy()]),
         canon=np.concatenate([base.canon, canon]),
-        d4=None,
+        d4=None if d4 is None or base.d4 is None else np.concatenate([base.d4, d4]),
         raw=np.concatenate([base.raw, raw_feats(net)]),
         shape=np.concatenate([base.shape, shape]),
         extra={"resnet50_raw": np.concatenate([base.extra["resnet50_raw"], raw_feats(res)])},
@@ -185,8 +205,9 @@ def invariance_test(
     backbone: str = "dinov2_vits14",
     folds: list[int] | None = None,
     inner_k: int = 5,
+    out_name: str | None = None,
 ) -> pd.DataFrame:
-    base = load_inputs(dataset, backbone, need_d4=False)
+    base = load_inputs(dataset, backbone, need_d4=any("d4" in m for m in methods))
     splits = [s for s in outer_splits(dataset, 1) if folds is None or s[1] in folds]
     rows = []
     for _, k, tr, te in splits:
@@ -208,7 +229,8 @@ def invariance_test(
             )
             log.info("invariance %s %s fold %d: %s", dataset, m, k, rows[-1])
     out = pd.DataFrame(rows)
-    path = project_root() / "results" / "method" / tag / dataset / "invariance.csv"
+    name = "invariance.csv" if out_name is None else out_name
+    path = project_root() / "results" / "method" / tag / dataset / name
     path.parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(path, index=False)
     return out
