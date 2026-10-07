@@ -1,0 +1,51 @@
+{
+ "thresholds": [
+  0.8930406296296295,
+  0.8134834905660379,
+  0.7606734736842105,
+  0.8361736538461539
+ ],
+ "confident_joint": [
+  [
+   43,
+   1,
+   1,
+   1
+  ],
+  [
+   0,
+   39,
+   2,
+   0
+  ],
+  [
+   2,
+   1,
+   39,
+   0
+  ],
+  [
+   1,
+   1,
+   0,
+   36
+  ]
+ ],
+ "n_suspected_label_issues": 10,
+ "n_images": 216,
+ "errors_repeat0": 26,
+ "suspects_among_errors": 10,
+ "accuracy_if_suspects_were_mislabelled_upper_bound": 0.9259259259259259,
+ "suspect_image_ids": [
+  "hushem/01_Normal/image_040.BMP",
+  "hushem/02_Tapered/image_049.BMP",
+  "hushem/03_Pyriform/image_010.BMP",
+  "hushem/03_Pyriform/image_011.BMP",
+  "hushem/04_Amorphous/image_002.BMP",
+  "hushem/01_Normal/image_028.BMP",
+  "hushem/01_Normal/image_037.BMP",
+  "hushem/02_Tapered/image_050.BMP",
+  "hushem/03_Pyriform/image_021.BMP",
+  "hushem/04_Amorphous/image_015.BMP"
+ ]
+}

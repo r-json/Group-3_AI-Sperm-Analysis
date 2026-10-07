@@ -1,0 +1,102 @@
+{
+ "method": "kilic_lite",
+ "dataset": "hushem",
+ "backbone": "dinov2_vits14",
+ "repeats": 1,
+ "train_fraction": 0.75,
+ "mode": "outer",
+ "code_commit": "8dfebfe204658da19bef7d4598fc6f8ca54ea99c",
+ "seconds": 107.9,
+ "folds": [
+  {
+   "repeat": 0,
+   "fold": 0,
+   "n_train": 130,
+   "selected": {
+    "kilic_lite": {
+     "n_pca": 128,
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "kilic_lite": 1.1409195675713826
+   },
+   "inner_acc": {
+    "kilic_lite": 0.5307692307692308
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 1,
+   "n_train": 131,
+   "selected": {
+    "kilic_lite": {
+     "n_pca": 64,
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "kilic_lite": 1.2134479798930549
+   },
+   "inner_acc": {
+    "kilic_lite": 0.48854961832061067
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 2,
+   "n_train": 129,
+   "selected": {
+    "kilic_lite": {
+     "n_pca": 64,
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "kilic_lite": 1.128199562486358
+   },
+   "inner_acc": {
+    "kilic_lite": 0.5736434108527132
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 3,
+   "n_train": 129,
+   "selected": {
+    "kilic_lite": {
+     "n_pca": 64,
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "kilic_lite": 1.1712103589671312
+   },
+   "inner_acc": {
+    "kilic_lite": 0.5193798449612403
+   }
+  },
+  {
+   "repeat": 0,
+   "fold": 4,
+   "n_train": 130,
+   "selected": {
+    "kilic_lite": {
+     "n_pca": 64,
+     "C": 10.0,
+     "gamma": "scale"
+    }
+   },
+   "inner_logloss": {
+    "kilic_lite": 1.045330893377809
+   },
+   "inner_acc": {
+    "kilic_lite": 0.6461538461538462
+   }
+  }
+ ]
+}

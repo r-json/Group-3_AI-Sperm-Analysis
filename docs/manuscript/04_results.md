@@ -166,9 +166,17 @@ Notes on Table E:
 
 ## 4.6 Efficiency
 
-Table F (parameters, model size and CPU latency) is produced by `spermtriage benchmark`,
-which must run on an idle machine. It will be generated after the method study's compute
-finishes [RESULT: results/main/efficiency.csv].
+**Table F - Efficiency** (AMD Ryzen 5 3450U, 4 threads, batch size 1; median of 100 runs
+[`results/main/efficiency.csv`]).
+
+| Backbone | Parameters (M) | Size fp32 (MB) | Median latency (ms/image) | IQR (ms) |
+| --- | --- | --- | --- | --- |
+| MobileNetV3-L | 4.2 | 16.8 | 42.0 | 38.8-45.6 |
+| ResNet-50 | 23.5 | 94.1 | 161.5 | 156.6-177.4 |
+| DINOv2 ViT-S/14 | 21.6 | 86.5 | 210.7 | 205.8-220.8 |
+
+The fine-tuned MobileNetV3 was both the most accurate configuration and the fastest, at
+about 24 images per second on a 4-core laptop CPU.
 
 ## 4.7 Published results (context only)
 

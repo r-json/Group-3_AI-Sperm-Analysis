@@ -43,6 +43,24 @@ python scripts/leakage_simulation.py   # results/main/leakage_simulation.csv
 | Reliability, risk-coverage, confusion and conformal figures | `spermtriage report` | `results/main/figures/*.png` |
 | Leakage simulation (RQ5) | `scripts/leakage_simulation.py` | `results/main/leakage_simulation.csv` |
 
+### AniFA method study
+
+```bash
+scripts/run_pipeline.sh            # resumable: features -> inner -> main -> ablations ->
+                                   # invariance -> efficiency -> ceiling -> tables
+python scripts/latency_anifa.py    # results/method/v1/latency.csv (idle machine)
+watch -n 30 scripts/progress.sh    # progress dashboard
+```
+
+| Output | File |
+| --- | --- |
+| Main comparison and paired tests | `results/method/v1/summary.csv`, `comparisons.csv` |
+| Ablations | `results/method/v1/*/anifa_*__predictions.csv`, `summary.csv` |
+| Rotation robustness | `results/method/v1/*/invariance*.csv` |
+| Data efficiency | `results/method/v1/data_efficiency.csv` |
+| Label-noise ceiling and error taxonomy | `results/method/v1/*/anifa__ceiling.json`, `smids/error_taxonomy.csv` |
+| Every evaluation, failures included | `EXPERIMENTS.md` |
+
 ## 3. Disclosures and corrections made during the work
 
 1. **Provenance bug (found and fixed).** Until commit `c61a69b`, a run recorded the git

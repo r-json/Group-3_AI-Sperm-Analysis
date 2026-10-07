@@ -36,3 +36,20 @@ Protocol: group-aware stratified 5-fold CV (perceptual-hash groups), repeated wi
 | 2026-10-06 20:52 | v1 | hushem | anifa | outer | 0.25 | ac81d0f | inner acc 73.1 ± 5.4; OUTER acc 78.2 ± 5.4 (n folds 5) |
 | 2026-10-06 20:52 | v1 | hushem | frozen_raw_lr | outer | 0.25 | ac81d0f | inner acc 57.3 ± 13.2; OUTER acc 59.7 ± 4.6 (n folds 5) |
 | 2026-10-07 02:45 | v1 | hushem | kilic_lite | outer | 0.25 | ac81d0f | FAILED: PCA n_components=64 > 34 inner-fold samples at 25% data. Fixed by CappedPCA (binds only when n_samples-1 < n_pca, so all full-data v1 results are unchanged); efficiency stage re-run |
+| 2026-10-07 02:45 | v1 | hushem | kilic_lite | outer | 0.25 | 8dfebfe | inner acc 42.7 ± 10.9; OUTER acc 38.9 ± 7.5 (n folds 5) |
+| 2026-10-07 02:46 | v1 | hushem | anifa | outer | 0.5 | 8dfebfe | inner acc 78.3 ± 3.3; OUTER acc 85.2 ± 2.6 (n folds 5) |
+| 2026-10-07 02:46 | v1 | hushem | frozen_raw_lr | outer | 0.5 | 8dfebfe | inner acc 70.0 ± 2.9; OUTER acc 70.9 ± 7.9 (n folds 5) |
+| 2026-10-07 02:48 | v1 | hushem | kilic_lite | outer | 0.5 | 8dfebfe | inner acc 48.7 ± 3.7; OUTER acc 55.2 ± 13.1 (n folds 5) |
+| 2026-10-07 02:49 | v1 | hushem | anifa | outer | 0.75 | 8dfebfe | inner acc 82.0 ± 2.4; OUTER acc 87.5 ± 5.1 (n folds 5) |
+| 2026-10-07 02:49 | v1 | hushem | frozen_raw_lr | outer | 0.75 | 8dfebfe | inner acc 72.1 ± 3.7; OUTER acc 76.9 ± 7.1 (n folds 5) |
+| 2026-10-07 02:50 | v1 | hushem | kilic_lite | outer | 0.75 | 8dfebfe | inner acc 55.2 ± 6.1; OUTER acc 54.2 ± 10.4 (n folds 5) |
+| 2026-10-07 02:51 | v1 | smids | anifa | outer | 0.25 | 8dfebfe | inner acc 85.2 ± 1.6; OUTER acc 86.7 ± 1.5 (n folds 5) |
+| 2026-10-07 02:51 | v1 | smids | frozen_raw_lr | outer | 0.25 | 8dfebfe | inner acc 81.7 ± 1.3; OUTER acc 82.1 ± 1.4 (n folds 5) |
+| 2026-10-07 02:53 | v1 | smids | kilic_lite | outer | 0.25 | 8dfebfe | inner acc 79.1 ± 0.6; OUTER acc 79.4 ± 2.4 (n folds 5) |
+| 2026-10-07 02:55 | v1 | smids | anifa | outer | 0.5 | 8dfebfe | inner acc 87.0 ± 1.1; OUTER acc 86.8 ± 1.8 (n folds 5) |
+| 2026-10-07 02:56 | v1 | smids | frozen_raw_lr | outer | 0.5 | 8dfebfe | inner acc 83.9 ± 0.3; OUTER acc 84.0 ± 1.6 (n folds 5) |
+| 2026-10-07 02:58 | v1 | smids | kilic_lite | outer | 0.5 | 8dfebfe | inner acc 81.5 ± 0.6; OUTER acc 81.2 ± 1.9 (n folds 5) |
+| 2026-10-07 03:03 | v1 | smids | anifa | outer | 0.75 | 8dfebfe | inner acc 87.2 ± 0.6; OUTER acc 87.8 ± 2.2 (n folds 5) |
+| 2026-10-07 03:04 | v1 | smids | frozen_raw_lr | outer | 0.75 | 8dfebfe | inner acc 84.1 ± 1.0; OUTER acc 84.6 ± 1.4 (n folds 5) |
+| 2026-10-07 03:06 | v1 | smids | kilic_lite | outer | 0.75 | 8dfebfe | inner acc 81.5 ± 0.9; OUTER acc 82.5 ± 1.2 (n folds 5) |
+| 2026-10-07 04:56 | v1 | hushem | anifa_unanchored_d4, anifa_single_view | invariance | 1 | 2000bd9 | rotated+mirrored test images, 5 folds: changed predictions 20/216 (unanchored D4) and 21/216 (single canonical view) vs 14/216 for anifa (results/method/v1/hushem/invariance_ablations.csv) |

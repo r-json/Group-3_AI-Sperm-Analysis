@@ -272,9 +272,15 @@ Per-class referral rate under the SGR threshold (pooled test; a class referred a
 | temperature_scaling | brier | mobilenetv3-lp: raw - temperature-scaled | 0.0013 | 2015475.000 | < 0.001 | 0.001 | 0.07 |
 | temperature_scaling | brier | resnet50-lp: raw - temperature-scaled | 0.0007 | 1735782.000 | < 0.001 | < 0.001 | 0.04 |
 
-### Table F - Efficiency
+### Table F - Efficiency (CPU, batch size 1)
 
-Not yet measured: run `spermtriage benchmark`.
+Hardware: AMD Ryzen 5 3450U with Radeon Vega Mobile Gfx; 4 threads; median over 100 runs.
+
+| Backbone | Parameters (M) | Size fp32 (MB) | Latency median (ms/image) | IQR (ms) |
+| --- | --- | --- | --- | --- |
+| mobilenetv3_large | 4.2 | 16.8 | 42.0 | 38.8-45.6 |
+| resnet50 | 23.5 | 94.1 | 161.5 | 156.6-177.4 |
+| dinov2_vits14 | 21.6 | 86.5 | 210.7 | 205.8-220.8 |
 
 ### Table G - Published results (as reported in the original papers; protocols differ)
 

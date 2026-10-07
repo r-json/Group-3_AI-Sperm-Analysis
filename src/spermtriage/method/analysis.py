@@ -290,3 +290,32 @@ def write_tables(tag: str, datasets: list[str], methods: list[str], baselines: l
     comps = pd.concat([compare(tag, d, "anifa", baselines) for d in datasets])
     comps.to_csv(root / "comparisons.csv", index=False, float_format="%.6g")
     return root
+
+
+def data_efficiency_table(tag: str, datasets: list[str], methods: list[str]) -> pd.DataFrame:
+    """Outer accuracy (repeat 0, 5 folds) at 25/50/75/100% of each training fold."""
+    root = project_root() / "results" / "method" / tag
+    rows = []
+    for ds in datasets:
+        for m in methods:
+            for frac in (0.25, 0.5, 0.75, 1.0):
+                suffix = "" if frac == 1.0 else f"__frac{frac:g}"
+                path = root / ds / f"{m}{suffix}__predictions.csv"
+                if not path.exists():
+                    continue
+                df = pd.read_csv(path)
+                df = df[df["repeat"] == 0]
+                acc = (df["pred"] == df["label_idx"]).groupby(df["fold"]).mean()
+                rows.append(
+                    {
+                        "dataset": ds,
+                        "method": m,
+                        "train_fraction": frac,
+                        "acc_mean": float(acc.mean()),
+                        "acc_sd": float(acc.std(ddof=1)),
+                        "errors": int((df["pred"] != df["label_idx"]).sum()),
+                    }
+                )
+    out = pd.DataFrame(rows)
+    out.to_csv(root / "data_efficiency.csv", index=False, float_format="%.6f")
+    return out

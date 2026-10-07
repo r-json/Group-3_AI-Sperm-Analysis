@@ -50,6 +50,32 @@ on HuSHeM and 90-96% on SMIDS, under different protocols ([Table G](results/main
 The models here are deliberately CPU-feasible, and the contribution is reliability, not
 accuracy.
 
+## Companion method: AniFA (anisotropy-weighted frame averaging)
+
+AniFA is a training-free, rotation- and reflection-invariant representation:
+
+* an unsupervised head mask defines a moment frame;
+* frozen DINOv2 features are averaged over 8 views anchored to that frame;
+* the result is stacked with closed-form invariant shape descriptors under nested selection.
+
+Results come from a group-aware 5 × 5-fold protocol with paired tests
+([`docs/method/04_results.md`](docs/method/04_results.md)):
+
+| | HuSHeM | SMIDS |
+| --- | --- | --- |
+| **AniFA** | **86.0 ± 4.8%** | **88.0 ± 1.5%** |
+| Same frozen features, no canonicalisation | 77.2 ± 5.0% | 85.3 ± 1.4% |
+| Kılıç-lite (GAP → PCA → SVM, nested) | 54.8 ± 7.0% | 83.2 ± 1.3% |
+| Predictions changed by random rotation + mirroring (AniFA vs raw) | 14 vs 48 of 216 | 26 vs 84 of 590 |
+
+* AniFA beat both baselines in all 5 repeats on both datasets (exact McNemar p < 0.05).
+* With 25% of the training data it matched the raw features trained on 100%.
+* **The 98% target was not reached.** Confident learning flags 3.9% of SMIDS labels as
+  suspect, and even counting all of them correct caps AniFA at 92.3%. Most remaining errors
+  are borderline morphology or cluttered patches.
+* Full GPU baselines (CBAM-ResNet50, Ilhan & Serbes) are ready in
+  [`notebooks/gpu_baselines.md`](notebooks/gpu_baselines.md).
+
 ## Data integrity finding
 
 The official SMIDS release contains **49 pairs of pixel-identical images, 4 of them with

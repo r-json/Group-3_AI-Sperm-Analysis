@@ -1,0 +1,4 @@
+pipeline,median_ms,q25_ms,q75_ms,n_images,threads,cpu
+anifa_8_views_plus_shape,1593.84,1557.70,1629.37,50,4,x86_64
+frozen_single_view,206.97,200.96,215.60,50,4,x86_64
+mask_and_shape_only,8.94,8.78,9.47,50,4,x86_64

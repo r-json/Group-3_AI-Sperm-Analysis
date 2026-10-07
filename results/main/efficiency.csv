@@ -1,0 +1,4 @@
+backbone,image_size,params_m,size_mb,latency_ms_median,latency_ms_q25,latency_ms_q75,runs,threads,cpu,torch
+mobilenetv3_large,224,4.206,16.823,41.978,38.840,45.565,100,4,AMD Ryzen 5 3450U with Radeon Vega Mobile Gfx,2.14.1+cpu
+resnet50,224,23.514,94.057,161.463,156.583,177.354,100,4,AMD Ryzen 5 3450U with Radeon Vega Mobile Gfx,2.14.1+cpu
+dinov2_vits14,224,21.630,86.520,210.655,205.839,220.797,100,4,AMD Ryzen 5 3450U with Radeon Vega Mobile Gfx,2.14.1+cpu

@@ -1,7 +1,7 @@
 # Paper-ready Method section (AniFA)
 
-> Numbers in brackets are filled from `results/method/v1/summary.csv` and
-> `comparisons.csv` after the outer evaluation; see `04_results.md`.
+> Numbers come from `results/method/v1/` (frozen version v1); see `04_results.md` for the
+> tables and sources.
 
 ## Anisotropy-weighted frame averaging (AniFA)
 
@@ -96,11 +96,20 @@ No backpropagation is required: fewer than 10⁴ parameters are fitted, against 
 * We **propose** AniFA, a training-free, provably O(2)-invariant representation for
   object-centred microscopy. It combines a mask-moment frame with anisotropy-dependent
   weights and invariant shape descriptors.
-* We **show** whether, and by how much, invariance by construction improves frozen
-  foundation-model features over no canonicalisation and over a nested re-implementation of
-  the strongest published pipeline, under one leakage-free, group-aware, repeated protocol.
-  [RESULT]
-* We **measure** rotation robustness on randomly rotated and mirrored test images, and data
-  efficiency at 25-100% of the training data. [RESULT]
-* We **estimate** the label-noise ceiling of SMIDS with confident learning, and state what
-  accuracy is attainable without relabelling. [RESULT]
+* We **show** that invariance by construction improves the same frozen foundation features,
+  under one leakage-free, group-aware, 5 × 5-fold protocol. AniFA beat the un-canonicalised
+  features in all 5 repeats on both datasets (exact McNemar p < 0.05):
+  * HuSHeM: 77.2% → 86.0%;
+  * SMIDS: 85.3% → 88.0%.
+
+  It also beat a nested re-implementation of the Kılıç (2025) pipeline without CBAM
+  fine-tuning: 54.8% and 83.2%.
+* We **measure** rotation robustness. Under random rotation and mirroring of the test
+  images, AniFA changed 14 of 216 HuSHeM predictions against 48 for the raw features, and 26
+  of 590 SMIDS predictions against 84. We also measure data efficiency: with 25% of the
+  training data, AniFA (78.2% HuSHeM, 86.7% SMIDS) exceeded the raw features trained on all
+  of it.
+* We **estimate** the label-noise ceiling of SMIDS with confident learning: 3.9% of labels
+  are flagged. Even if all flagged images were mislabelled, accuracy would be capped at
+  92.3%, so 98% is not attainable without expert relabelling of borderline and cluttered
+  patches.
